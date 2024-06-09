@@ -6,12 +6,15 @@ import './App.css';
 
 import Navbar from './Components/Models/Navbar';
 import Presentacion from './Components/Models/Landing/Presentacion';
+import { Route } from 'react-router';
 
 const App = () => {
   return (
     <>
-      <Navbar/>
-      <Presentacion/>
+      <Route>
+        <Navbar/>
+        <Presentacion/>
+      </Route>
     </>
   );
 }

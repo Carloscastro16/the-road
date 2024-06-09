@@ -4,7 +4,7 @@ const Navbar = () => {
     <nav className="navbar sticky-top navbar-expand-lg navbar_custom">
       <div className="container-fluid">
 
-        <a className="navbar-brand" href="#">The road</a>
+        <p className="navbar-brand">The road</p>
 
         <button className="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasResponsive" aria-controls="offcanvasResponsive">
           <span className="navbar-toggler-icon"></span>
@@ -13,21 +13,21 @@ const Navbar = () => {
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav me-auto mb-2 mb-lg-0">
             <li className="nav-item">
-              <a className="nav-link" aria-current="page" href="#">Explora</a>
+              <p className="nav-link" aria-current="page">Explora</p>
             </li>
             <li className="nav-item">
-              <a className="nav-link" aria-current="page" href="#">Productos</a>
+              <p className="nav-link" aria-current="page">Productos</p>
             </li>
             <li className="nav-item">
-              <a className="nav-link" aria-current="page" href="#">Para Desarrolladores</a>
+              <p className="nav-link" aria-current="page">Para Desarrolladores</p>
             </li>
           </ul>
           <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
             <li className="nav-item">
-              <a className="nav-link" aria-current="page" href="#">Inicia Sesión</a>
+              <p className="nav-link" aria-current="page">Inicia Sesión</p>
             </li>
             <li className="nav-item">
-              <a className="nav-link" aria-current="page" href="#">Unete</a>
+              <p className="nav-link" aria-current="page">Unete</p>
             </li>
           </ul>
         </div>
@@ -40,19 +40,19 @@ const Navbar = () => {
             <div className="offcanvas-body">
                 <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                     <li className="nav-item">
-                    <a className="nav-link" aria-current="page" href="#">Explora</a>
+                    <p className="nav-link" aria-current="page">Explora</p>
                     </li>
                     <li className="nav-item">
-                    <a className="nav-link" aria-current="page" href="#">Productos</a>
+                    <p className="nav-link" aria-current="page">Productos</p>
                     </li>
                     <li className="nav-item">
-                    <a className="nav-link" aria-current="page" href="#">Para Desarrolladores</a>
+                    <p className="nav-link" aria-current="page">Para Desarrolladores</p>
                     </li>
                     <li className="nav-item">
-                    <a className="nav-link" aria-current="page" href="#">Inicia Sesión</a>
+                    <p className="nav-link" aria-current="page">Inicia Sesión</p>
                     </li>
                     <li className="nav-item">
-                    <a className="nav-link" aria-current="page" href="#">Unete</a>
+                    <p className="nav-link" aria-current="page">Unete</p>
                     </li>
                 </ul>
             </div>
