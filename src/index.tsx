@@ -7,10 +7,22 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import LandingView from './Views/landing/LandingView';
+import AdminView from './Views/admin/AdminView';
+import AdminDashboard from './Components/Models/Admin/Dashboard';
 const router = createBrowserRouter([
   {
     path: "/",
     element: <LandingView />,
+  },
+  {
+    path: "/admin",
+    element: <AdminView />,
+    children: [
+      {
+        path: "/admin/dashboard",
+        element: <AdminDashboard />,
+      },
+    ],
   },
 ]);
 
