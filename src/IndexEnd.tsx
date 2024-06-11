@@ -5,7 +5,7 @@ import reportWebVitals from './reportWebVitals';
 import {
   createBrowserRouter,
   RouterProvider,
-} from 'react-router-dom';
+} from "react-router-dom";
 import LandingView from './Views/landing/LandingView';
 import AdminView from './Views/admin/AdminView';
 import AdminDashboard from './Views/admin/AdminDashboard';
@@ -13,27 +13,22 @@ import StudentsView from './Views/students/StudentsView';
 import StudentsDashboard from './Views/students/StudentsDashboard';
 import { AuthProvider } from './Services/Auth/AuthProvider';
 import PrivateRoute from './Services/Routes/ProtectedRoute';
-import LoginPage from './Views/auth/AuthView';
 
 const router = createBrowserRouter([
   {
-    path: '/',
+    path: "/",
     element: <LandingView />,
   },
   {
-    path: '/login',
-    element: <LoginPage />,
-  },
-  {
-    path: '/administrador',
+    path: "/administrador",
     element: <PrivateRoute />,
     children: [
       {
-        path: '/administrador',
+        path: "/administrador",
         element: <AdminView />,
         children: [
           {
-            path: 'dashboard',
+            path: "dashboard",
             element: <AdminDashboard />,
           },
         ],
@@ -41,27 +36,27 @@ const router = createBrowserRouter([
     ],
   },
   {
-    path: '/estudiantes',
+    path: "/estudiantes",
     element: <PrivateRoute />,
     children: [
       {
-        path: '/estudiantes',
+        path: "/estudiantes",
         element: <StudentsView />,
         children: [
           {
-            path: 'dashboard',
+            path: "dashboard",
             element: <StudentsDashboard />,
           },
           {
-            path: 'actividades',
+            path: "actividades",
             element: <StudentsDashboard />,
           },
           {
-            path: 'rutas',
+            path: "rutas",
             element: <StudentsDashboard />,
           },
           {
-            path: 'perfil',
+            path: "perfil",
             element: <StudentsDashboard />,
           },
         ],

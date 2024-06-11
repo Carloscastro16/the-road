@@ -85,7 +85,7 @@ const cardsInfo = [
 export default function BestRoutes() {
     return (
         <Box>
-            <Stack width={'100%'} flexDirection={'row'} alignItems={'center'} justifyContent={'space-between'}>
+            <Stack width={'100%'} flexDirection={'row'} alignItems={'center'} justifyContent={'space-between'} mb={'28px'}>
                 <Typography sx={{
                     fontFamily: 'Montserrat',
                     fontSize: '32px',
@@ -107,7 +107,6 @@ export default function BestRoutes() {
                 }}>Ver mas...</Button>
             </Stack>
             <Stack sx={{
-                mt: '28px',
                 flexDirection: 'row',
                 gap: '32px',
                 flexWrap: 'wrap',

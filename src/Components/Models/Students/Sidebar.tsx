@@ -28,23 +28,23 @@ import logout from '../../../assets/icons/Log-out.png'
 
 const mainItems = [
   {
-    route: '/dashboard',
+    route: 'dashboard',
     text: 'Dashboard',
     img: dashboard
   },
   {
     text: 'Rutas',
-    route: '/rutas',
+    route: 'rutas',
     img: roads
   },
   {
     text: 'Actividades',
-    route: '/actividades',
+    route: 'actividades',
     img: activities
   },
   {
     text: 'Mis Actividades',
-    route: '/misactividades',
+    route: 'misactividades',
     img: myActivities
   }
 ];
@@ -188,26 +188,28 @@ export default function StudentsSidebar() {
           <List sx={{ flexGrow: 1 }}>
             {mainItems.map((text, index) => (
               <ListItem key={text.text} disablePadding sx={{ display: 'block' }}>
-                <ListItemButton
-                  sx={{
-                    minHeight: 48,
-                    justifyContent: open ? 'initial' : 'center',
-                    px: 2.5,
-                  }}
-                >
-                  <ListItemIcon
+                <Link to={text.route}>
+                  <ListItemButton
                     sx={{
-                      minWidth: 0,
-                      mr: open ? 3 : 'auto',
-                      justifyContent: 'center',
-                      height: '24px',
-                      width: '24px'
+                      minHeight: 48,
+                      justifyContent: open ? 'initial' : 'center',
+                      px: 2.5,
                     }}
                   >
-                    <img src={text.img} alt="home" width={'100%'} height={'100%'} />
-                  </ListItemIcon>
-                  <ListItemText primary={text.text} sx={{ opacity: open ? 1 : 0 }} />
-                </ListItemButton>
+                    <ListItemIcon
+                      sx={{
+                        minWidth: 0,
+                        mr: open ? 3 : 'auto',
+                        justifyContent: 'center',
+                        height: '24px',
+                        width: '24px'
+                      }}
+                    >
+                      <img src={text.img} alt="home" width={'100%'} height={'100%'} />
+                    </ListItemIcon>
+                    <ListItemText primary={text.text} sx={{ opacity: open ? 1 : 0 }} />
+                  </ListItemButton>
+                </Link>
               </ListItem>
             ))}
           </List>
