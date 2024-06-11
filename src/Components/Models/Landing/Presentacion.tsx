@@ -1,12 +1,18 @@
+import ts from '../../../assets/Img/tsbanner.png'
+import css from '../../../assets/Img/cssbanner.png'
+import html from '../../../assets/Img/htmlbanner.png'
+import js from '../../../assets/Img/javascriptbanner.png'
+import python from '../../../assets/Img/pythonbanner.png'
+import react from '../../../assets/Img/reactbanner.png'
 const Presentacion = () =>{
     return (
         <div className="presentation-container">
           <div className="background-icons">
-            <img src="path/to/js-icon.png" alt="JS Icon" className="icon js-icon" />
-            <img src="path/to/python-icon.png" alt="Python Icon" className="icon python-icon" />
-            <img src="path/to/html-icon.png" alt="HTML Icon" className="icon html-icon" />
-            <img src="path/to/css-icon.png" alt="CSS Icon" className="icon css-icon" />
-            <img src="path/to/ts-icon.png" alt="TS Icon" className="icon ts-icon" />
+            <img src={js} alt="JS Icon" className="icon js-icon" />
+            <img src={python} alt="Python Icon" className="icon python-icon" />
+            <img src={html} alt="HTML Icon" className="icon html-icon" />
+            <img src={css} alt="CSS Icon" className="icon css-icon" />
+            <img src={ts} alt="TS Icon" className="icon ts-icon" />
           </div>
           <div className="content">
             <h1>Domina la programación</h1>
