@@ -4,13 +4,13 @@ import { styled } from '@mui/system';
 import Img from '../../../assets/Img/Codigo.png';
 
 const ImageContainer = styled('div')(({ theme }) => ({
-  backgroundImage: `url(${Img})`, // Ajusta la ruta de tu imagen
+  backgroundImage: `url(${Img})`, 
   backgroundSize: 'cover',
   backgroundPosition: 'center',
-  height: '200px', // Ajusta la altura
+  height: '200px',
   [theme.breakpoints.up('md')]: {
-    flex: '0.7 0 200px', // Controla el tamaño de la imagen en pantallas grandes
-    height: 'auto', // Ajusta la altura automáticamente en pantallas grandes
+    flex: '0.7 0 200px', 
+    height: 'auto', 
   },
 }));
 
@@ -58,10 +58,12 @@ const Ofrecemos = () => {
           mb: 4,
           borderRadius: '10px',
           backgroundColor: 'rgba(145, 139, 198, 0.30)',
+        
+
         }}
       >
         <ContentContainer>
-          <Typography variant="h5" gutterBottom sx={{ mb: 3 }}>
+          <Typography variant="h5" gutterBottom sx={{ mb: 3 ,fontWeight: 'bold' }}>
             Afila tus habilidades de codificación
           </Typography>
           <Typography variant="body1" gutterBottom sx={{ mb: 3, pr: { md: 12 } }}>
@@ -74,8 +76,8 @@ const Ofrecemos = () => {
         <ImageContainer />
       </Paper>
 
-      <Grid container spacing={4}>
-        <Grid item xs={12} md={6} sx={{ mb: { xs: 4, md: 0 } }}>
+      <Grid container spacing={5}>
+        <Grid item xs={12} md={5} sx={{ mb: { xs: 6, md: 0 } }}>
           <Paper
             elevation={3}
             sx={{
@@ -85,9 +87,13 @@ const Ofrecemos = () => {
               justifyContent: 'space-between',
               height: '100%',
               alignItems: { xs: 'center', md: 'flex-start' },
+              borderRadius: '20px', 
+              background: '#b1ded951',
+              backdropFilter: 'blur(40px)'
+
             }}
           >
-            <Typography variant="h5" gutterBottom>
+            <Typography variant="h5" gutterBottom sx={{ fontWeight: 'bold' }}>
               Mantente actualizado
             </Typography>
             <Typography variant="body1" gutterBottom>
@@ -96,12 +102,10 @@ const Ofrecemos = () => {
             <AlignLeftTypography variant="body1" gutterBottom sx={{ fontWeight: 'bold' }}>
               ¡La innovación no espera, y tú tampoco deberías hacerlo!
             </AlignLeftTypography>
-            <CustomButton>
-              IMAGEN ILUSTRATIVA
-            </CustomButton>
+
           </Paper>
         </Grid>
-        <Grid item xs={12} md={6}>
+        <Grid item xs={12} md={7}>
           <Paper
             elevation={3}
             sx={{
@@ -111,9 +115,12 @@ const Ofrecemos = () => {
               justifyContent: 'space-between',
               height: '100%',
               alignItems: { xs: 'center', md: 'flex-start' },
+              borderRadius: '20px', 
+              background: '#b1ded951',
+              backdropFilter: 'blur(40px)'
             }}
           >
-            <Typography variant="h5" gutterBottom>
+            <Typography variant="h5" gutterBottom sx={{ fontWeight: 'bold' }}>
               Gana puntos y compite con tus amigos
             </Typography>
             <Typography variant="body1" gutterBottom>
@@ -122,9 +129,6 @@ const Ofrecemos = () => {
             <AlignLeftTypography variant="body1" gutterBottom sx={{ fontWeight: 'bold' }}>
               ¡Empieza ahora y alcanza la cima!
             </AlignLeftTypography>
-            <CustomButton>
-              IMAGEN ILUSTRATIVA
-            </CustomButton>
           </Paper>
         </Grid>
       </Grid>
