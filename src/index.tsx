@@ -8,19 +8,31 @@ import {
 } from "react-router-dom";
 import LandingView from './Views/landing/LandingView';
 import AdminView from './Views/admin/AdminView';
-import AdminDashboard from './Components/Models/Admin/Dashboard';
+import AdminDashboard from './Views/admin/AdminDashboard';
+import StudentsView from './Views/students/StudentsView';
+import StudentsDashboard from './Views/students/StudentsDashboard';
 const router = createBrowserRouter([
   {
     path: "/",
     element: <LandingView />,
   },
   {
-    path: "/admin",
+    path: "/administrador",
     element: <AdminView />,
     children: [
       {
-        path: "/admin/dashboard",
+        path: "/administrador/dashboard",
         element: <AdminDashboard />,
+      },
+    ],
+  },
+  {
+    path: "/estudiantes",
+    element: <StudentsView />,
+    children: [
+      {
+        path: "/estudiantes/dashboard",
+        element: <StudentsDashboard />,
       },
     ],
   },

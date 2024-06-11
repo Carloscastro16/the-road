@@ -1,6 +1,6 @@
 import { Box } from "@mui/material";
 
-export default function AdminDashboard(){
+export default function AdminIndicators(){
     return (
         <Box sx={{
             width: '100%',
