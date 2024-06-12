@@ -2,6 +2,9 @@ import React from 'react';
 import { Box, Button, Grid, Typography, Paper } from '@mui/material';
 import { styled } from '@mui/system';
 import Img from '../../../assets/Img/Codigo.png';
+import Img2 from '../../../assets/images/Vector.png';
+import Img3 from '../../../assets/images/Vector2.png';
+
 
 const ImageContainer = styled('div')(({ theme }) => ({
   backgroundImage: `url(${Img})`, 
@@ -93,6 +96,7 @@ const Ofrecemos = () => {
 
             }}
           >
+            <img src={Img2} alt="Icono" style={{ width: '50px', marginBottom: '16px' }} />
             <Typography variant="h5" gutterBottom sx={{ fontWeight: 'bold' }}>
               Mantente actualizado
             </Typography>
@@ -120,6 +124,7 @@ const Ofrecemos = () => {
               backdropFilter: 'blur(40px)'
             }}
           >
+             <img src={Img3} alt="Icono" style={{ width: '50px', marginBottom: '16px' }} />
             <Typography variant="h5" gutterBottom sx={{ fontWeight: 'bold' }}>
               Gana puntos y compite con tus amigos
             </Typography>

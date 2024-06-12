@@ -27,7 +27,7 @@ const Header = () => {
 
   return (
     <>
-      <AppBar position="static" sx={{ backgroundColor: 'transparent', color: 'black' }}>
+      <AppBar position="static" sx={{ backgroundColor: 'transparent', color: 'black', boxShadow: 'none' }}>
         <Toolbar>
           <Hidden mdUp>
             <IconButton edge="start" color="inherit" aria-label="menu" onClick={handleDrawerToggle}>
