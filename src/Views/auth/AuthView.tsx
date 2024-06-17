@@ -8,7 +8,7 @@ const LoginPage: React.FC = () => {
 
   const handleLogin = () => {
     login();
-    navigate('/estudiantes/dashboard');
+    navigate('/administrador/dashboard');
   };
 
   return (

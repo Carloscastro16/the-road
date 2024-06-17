@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { AppBar, Toolbar, IconButton, Typography, Box, Button, Drawer, List, ListItem, ListItemText, Hidden } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
+import { Link } from 'react-router-dom';
+
+
 
 const Header = () => {
   const [drawerOpen, setDrawerOpen] = useState(false);
@@ -18,7 +21,9 @@ const Header = () => {
       <List>
         {['Explora', 'Productos', 'Para Desarrolladores', 'Inicia Sesión', 'Únete'].map((text) => (
           <ListItem button key={text}>
-            <ListItemText primary={text} />
+            <ListItemText>
+              <Link to={'/login'}></Link>
+            </ListItemText>
           </ListItem>
         ))}
       </List>
@@ -48,7 +53,9 @@ const Header = () => {
             </Box>
             <Box>
               <Button color="inherit">Inicia Sesión</Button>
-              <Button color="inherit">Únete</Button>
+              <Link to={'/login'}>
+                <Button color="inherit">Únete</Button>
+              </Link>
             </Box>
           </Hidden>
         </Toolbar>
