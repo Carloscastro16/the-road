@@ -65,7 +65,8 @@ const GenresDataTable: React.FC = () => {
   const handleDelete = async (id: string) => {
     try {
       const response = await genreService.deleteGenreById(id);
-      setGenre((prevActivities) => prevActivities.filter((activity) => activity._id !== id));
+      /* setGenre((prevActivities) => prevActivities.filter((activity) => activity._id !== id)); */
+      getGenres();
       return response
     } catch (error) {
       console.error('Error eliminando actividad:', error);

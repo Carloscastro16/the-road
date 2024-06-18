@@ -23,6 +23,7 @@ export interface User {
     password?: string,
     rolename: string,
     creationDate: string;
+    points: number;
 }
 
 // Noticias
