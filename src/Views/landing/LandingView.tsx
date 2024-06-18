@@ -4,9 +4,11 @@ import OfferSection from "../../Components/Models/Landing/OfferSection";
 import AboutUsSection from "../../Components/Models/Landing/AboutUsSection";
 import Footer from "../../Components/Models/Landing/Footer";
 
+
 export default function LandingView(){
     return ( 
         <>
+
         <Navbar></Navbar>
         <Presentacion></Presentacion>
         <OfferSection></OfferSection>
