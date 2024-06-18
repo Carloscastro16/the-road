@@ -1,3 +1,4 @@
+import React from "react"
 import { Box, Button, Stack, Typography } from "@mui/material"
 import { useState } from "react"
 import expand from '../../../assets/icons/expand.png'
@@ -205,7 +206,7 @@ export default function ActivitiesList() {
                 }}>
                     {languages.slice(0, limit).map((language, index) => {
                         return (
-                            <Stack flexDirection={'row'} gap={'6px'} alignItems={'center'} sx={{
+                            <Stack key={index} flexDirection={'row'} gap={'6px'} alignItems={'center'} sx={{
                                 border: '1px solid #49437B',
                                 borderRadius: '24px',
                                 py: '8px',

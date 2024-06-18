@@ -6,8 +6,6 @@ import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import List from '@mui/material/List';
 import CssBaseline from '@mui/material/CssBaseline';
-import Typography from '@mui/material/Typography';
-import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
@@ -18,17 +16,45 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
-import { Breadcrumbs } from '@mui/material';
-import { Link } from 'react-router-dom';
-
+import { Breadcrumbs, capitalize } from '@mui/material';
+import { Link, useLocation } from 'react-router-dom';
+import dashboard from '../../../assets/icons/Home.png'
+import roads from '../../../assets/icons/My-Activities.png'
+import activities from '../../../assets/icons/Activities.png'
+import myActivities from '../../../assets/icons/Activities2.png'
 const mainItems = [
-    'Dashboard',
-    'Rutas',
-    'Actividades',
-    'Usuarios',
-    'Generos',
-    'Mi perfil'
+    {
+        route: 'dashboard',
+        text: 'Dashboard',
+        img: dashboard
+    },
+    {
+        text: 'Rutas',
+        route: 'rutas',
+        img: roads
+    },
+    {
+        text: 'Actividades',
+        route: 'actividades',
+        img: activities
+    },
+    {
+        text: 'Generos',
+        route: 'generos',
+        img: myActivities
+    },
+    {
+        text: 'Usuarios',
+        route: 'usuarios',
+        img: myActivities
+    },
+    {
+        text: 'Perfil',
+        route: 'perfil',
+        img: myActivities
+    },
 ];
+
 const drawerWidth = 240;
 
 const openedMixin = (theme: Theme): CSSObject => ({
@@ -103,7 +129,8 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 export default function AdminSidebar() {
     const theme = useTheme();
     const [open, setOpen] = React.useState(false);
-
+    const location = useLocation();
+    const pathnames = location.pathname.split('/').filter((x) => x);
     const handleDrawerOpen = () => {
         setOpen(true);
     };
@@ -134,15 +161,15 @@ export default function AdminSidebar() {
                         <MenuIcon />
                     </IconButton>
                     <Breadcrumbs aria-label="breadcrumb">
-                        <Link to={'/'}>
-                            MUI
-                        </Link>
-                        <Link
-                            to={'/core'}
-                        >
-                            Core
-                        </Link>
-                        <Typography color="text.primary">Breadcrumbs</Typography>
+                        {
+                            pathnames.map((pathname, index) => {
+                                return (
+                                    <Link key={index} to={pathname}>
+                                        {capitalize(pathname)}
+                                    </Link>
+                                )
+                            })
+                        }
                     </Breadcrumbs>
                 </Toolbar>
             </AppBar>
@@ -155,25 +182,29 @@ export default function AdminSidebar() {
                 <Box sx={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
                     <List sx={{ flexGrow: 1 }}>
                         {mainItems.map((text, index) => (
-                            <ListItem key={text} disablePadding sx={{ display: 'block' }}>
-                                <ListItemButton
-                                    sx={{
-                                        minHeight: 48,
-                                        justifyContent: open ? 'initial' : 'center',
-                                        px: 2.5,
-                                    }}
-                                >
-                                    <ListItemIcon
+                            <ListItem key={index} disablePadding sx={{ display: 'block' }}>
+                                <Link to={text.route}>
+                                    <ListItemButton
                                         sx={{
-                                            minWidth: 0,
-                                            mr: open ? 3 : 'auto',
-                                            justifyContent: 'center',
+                                            minHeight: 48,
+                                            justifyContent: open ? 'initial' : 'center',
+                                            px: 2.5,
                                         }}
                                     >
-                                        {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                                    </ListItemIcon>
-                                    <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
-                                </ListItemButton>
+                                        <ListItemIcon
+                                            sx={{
+                                                minWidth: 0,
+                                                mr: open ? 3 : 'auto',
+                                                justifyContent: 'center',
+                                                height: '24px',
+                                                width: '24px'
+                                            }}
+                                        >
+                                            <img src={text.img} alt="home" width={'100%'} height={'100%'} />
+                                        </ListItemIcon>
+                                        <ListItemText primary={text.text} sx={{ opacity: open ? 1 : 0 }} />
+                                    </ListItemButton>
+                                </Link>
                             </ListItem>
                         ))}
                     </List>

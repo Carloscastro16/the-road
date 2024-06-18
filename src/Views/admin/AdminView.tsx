@@ -1,7 +1,7 @@
 import { Box } from "@mui/material";
 import AdminSidebar from "../../Components/Models/Admin/Sidebar";
 import { Outlet } from "react-router-dom";
-
+import React from "react";
 export default function AdminView(){
     return ( 
         <Box sx={{
@@ -13,6 +13,7 @@ export default function AdminView(){
             <AdminSidebar></AdminSidebar>
             <Box sx={{
                 width: '100%',
+                marginTop: '64px'
             }}>
                 <Outlet></Outlet>
             </Box>
