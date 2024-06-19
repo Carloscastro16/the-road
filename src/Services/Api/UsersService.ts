@@ -1,6 +1,6 @@
 // services/roadService.ts
 import axios from 'axios';
-import { Response } from '../Interfaces/Interfaces';
+import { Response, User } from '../Interfaces/Interfaces';
 
 const API_URL = 'https://the-road-api.onrender.com/api/users';
 
@@ -15,5 +15,21 @@ export const deleteUserById = async (id: string) => {
     return response.data;
   } catch (error) {
     console.error('Error eliminando Usuario:', error);
+  }
+};
+export const createUser = async (body: User) => {
+  try {
+    const response = await axios.post(API_URL + `/createUser`, body);
+    return response.data;
+  } catch (error) {
+    console.error('Error creando Usuario:', error);
+  }
+};
+export const updateUserById = async (body: User) => {
+  try {
+    const response = await axios.put(API_URL + `/updateUserById`, body);
+    return response.data;
+  } catch (error) {
+    console.error('Error Editando Usuario:', error);
   }
 };

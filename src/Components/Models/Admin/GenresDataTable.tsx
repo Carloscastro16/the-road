@@ -1,15 +1,23 @@
 // components/ActivitiesDataTable.tsx
 import React, { useEffect, useState } from 'react';
 import { DataGrid, GridColDef, GridDeleteIcon, GridRenderCellParams } from '@mui/x-data-grid';
-import { Box, IconButton } from '@mui/material';
+import { Box, Dialog, DialogContent, DialogTitle, IconButton } from '@mui/material';
 import { EditNotifications } from '@mui/icons-material';
 import Swal from 'sweetalert2'
 import { Genre } from '../../../Services/Interfaces/Interfaces';
 import * as genreService from '../../../Services/Api/GenresService';
-const GenresDataTable: React.FC = () => {
+import GenreForm from './Forms/GenresForm';
+
+function GenresDataTable({initialData}: any){
+  const emptyGenre: Genre = {
+    _id: '',
+    title: '',
+    cantidad: 0,
+  }
   const [genres, setGenre] = useState<Genre[]>([]);
   const [loading, setLoading] = useState(true);
-
+  const [selectedGenre, setSelectedGenre] = useState<Genre>(emptyGenre);
+  const [open, setOpen] = useState(false);
   const columns: GridColDef[] = [
     { field: '_id', headerName: 'ID', width: 280 },
     { field: 'title', headerName: 'Titulo', width: 210 },
@@ -39,6 +47,28 @@ const GenresDataTable: React.FC = () => {
       ),
     },
   ];
+  const handleClose = () => {
+    setOpen(false);
+    setSelectedGenre(emptyGenre);
+  };
+  const handleEdit = (genre: Genre) => {
+    console.log('Abriendo Modal')
+    setSelectedGenre(genre);
+    setOpen(true);
+    console.log('Genero: ', genre)
+  };
+  const handleFormSubmit = async (data: Genre) => {
+    try {
+      const response = await genreService.updateGenreById(data);
+      console.log(response);
+      handleClose();
+      await getGenres();
+      return response;
+    } catch (error) {
+      console.error('Error updating data:', error);
+    }
+  };
+  
   const confirmDelete = (id: string) => {
     Swal.fire({
       title: '¿Estás seguro?',
@@ -51,7 +81,7 @@ const GenresDataTable: React.FC = () => {
       cancelButtonText: 'Cancelar'
     }).then((result) => {
       if (result.isConfirmed) {
-        console.log('usuario con: ',id)
+        console.log('usuario con: ', id)
         handleDelete(id);
         Swal.fire(
           '¡Eliminado!',
@@ -73,11 +103,6 @@ const GenresDataTable: React.FC = () => {
       throw new Error;
     }
   };
-
-  const handleEdit = (activity: Genre) => {
-    console.log('Editar actividad:', activity);
-    // Aquí podrías abrir un diálogo o navegar a la página de edición
-  };
   const getGenres = async () => {
     try {
       const data = await genreService.fetchGenres();
@@ -94,20 +119,28 @@ const GenresDataTable: React.FC = () => {
   }, []);
 
   return (
-    <Box sx={{
-      width: '100%',
-      padding: '24px',
-      borderRadius: '10px',
-      backgroundColor: '#FFFFFF',
-      overflowX: 'scroll'
-    }}>
-      <DataGrid
-        rows={genres}
-        columns={columns}
-        loading={loading}
-        getRowId={(row) => row._id || ''}
-      />
-    </Box>
+    <>
+      <Box sx={{
+        width: '100%',
+        padding: '24px',
+        borderRadius: '10px',
+        backgroundColor: '#FFFFFF',
+        overflowX: 'scroll'
+      }}>
+        <DataGrid
+          rows={initialData}
+          columns={columns}
+          loading={loading}
+          getRowId={(row) => row._id || ''}
+        />
+      </Box>
+      <Dialog open={open} onClose={handleClose}>
+        <DialogTitle>Editar Genero</DialogTitle>
+        <DialogContent>
+          <GenreForm initialData={selectedGenre} onSubmit={handleFormSubmit} />
+        </DialogContent>
+      </Dialog>
+    </>
   );
 };
 
