@@ -9,10 +9,14 @@ import { fetchGenres } from "../../Services/Api/GenresService";
 const sortUsersByPoints = (users: User[]): User[] => {
     return users.sort((a, b) => b.points - a.points);
 };
+const sortGenresByPoints = (genre: Genre[]): Genre[] => {
+    genre = genre.slice(0,7);
+    return genre.sort((a, b) => a.cantidad - b.cantidad);
+};
+
 export default function AdminDashboard() {
     const [users, setUsers] = useState<User[]>([]);
     const [genres, setGenres] = useState<Genre[]>([]);
-
     const getUsers = async () => {
         try {
             const data = await fetchUsers();
@@ -29,7 +33,8 @@ export default function AdminDashboard() {
         try {
             const data = await fetchGenres();
             const newData = data.data;
-            setGenres(newData);
+            const sortedGenres = sortGenresByPoints(newData);
+            setGenres(sortedGenres);
         } catch (error) {
             console.error('Error fetching roads:', error);
         } finally {
