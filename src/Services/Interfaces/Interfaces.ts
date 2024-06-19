@@ -22,7 +22,7 @@ export interface User {
     email: string,
     password?: string,
     rolename: string,
-    creationDate: string;
+    creationDate: string | Date;
     points: number;
 }
 
@@ -65,5 +65,5 @@ export interface Options {
 export interface Genre{
     _id?: any;
     title: string;
-    count: number;
+    cantidad: number;
 }
