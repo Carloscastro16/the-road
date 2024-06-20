@@ -79,7 +79,7 @@ const Ofrecemos = () => {
           </Paper>
 
         </Grid>
-        <Grid item xs={4} md={4} sx={{ mb: { xs: 6, md: 0 } }}>
+        <Grid item xs={12} md={4} sx={{ mb: { xs: 6, md: 0 } }}>
           <Paper
             elevation={3}
             sx={{
@@ -108,7 +108,7 @@ const Ofrecemos = () => {
 
           </Paper>
         </Grid>
-        <Grid item xs={4} md={7}>
+        <Grid item xs={12} md={8}>
           <Paper
             elevation={3}
             sx={{
