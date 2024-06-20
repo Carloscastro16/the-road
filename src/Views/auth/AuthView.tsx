@@ -68,7 +68,7 @@ const Auth: React.FC = () => {
   const handleSubmitLogin = (e: React.FormEvent) => {
     e.preventDefault();
     login();
-    navigate('/estudiantes/dashboard');
+    navigate('/administrador/dashboard');
   };
 
   const handleSubmitRegister = (e: React.FormEvent) => {

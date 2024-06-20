@@ -1,4 +1,5 @@
-import { Box, Grid } from "@mui/material";
+import React from "react"
+import { Box } from "@mui/material";
 import news1 from '../../../assets/images/news1.png'
 import news2 from '../../../assets/images/news2.png'
 import news3 from '../../../assets/images/news3.png'

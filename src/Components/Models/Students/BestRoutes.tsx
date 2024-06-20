@@ -1,3 +1,4 @@
+import React from "react";
 import { Box, Button, Stack, Typography } from "@mui/material";
 import img1 from '../../../assets/images/amazoncover.png'
 const cardsInfo = [

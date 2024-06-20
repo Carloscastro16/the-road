@@ -6,8 +6,6 @@ import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import List from '@mui/material/List';
 import CssBaseline from '@mui/material/CssBaseline';
-import Typography from '@mui/material/Typography';
-import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
@@ -16,8 +14,6 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import MailIcon from '@mui/icons-material/Mail';
 import { Breadcrumbs, capitalize } from '@mui/material';
 import { Link, useLocation } from 'react-router-dom';
 import dashboard from '../../../assets/icons/Home.png'
@@ -169,7 +165,7 @@ export default function StudentsSidebar() {
             {
               pathnames.map((pathname, index) => {
                 return (
-                  <Link to={pathname}>
+                  <Link key={index} to={pathname}>
                     {capitalize(pathname)}
                   </Link>
                 )
@@ -187,7 +183,7 @@ export default function StudentsSidebar() {
         <Box sx={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
           <List sx={{ flexGrow: 1 }}>
             {mainItems.map((text, index) => (
-              <ListItem key={text.text} disablePadding sx={{ display: 'block' }}>
+              <ListItem key={index} disablePadding sx={{ display: 'block' }}>
                 <Link to={text.route}>
                   <ListItemButton
                     sx={{
@@ -215,7 +211,7 @@ export default function StudentsSidebar() {
           </List>
           <List>
             {endItems.map((text, index) => (
-              <ListItem key={text.text} disablePadding sx={{ display: 'block' }}>
+              <ListItem key={index} disablePadding sx={{ display: 'block' }}>
                 <ListItemButton
                   sx={{
                     minHeight: 48,
