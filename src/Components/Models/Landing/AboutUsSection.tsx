@@ -1,28 +1,36 @@
 import React from 'react';
-import { Box, Typography, Grid, Paper,Button } from '@mui/material';
+import { Box, Grid, Typography, Card, CardMedia, } from '@mui/material';
+import Img1 from '../../../assets/images/Perfil.jpg'; 
 
-function AboutUsSection() {
+const AboutUs = () => {
+  const teamMembers = [
+    { name: 'Carlos Castro', role: 'Backend' },
+    { name: 'Ana Pérez', role: 'Frontend' },
+    { name: 'Luis Gómez', role: 'UI/UX' },
+    { name: 'Marta Díaz', role: 'Full Stack' },
+  ];
+
   return (
-    <Box sx={{ py: 5 }}>
-      <Typography variant="h4" component="h2" textAlign="center" gutterBottom>
+    <Box sx={{ padding: 10 }}>
+      <Typography variant="h3" align="center" gutterBottom>
         ¿Quiénes somos?
       </Typography>
-      <Grid container spacing={3}>
-        {[1, 2, 3, 4].map((item) => (
-          <Grid item xs={12} md={3} key={item}>
-            <Paper sx={{ p: 3, textAlign: 'center' }}>
-              <Typography variant="h6" component="h3">
-                Mantente actualizado
-              </Typography>
-              <Button variant="contained" color="primary">
-                Imagen Ilustrativa
-              </Button>
-            </Paper>
+      <Grid container spacing={2} justifyContent="center">
+        {teamMembers.map((member, index) => (
+          <Grid item xs={6} sm={6} md={3} key={index} sx={{ borderRadius: '10px',}}>
+            <Card sx={{ height: '100%' }}>
+              <CardMedia
+                component="img"
+                image={Img1} 
+                alt={member.name}
+                sx={{ height: { xs: 260, sm: 290, md: 400 }, objectFit: 'cover' ,borderRadius: '10px',}}
+              />
+            </Card>
           </Grid>
         ))}
       </Grid>
     </Box>
   );
-}
+};
 
-export default AboutUsSection;
+export default AboutUs;

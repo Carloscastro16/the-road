@@ -48,5 +48,8 @@
             "bold": false,
             "italic": false
         }
-    ]
+    ],
+    "[typescriptreact]": {
+        "editor.defaultFormatter": "vscode.typescript-language-features"
+    }
 }

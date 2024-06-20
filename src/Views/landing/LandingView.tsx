@@ -5,6 +5,7 @@ import OfferSection from "../../Components/Models/Landing/OfferSection";
 import AboutUsSection from "../../Components/Models/Landing/AboutUsSection";
 import Footer from "../../Components/Models/Landing/Footer";
 
+
 export default function LandingView(){
     const presentacionRef = useRef(null);
     const offerSectionRef = useRef(null);
