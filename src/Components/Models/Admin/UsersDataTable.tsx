@@ -102,7 +102,6 @@ function UsersDataTable({ initialData }: any) {
   const handleEdit = (user: User) => {
     setSelectedUser(user);
     setOpen(true);
-    console.log('Editar usuario:', user);
   };
 
   const getUsers = async () => {

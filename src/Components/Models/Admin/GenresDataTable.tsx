@@ -14,7 +14,7 @@ function GenresDataTable({initialData}: any){
     title: '',
     cantidad: 0,
   }
-  const [genres, setGenre] = useState<Genre[]>([]);
+  const [genres, setGenres] = useState<Genre[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedGenre, setSelectedGenre] = useState<Genre>(emptyGenre);
   const [open, setOpen] = useState(false);
@@ -52,17 +52,15 @@ function GenresDataTable({initialData}: any){
     setSelectedGenre(emptyGenre);
   };
   const handleEdit = (genre: Genre) => {
-    console.log('Abriendo Modal')
     setSelectedGenre(genre);
     setOpen(true);
-    console.log('Genero: ', genre)
   };
   const handleFormSubmit = async (data: Genre) => {
     try {
       const response = await genreService.updateGenreById(data);
       console.log(response);
-      handleClose();
       await getGenres();
+      handleClose();
       return response;
     } catch (error) {
       console.error('Error updating data:', error);
@@ -107,7 +105,7 @@ function GenresDataTable({initialData}: any){
     try {
       const data = await genreService.fetchGenres();
       const newData = data.data;
-      setGenre(newData);
+      setGenres(newData);
     } catch (error) {
       console.error('Error fetching roads:', error);
     } finally {
@@ -115,8 +113,12 @@ function GenresDataTable({initialData}: any){
     }
   };
   useEffect(() => {
-    getGenres();
-  }, []);
+    if(initialData.lenght > 0){
+      setGenres(initialData);
+    }else{
+      getGenres();
+    }
+  }, [genres]);
 
   return (
     <>
@@ -128,7 +130,7 @@ function GenresDataTable({initialData}: any){
         overflowX: 'scroll'
       }}>
         <DataGrid
-          rows={initialData}
+          rows={genres}
           columns={columns}
           loading={loading}
           getRowId={(row) => row._id || ''}

@@ -1,3 +1,4 @@
+import React from 'react';
 import ts from '../../../assets/Img/tsbanner.png'
 import css from '../../../assets/Img/cssbanner.png'
 import html from '../../../assets/Img/htmlbanner.png'
