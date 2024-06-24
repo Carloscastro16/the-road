@@ -115,14 +115,6 @@
   font-family: 'Roboto', sans-serif;
 }
 
-body {
-  background-color: rgba(0, 128, 255, 0.5);
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
-  background-attachment: fixed;
-}
-
 main {
   width: 100%;
   padding: 20px;
@@ -144,7 +136,7 @@ main {
   justify-content: center;
   -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
-  background-color: rgba(48, 112, 113, 0.5);
+  background-color: rgba(34, 63, 63, 0.3);
   border-radius: 30px;
 }
 
@@ -171,9 +163,10 @@ main {
 
 .caja__trasera button {
   padding: 10px 40px;
-  border: 2px solid #fff;
+  border: 1px solid transparent;
+  border-radius: 30px;
   font-size: 14px;
-  background: transparent;
+  background: #25494A;
   font-weight: 600;
   cursor: pointer;
   color: white;
@@ -183,7 +176,7 @@ main {
 
 .caja__trasera button:hover {
   background: #fff;
-  color: #46A2FD;
+  color: #25494A;
 }
 
 /*Formularios*/
@@ -199,12 +192,22 @@ main {
   transition: left 500ms cubic-bezier(0.175, 0.885, 0.320, 1.275);
 }
 
+.contenedor__login-register label {
+  display: block;
+  font-size: 15px;
+  margin: 20px 0 4px 5px;
+  color: #223F3F;
+  font-weight: bold;
+}
+
 .contenedor__login-register form {
   width: 100%;
-  padding: 80px 20px;
-  background: white;
+  padding: 40px 20px;
+  background: #D1DCEE;
   position: absolute;
   border-radius: 20px;
+  box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.555);
+  justify-content: center;
 }
 
 .contenedor__login-register form h2 {
@@ -216,13 +219,12 @@ main {
 
 .contenedor__login-register form input {
   width: 100%;
-  margin-top: 20px;
   padding: 10px;
   border: none;
-  background: #F2F2F2;
+  background: rgba(255, 255, 255, 0.7);
   font-size: 16px;
   outline: none;
-  border-radius: 5px;
+  border-radius: 20px;
 }
 
 .contenedor__login-register form .input-group {
@@ -245,7 +247,8 @@ main {
   cursor: pointer;
   color: white;
   outline: none;
-  border-radius: 5px;
+  border-radius: 20px;
+  margin-left: 30%;
 }
 
 .formulario__login {
@@ -262,33 +265,53 @@ main {
   display: block;
 }
 
+/* Añadir animación de difuminado para dispositivos móviles */
 @media screen and (max-width: 850px) {
-
-main {
+  main {
     margin-top: 50px;
-}
+  }
 
-.caja__trasera {
+  .caja__trasera {
     max-width: 350px;
     height: 300px;
     flex-direction: column;
     margin: auto;
-}
+  }
 
-.caja__trasera div {
+  .caja__trasera div {
     margin: 0px;
     position: absolute;
-}
+  }
 
-/*Formularios*/
-
-.contenedor__login-register {
+  .contenedor__login-register {
     top: -10px;
     left: -5px;
     margin: auto;
-}
+  }
 
-.contenedor__login-register form {
+  .contenedor__login-register form button{
+    margin-left: 60px;
+  }
+
+  .contenedor__login-register form {
     position: relative;
-}
+    transition: opacity 500ms ease-in-out;
+  }
+
+  .formulario__login,
+  .formulario__register {
+    opacity: 0;
+    display: block;
+    transition: opacity 500ms ease-in-out;
+  }
+
+  .formulario__login.active,
+  .formulario__register.active {
+    opacity: 1;
+  }
+
+  .formulario__login:not(.active),
+  .formulario__register:not(.active) {
+    opacity: 0;
+  }
 }
