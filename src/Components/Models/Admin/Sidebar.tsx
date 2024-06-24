@@ -17,11 +17,12 @@ import ListItemText from '@mui/material/ListItemText';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
 import { Breadcrumbs, capitalize } from '@mui/material';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import dashboard from '../../../assets/icons/Home.png'
 import roads from '../../../assets/icons/My-Activities.png'
 import activities from '../../../assets/icons/Activities.png'
 import myActivities from '../../../assets/icons/Activities2.png'
+import { useAuth } from '../../../Services/Auth/AuthProvider';
 const mainItems = [
     {
         route: 'dashboard',
@@ -127,10 +128,17 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 );
 
 export default function AdminSidebar() {
+    const navigate = useNavigate();
+    const { logout } = useAuth();
     const theme = useTheme();
     const [open, setOpen] = React.useState(false);
     const location = useLocation();
     const pathnames = location.pathname.split('/').filter((x) => x);
+    const handleLogout = (e: any) => {
+        e.preventDefault();
+        logout();
+        navigate('/');
+    };
     const handleDrawerOpen = () => {
         setOpen(true);
     };
@@ -209,28 +217,46 @@ export default function AdminSidebar() {
                         ))}
                     </List>
                     <List>
-                        {['Ajustes', 'Cerrar Sesión'].map((text, index) => (
-                            <ListItem key={text} disablePadding sx={{ display: 'block' }}>
-                                <ListItemButton
+                        <ListItem disablePadding sx={{ display: 'block' }}>
+                            <ListItemButton
+                                sx={{
+                                    minHeight: 48,
+                                    justifyContent: open ? 'initial' : 'center',
+                                    px: 2.5,
+                                }}
+                            >
+                                <ListItemIcon
                                     sx={{
-                                        minHeight: 48,
-                                        justifyContent: open ? 'initial' : 'center',
-                                        px: 2.5,
+                                        minWidth: 0,
+                                        mr: open ? 3 : 'auto',
+                                        justifyContent: 'center',
                                     }}
                                 >
-                                    <ListItemIcon
-                                        sx={{
-                                            minWidth: 0,
-                                            mr: open ? 3 : 'auto',
-                                            justifyContent: 'center',
-                                        }}
-                                    >
-                                        {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                                    </ListItemIcon>
-                                    <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
-                                </ListItemButton>
-                            </ListItem>
-                        ))}
+                                    <InboxIcon />
+                                </ListItemIcon>
+                                <ListItemText primary={'Ajustes'} sx={{ opacity: open ? 1 : 0 }} />
+                            </ListItemButton>
+                        </ListItem>
+                        <ListItem disablePadding sx={{ display: 'block' }} onClick={handleLogout}>
+                            <ListItemButton
+                                sx={{
+                                    minHeight: 48,
+                                    justifyContent: open ? 'initial' : 'center',
+                                    px: 2.5,
+                                }}
+                            >
+                                <ListItemIcon
+                                    sx={{
+                                        minWidth: 0,
+                                        mr: open ? 3 : 'auto',
+                                        justifyContent: 'center',
+                                    }}
+                                >
+                                    <MailIcon />
+                                </ListItemIcon>
+                                <ListItemText primary={'Cerrar Sesión'} sx={{ opacity: open ? 1 : 0 }} />
+                            </ListItemButton>
+                        </ListItem>
                     </List>
                 </Box>
             </Drawer>

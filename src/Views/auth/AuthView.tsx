@@ -2,11 +2,12 @@ import React, { useState, useEffect } from 'react';
 import '../../Components/Css/Custom.css'
 import { useAuth } from '../../Services/Auth/AuthProvider';
 import { useNavigate } from 'react-router-dom';
+import { Box } from '@mui/system';
 
 const Auth: React.FC = () => {
   const { login } = useAuth();
   const navigate = useNavigate();
-  const [isLogin, setIsLogin] = useState(true);
+  /* const [isLogin, setIsLogin] = useState(true); */
 
   useEffect(() => {
     const anchoPage = () => {
@@ -31,7 +32,7 @@ const Auth: React.FC = () => {
   }, []);
 
   const handleLogin = () => {
-    setIsLogin(true);
+    /* setIsLogin(true); */
     if (window.innerWidth > 850) {
       document.querySelector('.formulario__login')!.classList.add('active');
       document.querySelector('.formulario__register')!.classList.remove('active');
@@ -48,7 +49,7 @@ const Auth: React.FC = () => {
   };
 
   const handleRegister = () => {
-    setIsLogin(false);
+    /* setIsLogin(false); */
     if (window.innerWidth > 850) {
       document.querySelector('.formulario__register')!.classList.add('active');
       document.querySelector('.formulario__login')!.classList.remove('active');
@@ -78,7 +79,13 @@ const Auth: React.FC = () => {
   };
 
   return (
-    <main>
+    <Box sx={{
+      width: '100%',
+      height: '100vh',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+    }}>
       <div className="contenedor__todo">
         <div className="caja__trasera">
           <div className="caja__trasera-login">
@@ -113,7 +120,7 @@ const Auth: React.FC = () => {
           </form>
         </div>
       </div>
-    </main>
+    </Box>
   );
 };
 
