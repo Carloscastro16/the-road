@@ -613,3 +613,6 @@ code {
 .join-button:hover {
   background-color: #21867a;
 }
+.myRoads-img{
+  object-fit: cover;
+}

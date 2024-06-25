@@ -7,14 +7,11 @@ import Toolbar from '@mui/material/Toolbar';
 import List from '@mui/material/List';
 import CssBaseline from '@mui/material/CssBaseline';
 import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import { Breadcrumbs, capitalize } from '@mui/material';
+import { Breadcrumbs, Button, capitalize } from '@mui/material';
 import { Link, useLocation } from 'react-router-dom';
 import dashboard from '../../../assets/icons/Home.png'
 import roads from '../../../assets/icons/My-Activities.png'
@@ -144,7 +141,8 @@ export default function StudentsSidebar() {
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
       <AppBar position="fixed" open={open} sx={{
-        backgroundColor: 'white'
+        backgroundColor: 'white',
+        boxShadow: 'none',
       }}>
         <Toolbar sx={{
           background: 'white'
@@ -154,12 +152,13 @@ export default function StudentsSidebar() {
             onClick={handleDrawerOpen}
             edge="start"
             sx={{
+              fontSize: '16px',
               color: 'black',
               marginRight: 5,
               ...(open && { display: 'none' }),
             }}
           >
-            <MenuIcon />
+            LOGO
           </IconButton>
           <Breadcrumbs aria-label="breadcrumb">
             {
@@ -174,13 +173,21 @@ export default function StudentsSidebar() {
           </Breadcrumbs>
         </Toolbar>
       </AppBar>
-      <Drawer variant="permanent" open={open}>
-        <DrawerHeader>
-          <IconButton onClick={handleDrawerClose}>
-            {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
-          </IconButton>
+      <Drawer variant="permanent" open={open} sx={{
+        background: '#4ba6a8'
+      }}>
+        <DrawerHeader sx={{
+          background: '#4ba6a8',
+        }}>
+          <Button onClick={handleDrawerClose} sx={{
+            width: '100%',
+            color: 'white',
+            fontSize: '30px'
+          }}>
+            LOGO
+          </Button>
         </DrawerHeader>
-        <Box sx={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
+        <Box sx={{ display: 'flex', flexDirection: 'column', height: '100%', background: '#4ba6a8' }}>
           <List sx={{ flexGrow: 1 }}>
             {mainItems.map((text, index) => (
               <ListItem key={index} disablePadding sx={{ display: 'block' }}>
@@ -203,7 +210,7 @@ export default function StudentsSidebar() {
                     >
                       <img src={text.img} alt="home" width={'100%'} height={'100%'} />
                     </ListItemIcon>
-                    <ListItemText primary={text.text} sx={{ opacity: open ? 1 : 0 }} />
+                    <ListItemText primary={text.text} sx={{ opacity: open ? 1 : 0, color: 'white' }} />
                   </ListItemButton>
                 </Link>
               </ListItem>
