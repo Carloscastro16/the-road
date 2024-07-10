@@ -6,7 +6,8 @@ export default function StudentsActivities(){
     return (
         <Grid container spacing={2} sx={{
             paddingInline: '42px',
-            mt: '32px'
+            mt: '32px',
+            width: '100%',
         }}>
             <Grid item xs={12} >
                 <ActivitiesList></ActivitiesList>

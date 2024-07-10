@@ -256,7 +256,8 @@ export default function ActivitiesList() {
                 gap: '32px',
                 flexWrap: 'wrap',
                 mt: '24px',
-                mb: '32px'
+                mb: '32px',
+                justifyContent: 'center',
             }}>
                 {activitiesInfo.map((card, index) => {
                     return (
@@ -268,8 +269,7 @@ export default function ActivitiesList() {
                             justifyContent: 'flex-start',
                             gap: '20px',
                             borderRadius: '8px',
-                            background: 'white',
-                            width: '380px'
+                            background: 'white'
                         }} key={index}>
                             <Box sx={{
                                 width: '104px',

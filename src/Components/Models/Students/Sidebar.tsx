@@ -16,8 +16,8 @@ import { Link, useLocation } from 'react-router-dom';
 import dashboard from '../../../assets/icons/Home.png'
 import roads from '../../../assets/icons/My-Activities.png'
 import activities from '../../../assets/icons/Activities.png'
-import myActivities from '../../../assets/icons/Activities2.png'
 import logout from '../../../assets/icons/Log-out.png'
+import { useAuth } from '../../../Services/Auth/AuthProvider';
 
 const mainItems = [
   {
@@ -34,11 +34,6 @@ const mainItems = [
     text: 'Actividades',
     route: 'actividades',
     img: activities
-  },
-  {
-    text: 'Mis Actividades',
-    route: 'misactividades',
-    img: myActivities
   }
 ];
 const endItems = [
@@ -125,6 +120,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 );
 
 export default function StudentsSidebar() {
+  const { logout } = useAuth();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
   const location = useLocation();

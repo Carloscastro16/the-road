@@ -6,6 +6,9 @@ export interface RoadData {
     easyDescription: string;
     fullDescription: string;
     activities: Activity[];
+    duration: string;
+    punctuation: number;
+    img: string;
 }
 export interface Activity {
     _id?: any;

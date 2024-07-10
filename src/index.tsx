@@ -20,6 +20,7 @@ import AdminUsers from './Views/admin/AdminUsers';
 import AdminGenres from './Views/admin/AdminGenres';
 import StudentsRoads from './Views/students/StudentsRoads';
 import StudentsActivities from './Views/students/StudentsActivities';
+import IndividualRoads from './Views/students/IndividualRoads';
 
 const router = createBrowserRouter([
   {
@@ -85,6 +86,10 @@ const router = createBrowserRouter([
           {
             path: 'rutas',
             element: <StudentsRoads />,
+          },
+          {
+            path: 'rutas/:routeId',
+            element: <IndividualRoads />,
           },
           {
             path: 'perfil',

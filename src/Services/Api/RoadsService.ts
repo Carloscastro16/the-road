@@ -9,6 +9,11 @@ export const fetchRoads = async (): Promise<Response> => {
   console.log(response);
   return response.data;
 };
+export const fetchRoadById = async (id: string): Promise<Response> => {
+  const response = await axios.get(API_URL + `/getRoadById/${id}`);
+  console.log(response);
+  return response.data;
+};
 export const deleteRoadsById = async (id: string) => {
   try {
     const response = await axios.delete(API_URL + `/deleteRoadById/${id}`);

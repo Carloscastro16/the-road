@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Box, Button, Stack, Typography } from "@mui/material";
-import img1 from '../../../assets/images/amazoncover.png'
+import img1 from '../../../assets/images/amazoncover.png';
+import { RoadData } from "@/Services/Interfaces/Interfaces";
+import *  as roadsService from '../../../Services/Api/RoadsService';
 const cardsInfo = [
     {
         _id: 'holas',
@@ -84,6 +86,22 @@ const cardsInfo = [
     },
 ]
 export default function BestRoutes() {
+    const [roads, setRoads] = useState<RoadData[]>([]);
+    const getRoads = async () => {
+        try {
+            const data = await roadsService.fetchRoads();
+            console.log(data);
+            setRoads(data.data);
+        } catch (error) {
+            console.error('Error fetching roads:', error);
+        } finally {
+            console.log('data');
+        }
+    };
+    useEffect(() => {
+
+        getRoads();
+    }, []);
     return (
         <Box>
             <Stack width={'100%'} flexDirection={'row'} alignItems={'center'} justifyContent={'space-between'} mb={'28px'}>
@@ -111,8 +129,9 @@ export default function BestRoutes() {
                 flexDirection: 'row',
                 gap: '32px',
                 flexWrap: 'wrap',
+                justifyContent: 'center'
             }}>
-                {cardsInfo.slice(0, 6).map((card, index) => {
+                {roads.slice(0, 6).map((card, index) => {
                     return (
                         <Box sx={{
                             p: '10px',
@@ -122,8 +141,7 @@ export default function BestRoutes() {
                             justifyContent: 'flex-start',
                             gap: '20px',
                             borderRadius: '8px',
-                            background: 'white',
-                            width: '380px'
+                            background: 'white'
                         }} key={index}>
                             <Box sx={{
                                 width: '104px',
