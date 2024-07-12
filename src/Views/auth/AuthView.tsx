@@ -3,11 +3,12 @@ import '../../Components/Css/Custom.css'
 import { useAuth } from '../../Services/Auth/AuthProvider';
 import { useNavigate } from 'react-router-dom';
 import { Box } from '@mui/system';
+import { RenderFacebookLogin } from '../../Services/Auth/Facebook';
 
 const Auth: React.FC = () => {
   const { login } = useAuth();
   const navigate = useNavigate();
-  /* const [isLogin, setIsLogin] = useState(true); */
+  const [showFacebookLogin, setShowFacebookLogin] = useState(false);
 
   useEffect(() => {
     const anchoPage = () => {
@@ -32,7 +33,6 @@ const Auth: React.FC = () => {
   }, []);
 
   const handleLogin = () => {
-    /* setIsLogin(true); */
     if (window.innerWidth > 850) {
       document.querySelector('.formulario__login')!.classList.add('active');
       document.querySelector('.formulario__register')!.classList.remove('active');
@@ -49,7 +49,6 @@ const Auth: React.FC = () => {
   };
 
   const handleRegister = () => {
-    /* setIsLogin(false); */
     if (window.innerWidth > 850) {
       document.querySelector('.formulario__register')!.classList.add('active');
       document.querySelector('.formulario__login')!.classList.remove('active');
@@ -105,6 +104,11 @@ const Auth: React.FC = () => {
             <input type="text" placeholder="Correo Electronico" />
             <input type="password" placeholder="Contraseña" />
             <button type="submit">Entrar</button>
+            <RenderFacebookLogin></RenderFacebookLogin>
+            <button id="google-login" className="google-login">
+              <img src="path-to-google-icon.png" alt="Google Logo" />
+              <span>Continue with Google</span>
+            </button>
           </form>
           <form onSubmit={handleSubmitRegister} className="formulario__register">
             <h2>Únete</h2>

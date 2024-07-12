@@ -280,3 +280,41 @@ main {
     position: relative;
 }
 }
+/* LoginButtons.css */
+
+.login-buttons {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 10px !important;
+  width: 100% !important;
+}
+
+#fb-login {
+  width: 100% !important;
+  display: flex !important;
+  align-items: center !important;
+  border: 1px solid transparent !important;
+  cursor: pointer !important;
+  transition: background-color 0.218s, border-color 0.218s, box-shadow 0.218s !important;
+  padding: 10px !important;
+  border-radius: 5px !important;
+  background-color: #eadada !important;
+  color: #000000 !important;
+}
+
+#fb-login img {
+  height: 24px !important;
+  margin-right: 10px !important;
+}
+
+#fb-login span {
+  flex: 1 !important;
+  text-align: center !important;
+  font-size: 16px !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.21px !important;
+}
+
+#fb-login:hover {
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2) !important;
+}
