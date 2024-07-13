@@ -8,7 +8,6 @@ import { RenderFacebookLogin } from '../../Services/Auth/Facebook';
 const Auth: React.FC = () => {
   const { login } = useAuth();
   const navigate = useNavigate();
-  const [showFacebookLogin, setShowFacebookLogin] = useState(false);
 
   useEffect(() => {
     const anchoPage = () => {
@@ -68,7 +67,7 @@ const Auth: React.FC = () => {
   const handleSubmitLogin = (e: React.FormEvent) => {
     e.preventDefault();
     login();
-    navigate('/estudiantes/dashboard');
+    navigate('/administrador/dashboard');
   };
 
   const handleSubmitRegister = (e: React.FormEvent) => {
