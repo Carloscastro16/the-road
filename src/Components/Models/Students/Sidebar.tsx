@@ -12,11 +12,11 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import { Breadcrumbs, Button, capitalize } from '@mui/material';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import dashboard from '../../../assets/icons/Home.png'
 import roads from '../../../assets/icons/My-Activities.png'
 import activities from '../../../assets/icons/Activities.png'
-import logout from '../../../assets/icons/Log-out.png'
+import logoutImg from '../../../assets/icons/Log-out.png'
 import { useAuth } from '../../../Services/Auth/AuthProvider';
 
 const mainItems = [
@@ -34,18 +34,6 @@ const mainItems = [
     text: 'Actividades',
     route: 'actividades',
     img: activities
-  }
-];
-const endItems = [
-  {
-    text: 'Perfil',
-    route: '/dashboard',
-    img: logout
-  },
-  {
-    text: 'Cerrar Sesión',
-    route: '/dashboard',
-    img: logout
   }
 ];
 const drawerWidth = 240;
@@ -120,11 +108,17 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 );
 
 export default function StudentsSidebar() {
+  const navigate = useNavigate();
   const { logout } = useAuth();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
   const location = useLocation();
   const pathnames = location.pathname.split('/').filter((x) => x);
+  const handleLogout = (e: any) => {
+    e.preventDefault();
+    logout();
+    navigate('/');
+};
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -170,10 +164,10 @@ export default function StudentsSidebar() {
         </Toolbar>
       </AppBar>
       <Drawer variant="permanent" open={open} sx={{
-        background: '#4ba6a8'
+        background: '#fff'
       }}>
         <DrawerHeader sx={{
-          background: '#4ba6a8',
+          background: '#fff',
         }}>
           <Button onClick={handleDrawerClose} sx={{
             width: '100%',
@@ -183,7 +177,7 @@ export default function StudentsSidebar() {
             LOGO
           </Button>
         </DrawerHeader>
-        <Box sx={{ display: 'flex', flexDirection: 'column', height: '100%', background: '#4ba6a8' }}>
+        <Box sx={{ display: 'flex', flexDirection: 'column', height: '100%', background: '#fff' }}>
           <List sx={{ flexGrow: 1 }}>
             {mainItems.map((text, index) => (
               <ListItem key={index} disablePadding sx={{ display: 'block' }}>
@@ -206,15 +200,14 @@ export default function StudentsSidebar() {
                     >
                       <img src={text.img} alt="home" width={'100%'} height={'100%'} />
                     </ListItemIcon>
-                    <ListItemText primary={text.text} sx={{ opacity: open ? 1 : 0, color: 'white' }} />
+                    <ListItemText primary={text.text} sx={{ opacity: open ? 1 : 0, color: 'black' }} />
                   </ListItemButton>
                 </Link>
               </ListItem>
             ))}
           </List>
           <List>
-            {endItems.map((text, index) => (
-              <ListItem key={index} disablePadding sx={{ display: 'block' }}>
+              <ListItem disablePadding sx={{ display: 'block' }}>
                 <ListItemButton
                   sx={{
                     minHeight: 48,
@@ -231,12 +224,34 @@ export default function StudentsSidebar() {
                       width: '24px'
                     }}
                   >
-                    <img src={text.img} alt={text.text} width={'100%'} height={'100%'} />
+                    <img src={logoutImg} alt={'logout'} width={'100%'} height={'100%'} />
                   </ListItemIcon>
-                  <ListItemText primary={text.text} sx={{ opacity: open ? 1 : 0 }} />
+                  <ListItemText primary={'Perfil'} sx={{ opacity: open ? 1 : 0 }} />
                 </ListItemButton>
               </ListItem>
-            ))}
+              <ListItem disablePadding sx={{ display: 'block' }} onClick={handleLogout}>
+                <ListItemButton
+                  sx={{
+                    minHeight: 48,
+                    justifyContent: open ? 'initial' : 'center',
+                    px: 2.5,
+                  }}
+                >
+                  <ListItemIcon
+                    sx={{
+                      minWidth: 0,
+                      mr: open ? 3 : 'auto',
+                      justifyContent: 'center',
+                      height: '24px',
+                      width: '24px'
+                    }}
+                  >
+                    <img src={logoutImg} alt={'logout'} width={'100%'} height={'100%'} />
+                  </ListItemIcon>
+                  <ListItemText primary={'Logout'} sx={{ opacity: open ? 1 : 0 }} />
+                </ListItemButton>
+              </ListItem>
+              
           </List>
         </Box>
       </Drawer>

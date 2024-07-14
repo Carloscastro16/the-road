@@ -20,7 +20,6 @@ const RoadsDataTable: React.FC = () => {
     {
       field: 'activities', headerName: 'Activities', width: 200,
       valueGetter: ((params: Activity[]) => {
-        console.log(params);
         const value = params.map((activity: Activity) => activity.title).join(', ')
         return value
       })
@@ -59,13 +58,11 @@ const RoadsDataTable: React.FC = () => {
   };
 
   const handleEdit = (road: RoadData) => {
-    console.log('info: ', road)
     /* setSelectedUser(user); */
   };
   const getRoads = async () => {
     try {
       const data = await fetchRoads();
-      console.log(data);
       setRoads(data.data);
     } catch (error) {
       console.error('Error fetching roads:', error);

@@ -40,7 +40,7 @@ const Header: React.FC<HeaderProps> = ({ scrollToSection, presentacionRef, offer
         </ListItem>
         <ListItem >
           <ListItemText>
-            <Link to={'/join'}>Únete</Link>
+            <Link to={'/login'}>Únete</Link>
           </ListItemText>
         </ListItem>
       </List>
@@ -69,7 +69,9 @@ const Header: React.FC<HeaderProps> = ({ scrollToSection, presentacionRef, offer
               <Button color="inherit" onClick={() => scrollToSection(aboutUsSectionRef)}>Para Desarrolladores</Button>
             </Box>
             <Box>
-              <Button color="inherit">Inicia Sesión</Button>
+              <Link to={'/login'}>
+                <Button color="inherit">Inicia Sesión</Button>
+              </Link>
               <Link to={'/login'}>
                 <Button color="inherit">Únete</Button>
               </Link>

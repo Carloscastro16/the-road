@@ -1,3 +1,5 @@
+import { InputLabel, MenuItem, Select } from '@mui/material';
+import { Box } from '@mui/system';
 import React, { useState } from 'react';
 
 interface Option {
@@ -14,7 +16,7 @@ interface Question {
     image?: string;
 }
 
-const CreateActivitie: React.FC = () => {
+const CreateActivity: React.FC = () => {
     const [questions, setQuestions] = useState<Question[]>([]);
     const [activityTitle, setActivityTitle] = useState('');
     const [activityDescription, setActivityDescription] = useState('');
@@ -82,7 +84,16 @@ const CreateActivitie: React.FC = () => {
         };
         reader.readAsDataURL(file);
     };
-
+    const handleSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
+        const activityData = {
+            title: activityTitle,
+            description: activityDescription,
+            questions: questions,
+        };
+        console.log('Formulario enviado:', activityData);
+        // Aquí puedes hacer una solicitud a la API para enviar los datos
+    };
     return (
         <div className="activity-container">
             <div className="activity-header">
@@ -120,15 +131,18 @@ const CreateActivitie: React.FC = () => {
                             placeholder="Título"
                             className="question-title"
                         />
-                        <select
+                        <InputLabel id="demo-simple-select-label">Tipo de pregunta</InputLabel>
+                        <Select
+                            labelId="demo-simple-select-label"
+                            id="demo-simple-select"
                             value={question.type}
+                            label="Age"
                             onChange={(e) => handleTypeChange(index, e.target.value as 'options' | 'order' | 'image-options')}
-                            className="question-type"
                         >
-                            <option value="options">Opciones</option>
-                            <option value="order">Ordenar</option>
-                            <option value="image-options">Opciones con imagen</option>
-                        </select>
+                            <MenuItem value={'options'}>Opciones</MenuItem>
+                            <MenuItem value={'order'}>Ordenar</MenuItem>
+                            <MenuItem value={'image-options'}>Opciones con imagen</MenuItem>
+                        </Select>
                     </div>
                     <div className="description-container">
                         <label htmlFor={`question-description-${index}`}>Descripción</label>
@@ -192,20 +206,13 @@ const CreateActivitie: React.FC = () => {
                         </div>
                     )}
                     {question.type === 'image-options' && (
-                        <div className="question-options-with-image">
-                            <div className="question-options-column">
-                                <div className="description-container">
-                                    <label htmlFor={`question-description-${index}`}>Descripción</label>
-                                    <label htmlFor={`question-description-${index}`} className="char-counter">{question.description?.length || 0}/150</label>
-                                    <textarea
-                                        id={`question-description-${index}`}
-                                        value={question.description || ''}
-                                        onChange={(e) => handleDescriptionChange(index, e.target.value)}
-                                        placeholder="Descripción"
-                                        maxLength={150}
-                                        className="question-description"
-                                    ></textarea>
-                                </div>
+                        <Box sx={{
+                            display: 'flex',
+                            flexDirection: 'column',
+                        }} className="question-options-with-image">
+                            <Box sx={{
+                                width: '100%',
+                            }} className="question-options">
                                 <label className="option-label">Opciones</label>
                                 {question.options?.map((option, idx) => (
                                     <div key={idx} className="option">
@@ -224,24 +231,33 @@ const CreateActivitie: React.FC = () => {
                                     </div>
                                 ))}
                                 <button className="add-option" onClick={() => addOption(index)}>Nueva opción +</button>
-                            </div>
-                            <div className="question-image-upload">
-                                {question.image && <img src={question.image} alt="Vista previa de la imagen" className="image-preview" />}
-                            </div>
-                            <input 
-                                type="file" 
-                                id={`upload-${index}`}
-                                className="upload-image" 
-                                onChange={(e) => handleImageUpload(index, e.target.files![0])} 
-                            />
-                        </div>
+                            </Box>
+                            <Box sx={{
+                                width: '100%',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                flexDirection: 'column'
+                            }}>
+                                <div className="question-image-upload">
+                                    {question.image && <img src={question.image} alt="Vista previa de la imagen" className="image-preview" />}
+                                </div>
+                                <input
+                                    type="file"
+                                    id={`upload-${index}`}
+                                    className="upload-image"
+                                    onChange={(e) => handleImageUpload(index, e.target.files![0])}
+                                />
+                            <label htmlFor={`upload-${index}`} className="upload-image-button">Subir imagen</label>
+                            </Box>
+                        </Box>
                     )}
-                    <label htmlFor={`upload-${index}`} className="upload-image-button">Subir imagen</label>
                 </div>
             ))}
             <button className="add-question" onClick={addQuestion}>Nueva pregunta +</button>
+            <button className="add-question" onClick={handleSubmit}>Enviar</button>
         </div>
     );
 };
 
-export default CreateActivitie;
+export default CreateActivity;

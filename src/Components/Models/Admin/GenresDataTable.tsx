@@ -1,23 +1,24 @@
-// components/ActivitiesDataTable.tsx
 import React, { useEffect, useState } from 'react';
-import { DataGrid, GridColDef, GridDeleteIcon, GridRenderCellParams } from '@mui/x-data-grid';
+import { DataGrid, GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
 import { Box, Dialog, DialogContent, DialogTitle, IconButton } from '@mui/material';
-import { EditNotifications } from '@mui/icons-material';
-import Swal from 'sweetalert2'
+import { EditNotifications, Delete as DeleteIcon } from '@mui/icons-material';
+import Swal from 'sweetalert2';
 import { Genre } from '../../../Services/Interfaces/Interfaces';
 import * as genreService from '../../../Services/Api/GenresService';
 import GenreForm from './Forms/GenresForm';
 
-function GenresDataTable({initialData}: any){
+function GenresDataTable({ initialData }: any) {
   const emptyGenre: Genre = {
     _id: '',
     title: '',
     cantidad: 0,
-  }
-  const [genres, setGenres] = useState<Genre[]>([]);
+  };
+  const [genres, setGenres] = useState<Genre[]>(initialData || []);
   const [loading, setLoading] = useState(true);
   const [selectedGenre, setSelectedGenre] = useState<Genre>(emptyGenre);
   const [open, setOpen] = useState(false);
+  const [forceRender, setForceRender] = useState(0); // Estado para forzar la re-renderización
+
   const columns: GridColDef[] = [
     { field: '_id', headerName: 'ID', width: 280 },
     { field: 'title', headerName: 'Titulo', width: 210 },
@@ -35,38 +36,38 @@ function GenresDataTable({initialData}: any){
           >
             <EditNotifications />
           </IconButton>
-          {/* Asumiendo que handleDelete está implementado correctamente */}
           <IconButton
             onClick={() => confirmDelete(params.row._id)}
             color="secondary"
             aria-label="delete"
           >
-            <GridDeleteIcon />
+            <DeleteIcon />
           </IconButton>
         </>
       ),
     },
   ];
+
   const handleClose = () => {
     setOpen(false);
     setSelectedGenre(emptyGenre);
   };
+
   const handleEdit = (genre: Genre) => {
     setSelectedGenre(genre);
     setOpen(true);
   };
+
   const handleFormSubmit = async (data: Genre) => {
     try {
-      const response = await genreService.updateGenreById(data);
-      console.log(response);
-      await getGenres();
+      await genreService.updateGenreById(data);
+      await fetchGenres();
       handleClose();
-      return response;
     } catch (error) {
       console.error('Error updating data:', error);
     }
   };
-  
+
   const confirmDelete = (id: string) => {
     Swal.fire({
       title: '¿Estás seguro?',
@@ -79,7 +80,6 @@ function GenresDataTable({initialData}: any){
       cancelButtonText: 'Cancelar'
     }).then((result) => {
       if (result.isConfirmed) {
-        console.log('usuario con: ', id)
         handleDelete(id);
         Swal.fire(
           '¡Eliminado!',
@@ -92,33 +92,33 @@ function GenresDataTable({initialData}: any){
 
   const handleDelete = async (id: string) => {
     try {
-      const response = await genreService.deleteGenreById(id);
-      /* setGenre((prevActivities) => prevActivities.filter((activity) => activity._id !== id)); */
-      getGenres();
-      return response
+      await genreService.deleteGenreById(id);
+      setGenres((prevGenres) => prevGenres.filter((genre) => genre._id !== id));
+      setForceRender((prev) => prev + 1); // Cambia el estado para forzar la re-renderización
     } catch (error) {
       console.error('Error eliminando actividad:', error);
-      throw new Error;
     }
   };
-  const getGenres = async () => {
+
+  const fetchGenres = async () => {
     try {
-      const data = await genreService.fetchGenres();
-      const newData = data.data;
-      setGenres(newData);
+      setLoading(true);
+      const response = await genreService.fetchGenres();
+      setGenres(response.data);
     } catch (error) {
-      console.error('Error fetching roads:', error);
+      console.error('Error fetching genres:', error);
     } finally {
       setLoading(false);
     }
   };
+
   useEffect(() => {
-    if(initialData.lenght > 0){
-      setGenres(initialData);
-    }else{
-      getGenres();
+    if (!initialData || initialData.length === 0) {
+      fetchGenres();
+    } else {
+      setLoading(false);
     }
-  }, [genres]);
+  }, []);
 
   return (
     <>
@@ -130,6 +130,7 @@ function GenresDataTable({initialData}: any){
         overflowX: 'scroll'
       }}>
         <DataGrid
+          key={`data-grid-${forceRender}`} // Agrega la clave para forzar la re-renderización
           rows={genres}
           columns={columns}
           loading={loading}
@@ -144,6 +145,6 @@ function GenresDataTable({initialData}: any){
       </Dialog>
     </>
   );
-};
+}
 
 export default GenresDataTable;

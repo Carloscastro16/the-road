@@ -90,8 +90,7 @@ function UsersDataTable({ initialData }: any) {
   const handleDelete = async (id: string) => {
     try {
       const response = await usersService.deleteUserById(id);
-      /* setGenre((prevActivities) => prevActivities.filter((activity) => activity._id !== id)); */
-      getUsers();
+      await getUsers();
       return response
     } catch (error) {
       console.error('Error eliminando actividad:', error);

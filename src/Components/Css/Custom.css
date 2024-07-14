@@ -558,6 +558,7 @@ main {
   color: #fff;
   transition: border-color 0.3s, background-color 0.3s;
   -webkit-appearance: none;
+  appearance: none;
 }
 
 .order-input:focus {
@@ -574,6 +575,7 @@ main {
 
 .order-input[type='number'] {
   -moz-appearance: textfield;
+  appearance: textfield;
 }
 
 .order-input::placeholder {

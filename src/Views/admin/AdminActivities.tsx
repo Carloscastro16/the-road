@@ -7,7 +7,7 @@ export default function AdminActivities() {
     const navigate = useNavigate();
 
     const crearActividad = () => {
-        navigate('/administrador/crear_actividad');
+        navigate('/administrador/crear-actividad');
     }
 
     return (

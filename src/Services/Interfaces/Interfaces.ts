@@ -5,10 +5,11 @@ export interface RoadData {
     title: string;
     easyDescription: string;
     fullDescription: string;
-    activities: Activity[];
+    activities: string[];
     duration: string;
     punctuation: number;
     img: string;
+    activityDetails: Activity[];
 }
 export interface Activity {
     _id?: any;

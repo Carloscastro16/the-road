@@ -6,6 +6,7 @@ import *  as roadsService from '../../../Services/Api/RoadsService'
 // Import Swiper styles
 import 'swiper/css';
 import { RoadData } from "../../../Services/Interfaces/Interfaces";
+import { Link, useNavigate } from "react-router-dom";
 const cardsInfo = [
     {
         _id: 'holas',
@@ -99,6 +100,7 @@ const cardsInfo = [
     },
 ]
 export default function MyRoads() {
+    const navigate = useNavigate();
     const [roads, setRoads] = useState<RoadData[]>([]);
     const getRoads = async () => {
         try {
@@ -111,6 +113,9 @@ export default function MyRoads() {
             console.log('data');
         }
     };
+    function redirectTo(route: string) {
+        navigate(route);
+    }
     useEffect(() => {
         getRoads();
     }, []);
@@ -147,7 +152,7 @@ export default function MyRoads() {
                     {roads.slice(0, 6).map((card, index) => {
                         return (
                             <SwiperSlide key={index}>
-                                <Box sx={{
+                                <Box onClick={() => { redirectTo(`${card._id}`) }} sx={{
                                     display: 'flex',
                                     alignItems: 'center',
                                     justifyContent: 'center',
@@ -163,14 +168,6 @@ export default function MyRoads() {
                                         backgroundSize: 'cover',
                                         position: 'relative',
                                     }}>
-                                        <Box sx={{
-                                            position: 'absolute',
-                                            bottom: '0',
-                                            width: '80%',
-                                            height: '8px',
-                                            background: '#307071',
-                                            borderRadius: '0px 10px 10px 0',
-                                        }}></Box>
                                     </Box>
                                     <Box sx={{
                                         background: 'white',
@@ -185,6 +182,7 @@ export default function MyRoads() {
                                         }}>
                                             <Typography sx={{
                                                 whiteSpace: 'wrap',
+                                                cursor: 'pointer'
                                             }}>{card.title}</Typography>
                                             <Typography sx={{
                                                 whiteSpace: 'wrap',

@@ -6,12 +6,10 @@ const API_URL = 'https://the-road-api.onrender.com/api/roads';
 
 export const fetchRoads = async (): Promise<Response> => {
   const response = await axios.get(API_URL + '/getAllRoads');
-  console.log(response);
   return response.data;
 };
 export const fetchRoadById = async (id: string): Promise<Response> => {
   const response = await axios.get(API_URL + `/getRoadById/${id}`);
-  console.log(response);
   return response.data;
 };
 export const deleteRoadsById = async (id: string) => {
