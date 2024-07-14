@@ -21,6 +21,7 @@ import AdminGenres from './Views/admin/AdminGenres';
 import StudentsRoads from './Views/students/StudentsRoads';
 import StudentsActivities from './Views/students/StudentsActivities';
 import IndividualRoads from './Views/students/IndividualRoads';
+import CreateActivitie from './Views/admin/AdmintCreateActivities';
 
 const router = createBrowserRouter([
   {
@@ -50,6 +51,10 @@ const router = createBrowserRouter([
           {
             path: 'actividades',
             element: <AdminActivities />,
+          },
+          {
+            path: 'crear_actividad',
+            element: <CreateActivitie />,
           },
           {
             path: 'generos',

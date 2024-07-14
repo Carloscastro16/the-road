@@ -1,9 +1,15 @@
-
 import RoadsDataTable from "../../Components/Models/Admin/RoadsDataTable"
 import { Box, Button, Grid, TextField } from "@mui/material"
 import React from "react"
+import { useNavigate } from "react-router-dom"
 
 export default function AdminActivities() {
+    const navigate = useNavigate();
+
+    const crearActividad = () => {
+        navigate('/administrador/crear_actividad');
+    }
+
     return (
         <Grid container spacing={2} sx={{
             width: '100%',
@@ -31,11 +37,15 @@ export default function AdminActivities() {
                         </Box>
                     </Grid>
                     <Grid item xs={2}>
-                        <Button variant="contained" sx={{
-                            width: "100%",
-                            height: "100%",
-                            fontSize: "24px",
-                        }}>
+                        <Button 
+                            variant="contained" 
+                            sx={{
+                                width: "100%",
+                                height: "100%",
+                                fontSize: "24px",
+                            }}
+                            onClick={crearActividad}
+                        >
                             Agregar
                         </Button>
                     </Grid>
