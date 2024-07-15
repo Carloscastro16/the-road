@@ -12,6 +12,8 @@ import { storage } from "../../Services/Auth/FirebaseAuthProvider";
 
 import * as activityService from '../../Services/Api/ActivitiesService'
 import * as genresService from '../../Services/Api/GenresService'
+import { useNavigate, useParams } from 'react-router-dom';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 interface Option {
     text: string;
     correct?: boolean;
@@ -26,7 +28,9 @@ interface Question {
     image?: string;
 }
 
-const CreateActivity: React.FC = () => {
+const EditActivity: React.FC = () => {
+    const navigate = useNavigate();
+    const { id } = useParams();
     const [questions, setQuestions] = useState<Question[]>([]);
     const [genre, setGenre] = useState<string>('');
     const [genresList, setGenresList] = useState<any[]>([]);
@@ -48,13 +52,15 @@ const CreateActivity: React.FC = () => {
                 .catch(reject);
         });
     };
-    const addQuestion = () => {
-        setQuestions([...questions, { type: 'options', options: [{ text: 'Opción 1', correct: false }] }]);
-    };
+
     const handleChange = (e: SelectChangeEvent) => {
         const { value } = e.target as HTMLInputElement;
         setGenre(value as string);
     };
+    const addQuestion = () => {
+        setQuestions([...questions, { type: 'options', options: [{ text: 'Opción 1', correct: false }] }]);
+    };
+
     const handleTypeChange = (index: number, newType: 'options' | 'order' | 'image-options') => {
         const newQuestions = [...questions];
         newQuestions[index].type = newType;
@@ -133,6 +139,16 @@ const CreateActivity: React.FC = () => {
         console.log(res);
         return res;
     };
+    async function getActivityById(id: string) {
+        const res = await activityService.fetchActivityById(id);
+        console.log(res.data);
+        setQuestions(res.data.questions);
+        setActivityDescription(res.data.description);
+        setActivityTitle(res.data.title);
+    }
+    const handleGoBack = () => {
+        navigate(-1); // Esto te llevará a la página anterior
+    };
     async function fetchGenres(){
         const res = await genresService.fetchGenres();
         console.log(res.data);
@@ -141,10 +157,31 @@ const CreateActivity: React.FC = () => {
     useEffect(()=>{
         fetchGenres();
     },[])
+    useEffect(() => {
+        if (id) {
+            getActivityById(id)
+        }
+    }, []);
     return (
         <Box sx={{
             marginTop: '32px'
         }} className="activity-container">
+            <Box onClick={handleGoBack} sx={{
+                background: '#82C6C1',
+                width: '45px',
+                zIndex: 100,
+                borderRadius: '50%',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                padding: '10px',
+                cursor: 'pointer',
+                marginBottom: '10px'
+            }}>
+                <ArrowBackIcon sx={{
+                    color: '#fff'
+                }}></ArrowBackIcon>
+            </Box>
             <div className="activity-header">
                 <label htmlFor="activityTitle" className="activity-title-label">Título</label>
                 <input
@@ -333,4 +370,4 @@ const CreateActivity: React.FC = () => {
     );
 };
 
-export default CreateActivity;
+export default EditActivity;

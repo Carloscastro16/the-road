@@ -1,16 +1,15 @@
 // components/RoadsDataTable.tsx
 import React, { useEffect, useState } from 'react';
 import { DataGrid, GridColDef, GridDeleteIcon, GridRenderCellParams } from '@mui/x-data-grid';
-import { fetchRoads } from '../../../Services/Api/RoadsService';
 import { Box, IconButton } from '@mui/material';
 import { EditNotifications } from '@mui/icons-material';
-import axios from 'axios';
-import { Activity, RoadData } from '@/Services/Interfaces/Interfaces';
+import { Activity, RoadData } from '../../../Services/Interfaces/Interfaces';
+import { useNavigate } from 'react-router-dom';
+import Loader from '../shared/Loader';
 
-
-const RoadsDataTable: React.FC = () => {
+export default function RoadsDataTable({ initialData }: any) {
   const [roads, setRoads] = useState([]);
-  /* const [selectedUser, setSelectedUser] = useState(); */
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
   const columns: GridColDef[] = [
     { field: '_id', headerName: 'ID', width: 180 },
@@ -18,27 +17,20 @@ const RoadsDataTable: React.FC = () => {
     { field: 'easyDescription', headerName: 'Descripción Corta', width: 250 },
     { field: 'fullDescription', headerName: 'Descripción Larga', width: 300 },
     {
-      field: 'activities', headerName: 'Activities', width: 200,
-      valueGetter: ((params: Activity[]) => {
-        const value = params.map((activity: Activity) => activity.title).join(', ')
-        return value
-      })
-    },
-    {
       field: 'actions',
       headerName: 'Actions',
       width: 150,
       renderCell: (params: GridRenderCellParams) => (
         <>
           <IconButton
-            onClick={() => handleEdit(params.row)}
+            onClick={() => handleEdit(params.row._id)}
             color="primary"
             aria-label="edit"
           >
             <EditNotifications />
           </IconButton>
           <IconButton
-            onClick={() => handleDelete(params.row.id)}
+            onClick={() => handleDelete(params.row._id)}
             color="secondary"
             aria-label="delete"
           >
@@ -50,29 +42,19 @@ const RoadsDataTable: React.FC = () => {
   ];
   const handleDelete = async (id: string) => {
     try {
-      await axios.delete(`https://localhost:7219/api/Users/deleteUser/${id}`);
       setRoads((prevRows) => prevRows.filter((row: RoadData) => row._id !== id));
     } catch (error) {
       console.error('Error deleting data:', error);
     }
   };
 
-  const handleEdit = (road: RoadData) => {
-    /* setSelectedUser(user); */
-  };
-  const getRoads = async () => {
-    try {
-      const data = await fetchRoads();
-      setRoads(data.data);
-    } catch (error) {
-      console.error('Error fetching roads:', error);
-    } finally {
-      setLoading(false);
-    }
+  const handleEdit = (id: string) => {
+    navigate(`editar/${id}`)
   };
   useEffect(() => {
-
-    getRoads();
+    setLoading(true);
+    setRoads(initialData);
+    setLoading(false);
   }, []);
 
   return (
@@ -83,14 +65,24 @@ const RoadsDataTable: React.FC = () => {
       backgroundColor: '#FFFFFF',
       overflowX: 'scroll'
     }}>
-      <DataGrid
-        rows={roads}
-        columns={columns}
-        loading={loading}
-        getRowId={(row) => row._id || ''}
-      />
+      {loading ? (
+        <Box sx={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          width: '100%',
+          height: '100%'
+        }}>
+          <Loader />
+        </Box>
+      ) :
+        <DataGrid
+          rows={roads}
+          columns={columns}
+          loading={loading}
+          getRowId={(row) => row._id || ''}
+        />
+      }
     </Box>
   );
 };
-
-export default RoadsDataTable;

@@ -1,76 +1,80 @@
-import React from "react"
+import React, { useEffect } from "react"
 import { Box, Button, Stack, Typography } from "@mui/material"
 import { useState } from "react"
 import expand from '../../../assets/icons/expand.png'
 import cover1 from '../../../assets/images/cover1.png'
-const activitiesInfo = [
+import { Link } from "react-router-dom";
+import * as activitiesService from '../../../Services/Api/ActivitiesService'
+import Loader from "../shared/Loader"
+const activitiesInfoDefault = [
     {
+        _id: '2544590422454322',
         title: 'HTML Basics',
-        language: 'HTML',
-        activities: [1, 2, 3, 5, 6, 7],
+        genre: 'HTML',
+        questions: [1, 2, 3, 5, 6, 7],
         punctuation: 3,
         img: cover1,
     },
     {
         title: 'HTML Basics',
-        language: 'HTML',
-        activities: [1, 2, 3, 5, 6, 7],
-        punctuation: 3,
-        img: cover1,
-
-    },
-    {
-        title: 'HTML Basics',
-        language: 'HTML',
-        activities: [1, 2, 3, 5, 6, 7],
+        genre: 'HTML',
+        questions: [1, 2, 3, 5, 6, 7],
         punctuation: 3,
         img: cover1,
 
     },
     {
         title: 'HTML Basics',
-        language: 'HTML',
-        activities: [1, 2, 3, 5, 6, 7],
+        genre: 'HTML',
+        questions: [1, 2, 3, 5, 6, 7],
         punctuation: 3,
         img: cover1,
 
     },
     {
         title: 'HTML Basics',
-        language: 'HTML',
-        activities: [1, 2, 3, 5, 6, 7],
+        genre: 'HTML',
+        questions: [1, 2, 3, 5, 6, 7],
         punctuation: 3,
         img: cover1,
 
     },
     {
         title: 'HTML Basics',
-        language: 'HTML',
-        activities: [1, 2, 3, 5, 6, 7],
+        genre: 'HTML',
+        questions: [1, 2, 3, 5, 6, 7],
         punctuation: 3,
         img: cover1,
 
     },
     {
         title: 'HTML Basics',
-        language: 'HTML',
-        activities: [1, 2, 3, 5, 6, 7],
+        genre: 'HTML',
+        questions: [1, 2, 3, 5, 6, 7],
         punctuation: 3,
         img: cover1,
 
     },
     {
         title: 'HTML Basics',
-        language: 'HTML',
-        activities: [1, 2, 3, 5, 6, 7],
+        genre: 'HTML',
+        questions: [1, 2, 3, 5, 6, 7],
         punctuation: 3,
         img: cover1,
 
     },
     {
         title: 'HTML Basics',
-        language: 'HTML',
-        activities: [1, 2, 3, 5, 6, 7],
+        genre: 'HTML',
+        questions: [1, 2, 3, 5, 6, 7],
+        punctuation: 3,
+        img: cover1,
+
+    },
+    {
+        title: 'HTML Basics',
+        genre: 'HTML',
+        questions: [1, 2, 3, 5, 6, 7],
         punctuation: 3,
         img: cover1,
 
@@ -160,14 +164,27 @@ const languages = [
 ]
 
 export default function ActivitiesList() {
+    const [activitiesInfo, setActivitiesInfo] = useState<any>(activitiesInfoDefault)
     const [limit, setLimit] = useState(6);
+    const [isLoading, setIsLoading] = useState(true);
     function expandLimit() {
-        if(limit === 6){
+        if (limit === 6) {
             setLimit(languages.length)
-        }else{
+        } else {
             setLimit(6)
         }
     }
+    async function fetchActivities() {
+        setIsLoading(true)
+        const res = await activitiesService.fetchActivities();
+        console.log(res.data);
+        setActivitiesInfo(res.data);
+        setIsLoading(false)
+        return res;
+    }
+    useEffect(() => {
+        fetchActivities();
+    }, [])
     return (
         <Box>
             <Stack width={'100%'} flexDirection={'row'} alignItems={'center'} justifyContent={'space-between'} mb={'28px'}>
@@ -247,79 +264,93 @@ export default function ActivitiesList() {
                         borderRadius: '20px',
                     }} onClick={expandLimit}>
                         Expand
-                        <img src={expand} alt="expand" width={'12px'} height={'14px'}/>
+                        <img src={expand} alt="expand" width={'12px'} height={'14px'} />
                     </Button>
                 </Box>
             </Stack>
-            <Stack sx={{
-                flexDirection: 'row',
-                gap: '32px',
-                flexWrap: 'wrap',
-                mt: '24px',
-                mb: '32px',
-                justifyContent: 'center',
-            }}>
-                {activitiesInfo.map((card, index) => {
-                    return (
-                        <Box sx={{
-                            p: '10px',
-                            paddingRight: '38px',
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'flex-start',
-                            gap: '20px',
-                            borderRadius: '8px',
-                            background: 'white'
-                        }} key={index}>
+            {isLoading ? (
+                <Box sx={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    width: '100%',
+                    height: '100%'
+                }}>
+                    <Loader />
+                </Box>
+            ) :
+                <Stack sx={{
+                    flexDirection: 'row',
+                    gap: '32px',
+                    flexWrap: 'wrap',
+                    mt: '24px',
+                    mb: '32px',
+                    justifyContent: 'center',
+                }}>
+                    {activitiesInfo.map((card: any, index: any) => {
+                        return (
                             <Box sx={{
-                                width: '104px',
-                                height: '82px',
-                                borderRadius: '8px'
-                            }}>
-                                <img src={card.img} alt={card.title} width={'100%'} height={'100%'} />
-                            </Box>
-                            <Stack flexDirection={'column'}>
-                                <Typography sx={{
-                                    fontSize: '16px',
-                                    fontWeight: 'bold'
-                                }}>{card.title}</Typography>
-                                <Stack alignItems={'center'} justifyContent={'flex-start'} flexDirection={'row'} gap={'10px'} sx={{
-                                    color: 'black',
-                                    opacity: '0.7',
-                                }}>
-                                    <Typography sx={{
-                                        fontSize: '14px',
-                                        fontWeight: '400',
-                                    }}>{card.language}</Typography>
+                                p: '10px',
+                                paddingRight: '38px',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'flex-start',
+                                gap: '20px',
+                                borderRadius: '8px',
+                                background: 'white'
+                            }} key={index}>
+                                <Link to={`/estudiantes/actividad/${card._id}`}>
                                     <Box sx={{
-                                        width: '4px',
-                                        height: '4px',
-                                        background: 'black',
-                                        opacity: '0.7',
-                                        borderRadius: '50%'
-                                    }}></Box>
-                                    <Typography sx={{
-                                        fontSize: '14px',
-                                        fontWeight: '400'
-                                    }}>{card.activities.length} Preguntas</Typography>
-                                </Stack>
-                                <Stack alignItems={'center'} justifyContent={'flex-start'} flexDirection={'row'} gap={'10px'} sx={{
-                                    color: 'black',
-                                    opacity: '0.4',
-                                }}>
-                                    <Typography sx={{
-                                        fontSize: '14px',
-                                        fontWeight: '900',
+                                        width: '104px',
+                                        height: '82px',
+                                        borderRadius: '8px'
                                     }}>
-                                        {card.punctuation}
-                                    </Typography>
-                                </Stack>
-                            </Stack>
-                        </Box>
-                    )
-                })
-                }
-            </Stack>
+                                        <img src={card.img} alt={card.title} width={'100%'} height={'100%'} />
+                                    </Box>
+                                    <Stack flexDirection={'column'}>
+                                        <Typography sx={{
+                                            fontSize: '16px',
+                                            fontWeight: 'bold'
+                                        }}>{card.title}</Typography>
+                                        <Stack alignItems={'center'} justifyContent={'flex-start'} flexDirection={'row'} gap={'10px'} sx={{
+                                            color: 'black',
+                                            opacity: '0.7',
+                                        }}>
+                                            <Typography sx={{
+                                                fontSize: '14px',
+                                                fontWeight: '400',
+                                            }}>{card.genre}</Typography>
+                                            <Box sx={{
+                                                width: '4px',
+                                                height: '4px',
+                                                background: 'black',
+                                                opacity: '0.7',
+                                                borderRadius: '50%'
+                                            }}></Box>
+                                            <Typography sx={{
+                                                fontSize: '14px',
+                                                fontWeight: '400'
+                                            }}>{card.questions.length} Preguntas</Typography>
+                                        </Stack>
+                                        <Stack alignItems={'center'} justifyContent={'flex-start'} flexDirection={'row'} gap={'10px'} sx={{
+                                            color: 'black',
+                                            opacity: '0.4',
+                                        }}>
+                                            <Typography sx={{
+                                                fontSize: '14px',
+                                                fontWeight: '900',
+                                            }}>
+                                                {card.punctuation}
+                                            </Typography>
+                                        </Stack>
+                                    </Stack>
+                                </Link>
+                            </Box>
+                        )
+                    })
+                    }
+                </Stack>
+            }
         </Box>
     )
 }

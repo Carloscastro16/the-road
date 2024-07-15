@@ -1,4 +1,4 @@
-import RoadsDataTable from "../../Components/Models/Admin/RoadsDataTable"
+import ActivitiesDataTable from "../../Components/Models/Admin/ActivitiesDataTable";
 import { Box, Button, Grid, TextField } from "@mui/material"
 import React from "react"
 import { useNavigate } from "react-router-dom"
@@ -52,7 +52,7 @@ export default function AdminActivities() {
                 </Grid>
             </Grid>
             <Grid item xs={12}>
-                <RoadsDataTable></RoadsDataTable>
+                <ActivitiesDataTable></ActivitiesDataTable>
             </Grid>
         </Grid>
     )

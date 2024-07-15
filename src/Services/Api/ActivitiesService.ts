@@ -5,7 +5,12 @@ import { Response } from '../Interfaces/Interfaces';
 const API_URL = 'https://the-road-api.onrender.com/api/activity';
 
 export const fetchActivities = async (): Promise<Response> => {
-  const response = await axios.get(API_URL + '/getAllActivities');
+  const response = await axios.get(API_URL + '/getActivity');
+  console.log(response);
+  return response.data;
+};
+export const fetchActivityById = async (id: string): Promise<Response> => {
+  const response = await axios.get(API_URL + `/getActivityById/${id}`);
   console.log(response);
   return response.data;
 };
@@ -17,3 +22,12 @@ export const deleteActivityById = async (id: string) => {
     console.error('Error eliminando actividad:', error);
   }
 };
+
+export async function createActivity(body: any){
+  try {
+    const response = await axios.post(API_URL + '/createActivity', body)
+    return response.data;
+  } catch (error) {
+    console.error('Error creando actividad:', error);
+  }
+}

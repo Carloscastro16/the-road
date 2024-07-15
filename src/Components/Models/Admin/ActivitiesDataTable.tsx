@@ -6,8 +6,10 @@ import { EditNotifications } from '@mui/icons-material';
 import { Activity, Preguntas } from '../../../Services/Interfaces/Interfaces'; // Asegúrate de importar la interfaz correcta
 import * as activitiesService from '../../../Services/Api/ActivitiesService';
 import Swal from 'sweetalert2';
+import { useNavigate } from 'react-router-dom';
 
 const ActivitiesDataTable: React.FC = () => {
+  const navigate = useNavigate()
   const [activities, setActivities] = useState<Activity[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -16,22 +18,13 @@ const ActivitiesDataTable: React.FC = () => {
     { field: 'title', headerName: 'Titulo', width: 110 },
     { field: 'description', headerName: 'Descripción', width: 300 },
     {
-      field: 'questions',
-      headerName: 'Preguntas',
-      width: 200,
-      valueGetter: (params: Preguntas[]) => {
-        const questions = params.map((question: Preguntas) => question.name).join(', ');
-        return questions;
-      },
-    },
-    {
       field: 'actions',
       headerName: 'Acciones',
       width: 150,
       renderCell: (params: GridRenderCellParams) => (
         <>
           <IconButton
-            onClick={() => handleEdit(params.row)}
+            onClick={() => handleEdit(params.row._id)}
             color="primary"
             aria-label="edit"
           >
@@ -86,6 +79,7 @@ const ActivitiesDataTable: React.FC = () => {
 
   const handleEdit = (activity: Activity) => {
     console.log('Editar actividad:', activity);
+    navigate(`editar-actividad/${activity}`)
     // Aquí podrías abrir un diálogo o navegar a la página de edición
   };
   const getActivities = async () => {

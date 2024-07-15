@@ -22,6 +22,9 @@ import StudentsRoads from './Views/students/StudentsRoads';
 import StudentsActivities from './Views/students/StudentsActivities';
 import IndividualRoads from './Views/students/IndividualRoads';
 import CreateActivity from './Views/admin/AdmintCreateActivities';
+import CreateRoads from './Views/admin/AdminAddNewRoad';
+import EditActivity from './Views/admin/AdminEditActivities';
+import Quiz from './Views/students/Questions';
 
 const router = createBrowserRouter([
   {
@@ -57,6 +60,18 @@ const router = createBrowserRouter([
             element: <CreateActivity />,
           },
           {
+            path: 'actividades/editar-actividad/:id',
+            element: <EditActivity />,
+          },
+          {
+            path: 'rutas/editar/:routeId',
+            element: <CreateRoads />,
+          },
+          {
+            path: 'crear-ruta',
+            element: <CreateRoads />,
+          },
+          {
             path: 'generos',
             element: <AdminGenres />,
           },
@@ -87,6 +102,10 @@ const router = createBrowserRouter([
           {
             path: 'actividades',
             element: <StudentsActivities />,
+          },
+          {
+            path: 'actividad/:questionId',
+            element: <Quiz />,
           },
           {
             path: 'rutas',

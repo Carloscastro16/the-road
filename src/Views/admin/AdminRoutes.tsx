@@ -1,8 +1,24 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import RoadsDataTable from "../../Components/Models/Admin/RoadsDataTable";
 import { Box, Button, Grid, TextField } from "@mui/material";
-
+import { Link } from "react-router-dom";
+import * as roadsService from '../../Services/Api/RoadsService'
 export default function AdminRoutes() {
+    const [roads, setRoads] = useState([]);
+    const [loading, setLoading] = useState(false);
+    const getRoads = async () => {
+        try {
+            const data = await roadsService.fetchRoads();
+            setRoads(data.data);
+        } catch (error) {
+            console.error('Error fetching roads:', error);
+        } finally {
+            setLoading(false);
+        }
+    };
+    useEffect(() => {
+        getRoads();
+    }, []);
     return (
         <Grid container spacing={2} sx={{
             width: '100%',
@@ -30,18 +46,20 @@ export default function AdminRoutes() {
                         </Box>
                     </Grid>
                     <Grid item xs={2}>
-                        <Button variant="contained" sx={{
-                            width: "100%",
-                            height: "100%",
-                            fontSize: "24px",
-                        }}>
-                            Agregar
-                        </Button>
+                        <Link to={'/administrador/crear-ruta'}>
+                            <Button variant="contained" sx={{
+                                width: "100%",
+                                height: "100%",
+                                fontSize: "24px",
+                            }}>
+                                Agregar
+                            </Button>
+                        </Link>
                     </Grid>
                 </Grid>
             </Grid>
             <Grid item xs={12}>
-                <RoadsDataTable></RoadsDataTable>
+                <RoadsDataTable initialData={roads}></RoadsDataTable>
             </Grid>
         </Grid>
     )

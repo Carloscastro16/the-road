@@ -50,7 +50,9 @@ export default function IndividualRoads() {
                 padding: '10px',
                 cursor: 'pointer'
             }}>
-                <ArrowBackIcon></ArrowBackIcon>
+                <ArrowBackIcon sx={{
+                    color: '#fff'
+                }}></ArrowBackIcon>
             </Box>
             {!isLoading ? (
                 <Box sx={{
@@ -149,7 +151,7 @@ export default function IndividualRoads() {
                                                     <Typography sx={{
                                                         fontSize: '14px',
                                                         fontWeight: '400'
-                                                    }}>{card.preguntas.length} Preguntas</Typography>
+                                                    }}>{card.questions.length} Preguntas</Typography>
                                                 </Stack>
                                                 <Stack alignItems={'center'} justifyContent={'flex-start'} flexDirection={'row'} gap={'10px'} sx={{
                                                     color: 'black',
