@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react';
 import { DataGrid, GridColDef, GridDeleteIcon, GridRenderCellParams } from '@mui/x-data-grid';
 import { Box, IconButton } from '@mui/material';
 import { EditNotifications } from '@mui/icons-material';
-import { Activity, RoadData } from '../../../Services/Interfaces/Interfaces';
 import { useNavigate } from 'react-router-dom';
 import Loader from '../shared/Loader';
 
@@ -11,6 +10,7 @@ export default function RoadsDataTable({ initialData }: any) {
   const [roads, setRoads] = useState([]);
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
+
   const columns: GridColDef[] = [
     { field: '_id', headerName: 'ID', width: 180 },
     { field: 'title', headerName: 'Titulo', width: 110 },
@@ -40,22 +40,29 @@ export default function RoadsDataTable({ initialData }: any) {
       )
     }
   ];
+
   const handleDelete = async (id: string) => {
     try {
-      setRoads((prevRows) => prevRows.filter((row: RoadData) => row._id !== id));
+      setRoads((prevRows) => prevRows.filter((row: any) => row._id !== id));
     } catch (error) {
       console.error('Error deleting data:', error);
     }
   };
 
   const handleEdit = (id: string) => {
-    navigate(`editar/${id}`)
+    navigate(`editar/${id}`);
   };
+
   useEffect(() => {
     setLoading(true);
-    setRoads(initialData);
+    if (initialData && initialData.length > 0) {
+      setRoads(initialData);
+      console.log('initialData', initialData);
+    } else {
+      console.log('initialData is empty or undefined', initialData);
+    }
     setLoading(false);
-  }, []);
+  }, [initialData]);
 
   return (
     <Box sx={{
@@ -75,14 +82,14 @@ export default function RoadsDataTable({ initialData }: any) {
         }}>
           <Loader />
         </Box>
-      ) :
+      ) : (
         <DataGrid
           rows={roads}
           columns={columns}
           loading={loading}
-          getRowId={(row) => row._id || ''}
+          getRowId={(row) => row._id}
         />
-      }
+      )}
     </Box>
   );
 };

@@ -31,3 +31,12 @@ export async function createActivity(body: any){
     console.error('Error creando actividad:', error);
   }
 }
+
+export async function updateActivityById(body: any){
+  try {
+    const response = await axios.put(API_URL + '/updateActivityById', body)
+    return response.data;
+  } catch (error) {
+    console.error('Error creando actividad:', error);
+  }
+}

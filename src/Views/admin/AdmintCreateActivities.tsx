@@ -33,6 +33,27 @@ const CreateActivity: React.FC = () => {
     const [activityTitle, setActivityTitle] = useState('');
     const [activityDescription, setActivityDescription] = useState('');
     const [imageUpload, setImageUpload] = useState<any>(null);
+    const [bannerImageUpload, setBannerImageUpload] = useState<any>(null);
+    const [bannerImagePreview, setBannerImagePreview] = useState<any>(null);
+    const handleBannerImageUpload = (file: File) => {
+        setBannerImageUpload(file);
+        setBannerImagePreview(URL.createObjectURL(file));
+    };
+    const uploadBannerFile = (file: File): Promise<string> => {
+        return new Promise((resolve, reject) => {
+            if (!file) return resolve('');
+            const imageRef = ref(storage, `images/${file.name + v4()}`);
+            uploadBytes(imageRef, file)
+                .then((snapshot) => {
+                    getDownloadURL(snapshot.ref)
+                        .then((url) => {
+                            resolve(url);
+                        })
+                        .catch(reject);
+                })
+                .catch(reject);
+        });
+    };
     const uploadFile = (file: File): Promise<string> => {
         return new Promise((resolve, reject) => {
             if (!file) return resolve('');
@@ -121,12 +142,13 @@ const CreateActivity: React.FC = () => {
             }
             return question;
         }));
-
+        const bannerImg = await uploadBannerFile(bannerImageUpload!);
         const activityData = {
             title: activityTitle,
             genre: genre,
             description: activityDescription,
             questions: updatedQuestions,
+            bannerImg: bannerImg
         };
         console.log('Formulario enviado:', activityData);
         const res = await onCreateActivity(activityData);
@@ -173,6 +195,15 @@ const CreateActivity: React.FC = () => {
                     }
                     </Select>
                 </FormControl>
+                <Box>
+                    <input
+                        type="file"
+                        id='upload-banner'
+                        className="upload-image"
+                        onChange={(e) => handleBannerImageUpload(e.target.files![0])}
+                    />
+                    <label htmlFor={`upload-banner`} className="upload-image-button">Subir imagen</label>
+                </Box>
                 <div className="description-container">
                     <label htmlFor="activityDescription">Descripción</label>
                     <label htmlFor="activityDescription" className="char-counter">{activityDescription.length}/150</label>

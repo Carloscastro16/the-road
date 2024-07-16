@@ -147,7 +147,7 @@ export default function MyRoads() {
             }}>
                 <Swiper
                     spaceBetween={10}
-                    slidesPerView={6}
+                    slidesPerView={4}
                 >
                     {roads.slice(0, 6).map((card, index) => {
                         return (
@@ -163,7 +163,7 @@ export default function MyRoads() {
                                         height: '180px',
                                         width: '220px',
                                         borderRadius: '10px 10px 0 0',
-                                        background: `url(${img1})`,
+                                        background: `url(${card.img})`,
                                         backgroundPosition: 'center',
                                         backgroundSize: 'cover',
                                         position: 'relative',
@@ -182,10 +182,15 @@ export default function MyRoads() {
                                         }}>
                                             <Typography sx={{
                                                 whiteSpace: 'wrap',
-                                                cursor: 'pointer'
+                                                cursor: 'pointer',
+                                                fontSize: '16px',
+                                                fontFamily: 'Montserrat',
+                                                marginBottom: '10px',
+                                                textAlign: 'center',
                                             }}>{card.title}</Typography>
                                             <Typography sx={{
                                                 whiteSpace: 'wrap',
+                                                fontSize: '14px'
                                             }}>{card.easyDescription}</Typography>
                                             <Typography>{card.punctuation}</Typography>
                                         </Stack>

@@ -66,17 +66,27 @@ const CreateRoads: React.FC = () => {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        console.log('Form data submitted:', formData);
-
-        const imageUrl = await uploadFile(imageUpload!);
-        const finalData = {
-            ...formData,
-            img: imageUrl,
-            activities: selectedActivities,
+        if (routeId) {
+            getRoadById(routeId)
+            const finalEditData = {
+                ...formData,
+                activities: selectedActivities,
+            }
+            const res = await roadService.updateRoadById(finalEditData);
+            navigate('/administrador/rutas');
+            return res
+        }else{
+            const imageUrl = await uploadFile(imageUpload!);
+            const finalData = {
+                ...formData,
+                img: imageUrl,
+                activities: selectedActivities,
+            }
+            console.log('Final data:', finalData);
+            const res = await roadService.createRoad(finalData);
+            navigate('/administrador/rutas');
+            return res
         }
-        const res = await roadService.createRoad(finalData);
-        console.log('Final data:', res);
-        navigate('/administrador/rutas');
     };
     const fetchActivities = async () => {
         const res = await activityService.fetchActivities();

@@ -37,6 +37,8 @@ const EditActivity: React.FC = () => {
     const [activityTitle, setActivityTitle] = useState('');
     const [activityDescription, setActivityDescription] = useState('');
     const [imageUpload, setImageUpload] = useState<any>(null);
+    const [bannerImageUpload, setBannerImageUpload] = useState<any>(null);
+    const [bannerImagePreview, setBannerImagePreview] = useState<any>(null);
     const uploadFile = (file: File): Promise<string> => {
         return new Promise((resolve, reject) => {
             if (!file) return resolve('');
@@ -110,12 +112,30 @@ const EditActivity: React.FC = () => {
         newQuestions[index].description = newDescription;
         setQuestions(newQuestions);
     };
-
+    const handleBannerImageUpload = (file: File) => {
+        setBannerImageUpload(file);
+        setBannerImagePreview(URL.createObjectURL(file));
+    };
+    const uploadBannerFile = (file: File): Promise<string> => {
+        return new Promise((resolve, reject) => {
+            if (!file) return resolve('');
+            const imageRef = ref(storage, `images/${file.name + v4()}`);
+            uploadBytes(imageRef, file)
+                .then((snapshot) => {
+                    getDownloadURL(snapshot.ref)
+                        .then((url) => {
+                            resolve(url);
+                        })
+                        .catch(reject);
+                })
+                .catch(reject);
+        });
+    };
     const handleImageUpload = (index: number, file: File) => {
         setImageUpload((prev: any) => ({ ...prev, [index]: file }));
     };
-    const onCreateActivity = async (body: any) => {
-        const response = await activityService.createActivity(body)
+    const onUpdateActivity = async (body: any) => {
+        const response = await activityService.updateActivityById(body)
         return response;
     }
     const handleSubmit = async (e: React.FormEvent) => {
@@ -127,15 +147,16 @@ const EditActivity: React.FC = () => {
             }
             return question;
         }));
-
+        const bannerImg = await uploadBannerFile(bannerImageUpload!);
         const activityData = {
             title: activityTitle,
             genre: genre,
             description: activityDescription,
             questions: updatedQuestions,
+            bannerImg: bannerImg
         };
         console.log('Formulario enviado:', activityData);
-        const res = await onCreateActivity(activityData);
+        const res = await onUpdateActivity(activityData);
         console.log(res);
         return res;
     };
@@ -149,14 +170,14 @@ const EditActivity: React.FC = () => {
     const handleGoBack = () => {
         navigate(-1); // Esto te llevará a la página anterior
     };
-    async function fetchGenres(){
+    async function fetchGenres() {
         const res = await genresService.fetchGenres();
         console.log(res.data);
         setGenresList(res.data);
     }
-    useEffect(()=>{
+    useEffect(() => {
         fetchGenres();
-    },[])
+    }, [])
     useEffect(() => {
         if (id) {
             getActivityById(id)
@@ -200,16 +221,25 @@ const EditActivity: React.FC = () => {
                         value={genre}
                         label="genre"
                         onChange={handleChange}
-                    >   
-                    {
-                        genresList.map((genre) =>{
-                            return(
-                                <MenuItem key='genre' value={genre.title}>{genre.title}</MenuItem>
-                            )
-                        })
-                    }
+                    >
+                        {
+                            genresList.map((genre) => {
+                                return (
+                                    <MenuItem key='genre' value={genre.title}>{genre.title}</MenuItem>
+                                )
+                            })
+                        }
                     </Select>
                 </FormControl>
+                <Box>
+                    <input
+                        type="file"
+                        id={`upload-banner-img`}
+                        className="upload-image"
+                        onChange={(e) => handleBannerImageUpload(e.target.files![0])}
+                    />
+                    <label htmlFor={`upload-banner-img`} className="upload-image-button">Subir imagen</label>
+                </Box>
                 <div className="description-container">
                     <label htmlFor="activityDescription">Descripción</label>
                     <label htmlFor="activityDescription" className="char-counter">{activityDescription.length}/150</label>

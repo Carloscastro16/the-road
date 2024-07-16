@@ -69,7 +69,7 @@ export default function IndividualRoads() {
                     <Box sx={{
                         height: '300px',
                         width: '100%',
-                        background: `url(${img1})`,
+                        background: `url(${roads!.img})`,
                         backgroundPosition: 'center',
                         backgroundSize: 'cover',
                         position: 'relative',

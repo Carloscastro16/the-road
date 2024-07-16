@@ -28,9 +28,9 @@ export const createRoad = async (body: RoadData) => {
     console.error('Error creando Ruta:', error);
   }
 };
-export const updateUserById = async (body: RoadData) => {
+export const updateRoadById = async (body: RoadData) => {
   try {
-    const response = await axios.put(API_URL + `/updateRoadById`, body);
+    const response = await axios.put(API_URL + `/UpdateRoadById`, body);
     return response.data;
   } catch (error) {
     console.error('Error Editando Ruta:', error);
