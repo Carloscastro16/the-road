@@ -1,6 +1,6 @@
 // firebaseConfig.js
 import { initializeApp } from 'firebase/app';
-import { getAuth, GoogleAuthProvider, signInWithPopup,signOut as firebaseSignOut } from 'firebase/auth';
+import { getAuth, GoogleAuthProvider, signInWithPopup, signOut as firebaseSignOut, FacebookAuthProvider } from 'firebase/auth';
 
 const firebaseConfig = {
     apiKey: "AIzaSyDrtXVclBpiiejuIRd_GUC1M1iS3IIQvfY",
@@ -14,13 +14,21 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const provider = new GoogleAuthProvider();
+const provider2 = new FacebookAuthProvider();
+
 
 const signInWithGoogle = () => {
     return signInWithPopup(auth, provider);
 };
 const signOut = () => {
-    return firebaseSignOut(auth); 
+    return firebaseSignOut(auth);
 };
 
+const loginFacebook = () => {
+    return signInWithPopup(auth, provider2);
+}
 
-export { auth, signInWithGoogle,signOut };
+
+
+
+export { auth, signInWithGoogle, signOut,loginFacebook };

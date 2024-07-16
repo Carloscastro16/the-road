@@ -6,7 +6,7 @@ import { Box } from '@mui/system';
 import { RenderFacebookLogin } from '../../Services/Auth/Facebook';
 
 const Auth: React.FC = () => {
-  const { login,googleLogin  } = useAuth();
+  const { login,googleLogin,facebookLogin  } = useAuth();
   const navigate = useNavigate();
 
   const [email, setEmail] = useState<string>('');
@@ -71,6 +71,12 @@ const Auth: React.FC = () => {
       navigate('/estudiantes/dashboard');
     });
   };
+  const handleFacebookLogin = () => {
+    facebookLogin().then(() => {
+      navigate('/estudiantes/dashboard');
+    });
+  };
+
 
   const handleSubmitLogin = (e: React.FormEvent) => {
     e.preventDefault();
@@ -114,6 +120,9 @@ const Auth: React.FC = () => {
             <RenderFacebookLogin></RenderFacebookLogin>
             <button type="button" onClick={handleGoogleLogin}>
               Iniciar Sesión con Google
+            </button>
+            <button type="button" onClick={handleFacebookLogin}>
+              Iniciar Sesión con facebook
             </button>
           </form>
           <form onSubmit={handleSubmitRegister} className="formulario__register">

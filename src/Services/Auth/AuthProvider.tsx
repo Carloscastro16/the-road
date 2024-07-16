@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import { auth, signInWithGoogle,  signOut as googleSignOut } from '../../Services/Auth/FirebaseConfig'; // Importar auth y signInWithGoogle desde el archivo correcto
+import { auth, signInWithGoogle, signOut as googleSignOut, loginFacebook } from '../../Services/Auth/FirebaseConfig'; // Importar auth y signInWithGoogle desde el archivo correcto
 import { onAuthStateChanged, signInWithEmailAndPassword, User, signOut } from 'firebase/auth';
 
 interface AuthContextType {
@@ -9,6 +9,7 @@ interface AuthContextType {
   googleLogin: () => Promise<void>;
   logout: () => void;
   googleSignOut: () => Promise<void>; // Agrega googleSignOut a AuthContextType
+  facebookLogin: () => Promise<void>; // Función para iniciar sesión con Facebook
 
 }
 
@@ -27,8 +28,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
       const token = await user.getIdToken();
-      console.log(token);
-      localStorage.setItem('token', token); 
+      localStorage.setItem('token', token);
       setIsLoggedIn(true);
     } catch (error) {
       console.error('Error logging in:', error);
@@ -72,6 +72,20 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       throw new Error('Failed to log out with Google');
     }
   };
+  const facebookLogin = async () => {
+    try {
+      const result = await loginFacebook();
+      const user = result.user;
+      const token = await user.getIdToken();
+      console.log(token);
+      localStorage.setItem('token', token);
+      setIsLoggedIn(true);
+    } catch (error) {
+      console.error('Error logging in with Facebook:', error);
+      setIsLoggedIn(false);
+      throw new Error('Failed to log in with Facebook');
+    }
+  };
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -83,7 +97,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ currentUser, isLoggedIn, login, googleLogin, logout,googleSignOut }}>
+    <AuthContext.Provider value={{ currentUser, isLoggedIn, login, googleLogin, logout, googleSignOut, facebookLogin }}>
       {children}
     </AuthContext.Provider>
   );
