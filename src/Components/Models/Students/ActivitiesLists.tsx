@@ -289,23 +289,26 @@ export default function ActivitiesList() {
                 }}>
                     {activitiesInfo.map((card: any, index: any) => {
                         return (
-                            <Box sx={{
-                                p: '10px',
-                                paddingRight: '38px',
-                                display: 'flex',
-                                alignItems: 'center',
-                                justifyContent: 'flex-start',
-                                gap: '20px',
-                                borderRadius: '8px',
-                                background: 'white'
-                            }} key={index}>
-                                <Link to={`/estudiantes/actividad/${card._id}`}>
+                            <Link key={index} to={`/estudiantes/actividad/${card._id}`}>
+                                <Box sx={{
+                                    p: '10px',
+                                    paddingRight: '38px',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'flex-start',
+                                    gap: '20px',
+                                    borderRadius: '8px',
+                                    background: 'white'
+                                }} key={index}>
                                     <Box sx={{
-                                        width: '104px',
+                                        width: '140px',
                                         height: '82px',
-                                        borderRadius: '8px'
+                                        borderRadius: '8px',
+                                        background: `url(${card!.bannerImg})`,
+                                        backgroundPosition: 'center',
+                                        backgroundSize: 'cover',
+                                        position: 'relative',
                                     }}>
-                                        <img src={card.img} alt={card.title} width={'100%'} height={'100%'} />
                                     </Box>
                                     <Stack flexDirection={'column'}>
                                         <Typography sx={{
@@ -344,8 +347,8 @@ export default function ActivitiesList() {
                                             </Typography>
                                         </Stack>
                                     </Stack>
-                                </Link>
-                            </Box>
+                                </Box>
+                            </Link>
                         )
                     })
                     }
