@@ -25,6 +25,7 @@ import CreateActivity from './Views/admin/AdmintCreateActivities';
 import CreateRoads from './Views/admin/AdminAddNewRoad';
 import EditActivity from './Views/admin/AdminEditActivities';
 import Quiz from './Views/students/Questions';
+import Profile from './Views/students/Profile';
 
 const router = createBrowserRouter([
   {
@@ -117,7 +118,7 @@ const router = createBrowserRouter([
           },
           {
             path: 'perfil',
-            element: <StudentsDashboard />,
+            element: <Profile />,
           },
         ],
       },
