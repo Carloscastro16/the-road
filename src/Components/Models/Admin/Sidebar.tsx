@@ -14,15 +14,17 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import MailIcon from '@mui/icons-material/Mail';
+import logoutImg from '../../../assets/icons/Log-out.png';
+import userImg from '../../../assets/icons/users.png';
+import profileImg from '../../../assets/icons/profile.png';
+import genreImg from '../../../assets/icons/genre.png';
 import { Breadcrumbs, capitalize } from '@mui/material';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import dashboard from '../../../assets/icons/Home.png'
 import roads from '../../../assets/icons/My-Activities.png'
 import activities from '../../../assets/icons/Activities.png'
-import myActivities from '../../../assets/icons/Activities2.png'
 import { useAuth } from '../../../Services/Auth/AuthProvider';
+import BuildIcon from '@mui/icons-material/Build';
 const mainItems = [
     {
         route: 'dashboard',
@@ -42,17 +44,17 @@ const mainItems = [
     {
         text: 'Generos',
         route: 'generos',
-        img: myActivities
+        img: genreImg
     },
     {
         text: 'Usuarios',
         route: 'usuarios',
-        img: myActivities
+        img: userImg
     },
     {
         text: 'Perfil',
         route: 'perfil',
-        img: myActivities
+        img: profileImg
     },
 ];
 
@@ -232,7 +234,7 @@ export default function AdminSidebar() {
                                         justifyContent: 'center',
                                     }}
                                 >
-                                    <InboxIcon />
+                                    <BuildIcon />
                                 </ListItemIcon>
                                 <ListItemText primary={'Ajustes'} sx={{ opacity: open ? 1 : 0 }} />
                             </ListItemButton>
@@ -250,9 +252,11 @@ export default function AdminSidebar() {
                                         minWidth: 0,
                                         mr: open ? 3 : 'auto',
                                         justifyContent: 'center',
+                                        height: '24px',
+                                        width: '24px'
                                     }}
                                 >
-                                    <MailIcon />
+                                    <img src={logoutImg} alt={'logout'} width={'100%'} height={'100%'} />
                                 </ListItemIcon>
                                 <ListItemText primary={'Cerrar Sesión'} sx={{ opacity: open ? 1 : 0 }} />
                             </ListItemButton>

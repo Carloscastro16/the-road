@@ -13,12 +13,14 @@ export default function AdminActivities() {
     return (
         <Grid container spacing={2} sx={{
             width: '100%',
-            paddingInline: '42px',
+            paddingInline: {xs: '10px', md:'42px'},
             mt: '24px',
         }}>
-            <Grid item xs={12} >
-                <Grid container spacing={3}>
-                    <Grid item xs={10}>
+            <Grid item xs={12} sx={{
+                marginLeft: '0'
+            }}>
+                <Grid container spacing={{xs: '10px', md: '24px'}}>
+                    <Grid item xs={9} md={10}>
                         <Box sx={{
                             width: '100%',
                             display: 'flex',
@@ -36,13 +38,13 @@ export default function AdminActivities() {
                             }} />
                         </Box>
                     </Grid>
-                    <Grid item xs={2}>
+                    <Grid item xs={3} md={2}>
                         <Button 
                             variant="contained" 
                             sx={{
                                 width: "100%",
                                 height: "100%",
-                                fontSize: "24px",
+                                fontSize: {xs: '12px',sm: '12px', md:'16px', lg:"24px"}
                             }}
                             onClick={crearActividad}
                         >

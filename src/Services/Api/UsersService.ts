@@ -33,3 +33,11 @@ export const updateUserById = async (body: User) => {
     console.error('Error Editando Usuario:', error);
   }
 };
+export const getUserByMail = async (body: any) => {
+  try {
+    const response = await axios.post(API_URL + `/getUserByMail`, body);
+    return response.data;
+  } catch (error) {
+    console.error('Error obteniendo Usuarios:', error);
+  }
+};

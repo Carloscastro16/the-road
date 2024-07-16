@@ -1,7 +1,6 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { auth, signInWithGoogle,  signOut as googleSignOut } from '../../Services/Auth/FirebaseConfig'; // Importar auth y signInWithGoogle desde el archivo correcto
 import { onAuthStateChanged, signInWithEmailAndPassword, User, signOut } from 'firebase/auth';
-
 interface AuthContextType {
   currentUser: User | null;
   isLoggedIn: boolean;

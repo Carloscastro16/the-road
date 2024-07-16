@@ -3,10 +3,10 @@ import '../../Components/Css/Custom.css'
 import { useAuth } from '../../Services/Auth/AuthProvider';
 import { useNavigate } from 'react-router-dom';
 import { Box } from '@mui/system';
-import { RenderFacebookLogin } from '../../Services/Auth/Facebook';
-
+import Swal from 'sweetalert2'
+import * as userService from '../../Services/Api/UsersService'
 const Auth: React.FC = () => {
-  const { login,googleLogin  } = useAuth();
+  const { login, googleLogin } = useAuth();
   const navigate = useNavigate();
 
   const [email, setEmail] = useState<string>('');
@@ -66,16 +66,40 @@ const Auth: React.FC = () => {
       document.querySelector('.caja__trasera-login')!.setAttribute('style', 'opacity: 1;');
     }
   };
-   const handleGoogleLogin = () => {
+  const handleGoogleLogin = () => {
     googleLogin().then(() => {
       navigate('/estudiantes/dashboard');
     });
   };
 
-  const handleSubmitLogin = (e: React.FormEvent) => {
+  const handleSubmitLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    login(email,password);
-    navigate('/estudiantes/dashboard');
+    if (!email) {
+      Swal.fire({
+        title: 'No fue ingresado ningun correo'
+      })
+      return false
+    }
+    if (!password) {
+      Swal.fire({
+        title: 'No fue ingresada ninguna contraseña'
+      })
+      return false
+    }
+    const user = {
+      email: email,
+      password: password
+    }
+    const res = await userService.getUserByMail(user);
+    await login(email, password);
+    console.log('respuesta: ',res)
+    if (res.data.rolename == 'Administrador') {
+      navigate('/administrador/dashboard');
+      return 'administrador';
+    } else {
+      navigate('/estudiantes/dashboard');
+      return 'estudiante'
+    }
   };
 
   const handleSubmitRegister = (e: React.FormEvent) => {
@@ -108,11 +132,10 @@ const Auth: React.FC = () => {
         <div className="contenedor__login-register">
           <form onSubmit={handleSubmitLogin} className="formulario__login active">
             <h2>Iniciar Sesión</h2>
-            <input type="text" placeholder="Correo Electronico" onChange={(e) => setEmail(e.target.value)}/>
+            <input type="text" placeholder="Correo Electronico" onChange={(e) => setEmail(e.target.value)} />
             <input type="password" placeholder="Contraseña" onChange={(e) => setPassword(e.target.value)} />
-            <button type="submit">Entrar</button>
-            <RenderFacebookLogin></RenderFacebookLogin>
-            <button type="button" onClick={handleGoogleLogin}>
+            <button type="submit" className='login-btn login'>Entrar</button>
+            <button type="button" className='login-btn google' onClick={handleGoogleLogin}>
               Iniciar Sesión con Google
             </button>
           </form>

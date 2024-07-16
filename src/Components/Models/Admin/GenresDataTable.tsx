@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { DataGrid, GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
-import { Box, Dialog, DialogContent, DialogTitle, IconButton } from '@mui/material';
+import { Box, Dialog, DialogContent, DialogTitle, IconButton, useMediaQuery, useTheme } from '@mui/material';
 import { EditNotifications, Delete as DeleteIcon } from '@mui/icons-material';
 import Swal from 'sweetalert2';
 import { Genre } from '../../../Services/Interfaces/Interfaces';
@@ -19,10 +19,40 @@ function GenresDataTable({ initialData }: any) {
   const [open, setOpen] = useState(false);
   const [forceRender, setForceRender] = useState(0); // Estado para forzar la re-renderización
 
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+  const isTablet = useMediaQuery(theme.breakpoints.down('md'));
+
   const columns: GridColDef[] = [
-    { field: '_id', headerName: 'ID', width: 280 },
-    { field: 'title', headerName: 'Titulo', width: 210 },
+    { field: 'title', headerName: 'Titulo', width: 280 },
     { field: 'cantidad', headerName: 'Cantidad de Vistas', width: 300 },
+    {
+      field: 'actions',
+      headerName: 'Acciones',
+      width: 250,
+      renderCell: (params: GridRenderCellParams) => (
+        <>
+          <IconButton
+            onClick={() => handleEdit(params.row)}
+            color="primary"
+            aria-label="edit"
+          >
+            <EditNotifications />
+          </IconButton>
+          <IconButton
+            onClick={() => confirmDelete(params.row._id)}
+            color="secondary"
+            aria-label="delete"
+          >
+            <DeleteIcon />
+          </IconButton>
+        </>
+      ),
+    },
+  ];
+
+  const mobileColumns: GridColDef[] = [
+    { field: 'title', headerName: 'Titulo', width: 210 },
     {
       field: 'actions',
       headerName: 'Acciones',
@@ -132,7 +162,7 @@ function GenresDataTable({ initialData }: any) {
         <DataGrid
           key={`data-grid-${forceRender}`} // Agrega la clave para forzar la re-renderización
           rows={genres}
-          columns={columns}
+          columns={isMobile ? mobileColumns : columns}
           loading={loading}
           getRowId={(row) => row._id || ''}
         />

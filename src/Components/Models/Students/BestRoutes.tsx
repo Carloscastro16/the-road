@@ -137,14 +137,14 @@ export default function BestRoutes() {
                         <Link key={index} to={`/estudiantes/rutas/${card._id}`}>
                             <Box sx={{
                                 p: '10px',
-                                paddingRight: '38px',
                                 display: 'flex',
                                 alignItems: 'center',
                                 justifyContent: 'flex-start',
                                 gap: '20px',
                                 borderRadius: '8px',
                                 background: 'white',
-                                maxWidth: '400px'
+                                maxWidth: '400px',
+                                width: '400px'
                             }} >
                                 <Box sx={{
                                     width: '150px',

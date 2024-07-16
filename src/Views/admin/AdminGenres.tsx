@@ -49,11 +49,11 @@ export default function AdminGenres() {
         <>
             <Grid container spacing={2} sx={{
                 width: '100%',
-                paddingInline: '42px',
+                paddingInline: {xs: '10px', md:'42px'},
                 mt: '24px',
             }}>
                 <Grid item xs={12} >
-                    <Grid container spacing={3}>
+                    <Grid container spacing={{xs: '10px', md: '24px'}}>
                         <Grid item xs={10}>
                             <Box sx={{
                                 width: '100%',
@@ -76,7 +76,7 @@ export default function AdminGenres() {
                             <Button onClick={() => { setOpen(true) }} variant="contained" sx={{
                                 width: "100%",
                                 height: "100%",
-                                fontSize: "24px",
+                                fontSize: {xs: '12px',sm: '12px', md:'16px', lg:"24px"}
                             }}>
                                 Agregar
                             </Button>

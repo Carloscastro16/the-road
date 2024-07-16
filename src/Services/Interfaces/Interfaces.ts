@@ -50,7 +50,9 @@ export interface Activity {
     _id?: any;
     title: string;
     description: string;
-    preguntas: Preguntas[]
+    questions: Preguntas[];
+    genre: string;
+    bannerImg: string;
 }
 
 export interface Preguntas {

@@ -12,6 +12,7 @@ import { storage } from "../../Services/Auth/FirebaseAuthProvider";
 
 import * as activityService from '../../Services/Api/ActivitiesService'
 import * as genresService from '../../Services/Api/GenresService'
+import { useNavigate } from 'react-router-dom';
 interface Option {
     text: string;
     correct?: boolean;
@@ -38,6 +39,10 @@ const CreateActivity: React.FC = () => {
     const handleBannerImageUpload = (file: File) => {
         setBannerImageUpload(file);
         setBannerImagePreview(URL.createObjectURL(file));
+    };
+    const navigate = useNavigate();
+    const handleGoBack = () => {
+        navigate(-1); // Esto te llevará a la página anterior
     };
     const uploadBannerFile = (file: File): Promise<string> => {
         return new Promise((resolve, reject) => {
@@ -153,16 +158,17 @@ const CreateActivity: React.FC = () => {
         console.log('Formulario enviado:', activityData);
         const res = await onCreateActivity(activityData);
         console.log(res);
+        handleGoBack();
         return res;
     };
-    async function fetchGenres(){
+    async function fetchGenres() {
         const res = await genresService.fetchGenres();
         console.log(res.data);
         setGenresList(res.data);
     }
-    useEffect(()=>{
+    useEffect(() => {
         fetchGenres();
-    },[])
+    }, [])
     return (
         <Box sx={{
             marginTop: '32px'
@@ -185,17 +191,20 @@ const CreateActivity: React.FC = () => {
                         value={genre}
                         label="genre"
                         onChange={handleChange}
-                    >   
-                    {
-                        genresList.map((genre) =>{
-                            return(
-                                <MenuItem key='genre' value={genre.title}>{genre.title}</MenuItem>
-                            )
-                        })
-                    }
+                    >
+                        {
+                            genresList.map((genre) => {
+                                return (
+                                    <MenuItem key='genre' value={genre.title}>{genre.title}</MenuItem>
+                                )
+                            })
+                        }
                     </Select>
                 </FormControl>
                 <Box>
+                    <div className="question-image-upload">
+                        {bannerImagePreview && <img src={bannerImagePreview} alt="Vista previa de la imagen" className="image-preview" />}
+                    </div>
                     <input
                         type="file"
                         id='upload-banner'
@@ -338,7 +347,7 @@ const CreateActivity: React.FC = () => {
                                 flexDirection: 'column'
                             }}>
                                 <div className="question-image-upload">
-                                    {question.image && <img src={question.image} alt="Vista previa de la imagen" className="image-preview" />}
+                                    {imageUpload && <img src={imageUpload} alt="Vista previa de la imagen" className="image-preview" />}
                                 </div>
                                 <input
                                     type="file"

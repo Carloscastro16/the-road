@@ -166,6 +166,7 @@ const EditActivity: React.FC = () => {
         setQuestions(res.data.questions);
         setActivityDescription(res.data.description);
         setActivityTitle(res.data.title);
+        setBannerImagePreview(res.data.bannerImg);
     }
     const handleGoBack = () => {
         navigate(-1); // Esto te llevará a la página anterior
@@ -231,15 +232,6 @@ const EditActivity: React.FC = () => {
                         }
                     </Select>
                 </FormControl>
-                <Box>
-                    <input
-                        type="file"
-                        id={`upload-banner-img`}
-                        className="upload-image"
-                        onChange={(e) => handleBannerImageUpload(e.target.files![0])}
-                    />
-                    <label htmlFor={`upload-banner-img`} className="upload-image-button">Subir imagen</label>
-                </Box>
                 <div className="description-container">
                     <label htmlFor="activityDescription">Descripción</label>
                     <label htmlFor="activityDescription" className="char-counter">{activityDescription.length}/150</label>
@@ -252,6 +244,40 @@ const EditActivity: React.FC = () => {
                         className="activity-textarea"
                     />
                 </div>
+                <Box sx={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    flexDirection: 'column',
+                    width: '100%',
+                    gap: '16px'
+                }}>
+                    <input
+                        type="file"
+                        id={`upload-banner-img`}
+                        className="upload-image"
+                        onChange={(e) => handleBannerImageUpload(e.target.files![0])}
+                    />
+                    <label htmlFor={`upload-banner-img`} className="upload-image-button">Subir imagen</label>
+                    <Box sx={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        width: '100%',
+                    }}>
+                        <Box className="question-image-upload" sx={{
+                            height: '200px',
+                            width: '200px',
+                            opacity: '.5',
+                            background: `url(${bannerImagePreview})`,
+                            backgroundPosition: 'center',
+                            backgroundSize: 'cover',
+                            position: 'relative',
+                        }}>
+                        </Box>
+                    </Box>
+                </Box>
+
             </div>
             {questions.map((question, index) => (
                 <div className="question-card" key={index}>

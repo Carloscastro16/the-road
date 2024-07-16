@@ -225,7 +225,6 @@ main {
 
 .contenedor__login-register form button {
   padding: 10px 40px;
-  margin-top: 40px;
   border: none;
   font-size: 14px;
   background: #307071;
@@ -234,6 +233,15 @@ main {
   color: white;
   outline: none;
   border-radius: 5px;
+}
+.contenedor__login-register .login-btn{
+  width: 100%;
+}
+.contenedor__login-register .login-btn.login{
+  margin-top: 40px;
+}
+.contenedor__login-register .login-btn.google{
+  margin-top: 10px;
 }
 
 .formulario__login {

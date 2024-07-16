@@ -1,7 +1,7 @@
 // components/ActivitiesDataTable.tsx
 import React, { useEffect, useState } from 'react';
 import { DataGrid, GridColDef, GridDeleteIcon, GridRenderCellParams } from '@mui/x-data-grid';
-import { Box, IconButton } from '@mui/material';
+import { Box, IconButton, useMediaQuery, useTheme } from '@mui/material';
 import { EditNotifications } from '@mui/icons-material';
 import { Activity, Preguntas } from '../../../Services/Interfaces/Interfaces'; // Asegúrate de importar la interfaz correcta
 import * as activitiesService from '../../../Services/Api/ActivitiesService';
@@ -12,11 +12,39 @@ const ActivitiesDataTable: React.FC = () => {
   const navigate = useNavigate()
   const [activities, setActivities] = useState<Activity[]>([]);
   const [loading, setLoading] = useState(true);
+  const theme = useTheme();
+  const isTablet = useMediaQuery(theme.breakpoints.down('md'));
 
   const columns: GridColDef[] = [
-    { field: '_id', headerName: 'ID', width: 180 },
     { field: 'title', headerName: 'Titulo', width: 110 },
-    { field: 'description', headerName: 'Descripción', width: 300 },
+    { field: 'genre', headerName: 'Genero', width: 300 },
+    {
+      field: 'actions',
+      headerName: 'Acciones',
+      width: 150,
+      renderCell: (params: GridRenderCellParams) => (
+        <>
+          <IconButton
+            onClick={() => handleEdit(params.row._id)}
+            color="primary"
+            aria-label="edit"
+          >
+            <EditNotifications />
+          </IconButton>
+          {/* Asumiendo que handleDelete está implementado correctamente */}
+          <IconButton
+            onClick={() => confirmDelete(params.row._id)}
+            color="secondary"
+            aria-label="delete"
+          >
+            <GridDeleteIcon />
+          </IconButton>
+        </>
+      ),
+    },
+  ];
+  const mobileColumns: GridColDef[] = [
+    { field: 'title', headerName: 'Titulo', width: 110 },
     {
       field: 'actions',
       headerName: 'Acciones',
@@ -87,6 +115,7 @@ const ActivitiesDataTable: React.FC = () => {
       const data = await activitiesService.fetchActivities();
       const newData = data.data;
       setActivities(newData);
+      console.log(newData);
     } catch (error) {
       console.error('Error fetching roads:', error);
     } finally {
@@ -107,7 +136,7 @@ const ActivitiesDataTable: React.FC = () => {
     }}>
       <DataGrid
         rows={activities}
-        columns={columns}
+        columns={isTablet ? mobileColumns : columns}
         loading={loading}
         getRowId={(row) => row._id || ''}
       />
