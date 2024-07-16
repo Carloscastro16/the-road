@@ -1,12 +1,15 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import { auth } from '../../Services/Auth/FirebaseConfig'; // Importar auth desde el archivo correcto
-import { onAuthStateChanged, signInWithEmailAndPassword, User,signOut } from 'firebase/auth';
+import { auth, signInWithGoogle,  signOut as googleSignOut } from '../../Services/Auth/FirebaseConfig'; // Importar auth y signInWithGoogle desde el archivo correcto
+import { onAuthStateChanged, signInWithEmailAndPassword, User, signOut } from 'firebase/auth';
 
 interface AuthContextType {
   currentUser: User | null;
   isLoggedIn: boolean;
   login: (email: string, password: string) => Promise<void>;
+  googleLogin: () => Promise<void>;
   logout: () => void;
+  googleSignOut: () => Promise<void>; // Agrega googleSignOut a AuthContextType
+
 }
 
 interface AuthProviderProps {
@@ -34,6 +37,21 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     }
   };
 
+  const googleLogin = async () => {
+    try {
+      const result = await signInWithGoogle();
+      const user = result.user;
+      const token = await user.getIdToken();
+      console.log(token);
+      localStorage.setItem('token', token);
+      setIsLoggedIn(true);
+    } catch (error) {
+      console.error('Error logging in with Google:', error);
+      setIsLoggedIn(false);
+      throw new Error('Failed to log in with Google');
+    }
+  };
+
   const logout = async () => {
     try {
       await signOut(auth);
@@ -44,7 +62,16 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       throw new Error('Failed to log out');
     }
   };
-
+  const googleSignOut = async () => {
+    try {
+      await googleSignOut(); // Llama a googleSignOut que llama a la función signOut de Google
+      localStorage.removeItem('token');
+      setIsLoggedIn(false);
+    } catch (error) {
+      console.error('Error logging out with Google:', error);
+      throw new Error('Failed to log out with Google');
+    }
+  };
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -56,7 +83,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ currentUser, isLoggedIn, login, logout }}>
+    <AuthContext.Provider value={{ currentUser, isLoggedIn, login, googleLogin, logout,googleSignOut }}>
       {children}
     </AuthContext.Provider>
   );

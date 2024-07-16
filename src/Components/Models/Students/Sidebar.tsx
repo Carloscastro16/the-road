@@ -109,17 +109,22 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 
 export default function StudentsSidebar() {
   const navigate = useNavigate();
-  const { logout } = useAuth();
+  const { logout, googleSignOut, isLoggedIn } = useAuth(); // Incluye googleSignOut desde useAuth
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
   const location = useLocation();
   const pathnames = location.pathname.split('/').filter((x) => x);
   
-  const handleLogout = (e: any) => {
+  const handleLogout = (e: React.MouseEvent<HTMLLIElement>) => {
     e.preventDefault();
-    logout();
+    if (isLoggedIn) {
+      logout();
+    } else {
+      googleSignOut();
+    }
     navigate('/');
-};
+  };
+
   const handleDrawerOpen = () => {
     setOpen(true);
   };

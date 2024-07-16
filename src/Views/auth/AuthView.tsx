@@ -6,7 +6,7 @@ import { Box } from '@mui/system';
 import { RenderFacebookLogin } from '../../Services/Auth/Facebook';
 
 const Auth: React.FC = () => {
-  const { login } = useAuth();
+  const { login,googleLogin  } = useAuth();
   const navigate = useNavigate();
 
   const [email, setEmail] = useState<string>('');
@@ -66,6 +66,11 @@ const Auth: React.FC = () => {
       document.querySelector('.caja__trasera-login')!.setAttribute('style', 'opacity: 1;');
     }
   };
+   const handleGoogleLogin = () => {
+    googleLogin().then(() => {
+      navigate('/estudiantes/dashboard');
+    });
+  };
 
   const handleSubmitLogin = (e: React.FormEvent) => {
     e.preventDefault();
@@ -107,9 +112,8 @@ const Auth: React.FC = () => {
             <input type="password" placeholder="Contraseña" onChange={(e) => setPassword(e.target.value)} />
             <button type="submit">Entrar</button>
             <RenderFacebookLogin></RenderFacebookLogin>
-            <button id="google-login" className="google-login">
-              <img src="path-to-google-icon.png" alt="Google Logo" />
-              <span>Continue with Google</span>
+            <button type="button" onClick={handleGoogleLogin}>
+              Iniciar Sesión con Google
             </button>
           </form>
           <form onSubmit={handleSubmitRegister} className="formulario__register">
