@@ -114,6 +114,7 @@ export default function StudentsSidebar() {
   const [open, setOpen] = React.useState(false);
   const location = useLocation();
   const pathnames = location.pathname.split('/').filter((x) => x);
+  
   const handleLogout = (e: any) => {
     e.preventDefault();
     logout();
@@ -207,28 +208,7 @@ export default function StudentsSidebar() {
             ))}
           </List>
           <List>
-              <ListItem disablePadding sx={{ display: 'block' }}>
-                <ListItemButton
-                  sx={{
-                    minHeight: 48,
-                    justifyContent: open ? 'initial' : 'center',
-                    px: 2.5,
-                  }}
-                >
-                  <ListItemIcon
-                    sx={{
-                      minWidth: 0,
-                      mr: open ? 3 : 'auto',
-                      justifyContent: 'center',
-                      height: '24px',
-                      width: '24px'
-                    }}
-                  >
-                    <img src={logoutImg} alt={'logout'} width={'100%'} height={'100%'} />
-                  </ListItemIcon>
-                  <ListItemText primary={'Perfil'} sx={{ opacity: open ? 1 : 0 }} />
-                </ListItemButton>
-              </ListItem>
+             
               <ListItem disablePadding sx={{ display: 'block' }} onClick={handleLogout}>
                 <ListItemButton
                   sx={{

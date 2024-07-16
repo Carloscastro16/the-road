@@ -9,6 +9,9 @@ const Auth: React.FC = () => {
   const { login } = useAuth();
   const navigate = useNavigate();
 
+  const [email, setEmail] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
+
   useEffect(() => {
     const anchoPage = () => {
       if (window.innerWidth > 850) {
@@ -66,7 +69,7 @@ const Auth: React.FC = () => {
 
   const handleSubmitLogin = (e: React.FormEvent) => {
     e.preventDefault();
-    login();
+    login(email,password);
     navigate('/estudiantes/dashboard');
   };
 
@@ -100,8 +103,8 @@ const Auth: React.FC = () => {
         <div className="contenedor__login-register">
           <form onSubmit={handleSubmitLogin} className="formulario__login active">
             <h2>Iniciar Sesión</h2>
-            <input type="text" placeholder="Correo Electronico" />
-            <input type="password" placeholder="Contraseña" />
+            <input type="text" placeholder="Correo Electronico" onChange={(e) => setEmail(e.target.value)}/>
+            <input type="password" placeholder="Contraseña" onChange={(e) => setPassword(e.target.value)} />
             <button type="submit">Entrar</button>
             <RenderFacebookLogin></RenderFacebookLogin>
             <button id="google-login" className="google-login">
