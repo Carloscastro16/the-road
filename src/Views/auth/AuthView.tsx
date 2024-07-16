@@ -6,7 +6,7 @@ import { Box } from '@mui/system';
 import Swal from 'sweetalert2'
 import * as userService from '../../Services/Api/UsersService'
 const Auth: React.FC = () => {
-  const { login, googleLogin } = useAuth();
+  const { login,googleLogin,facebookLogin  } = useAuth();
   const navigate = useNavigate();
 
   const [email, setEmail] = useState<string>('');
@@ -71,6 +71,12 @@ const Auth: React.FC = () => {
       navigate('/estudiantes/dashboard');
     });
   };
+  const handleFacebookLogin = () => {
+    facebookLogin().then(() => {
+      navigate('/estudiantes/dashboard');
+    });
+  };
+
 
   const handleSubmitLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -137,6 +143,9 @@ const Auth: React.FC = () => {
             <button type="submit" className='login-btn login'>Entrar</button>
             <button type="button" className='login-btn google' onClick={handleGoogleLogin}>
               Iniciar Sesión con Google
+            </button>
+            <button type="button" onClick={handleFacebookLogin}>
+              Iniciar Sesión con facebook
             </button>
           </form>
           <form onSubmit={handleSubmitRegister} className="formulario__register">
