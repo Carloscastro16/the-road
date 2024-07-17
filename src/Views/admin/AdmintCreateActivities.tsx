@@ -13,6 +13,7 @@ import { storage } from "../../Services/Auth/FirebaseAuthProvider";
 import * as activityService from '../../Services/Api/ActivitiesService'
 import * as genresService from '../../Services/Api/GenresService'
 import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 interface Option {
     text: string;
     correct?: boolean;
@@ -158,6 +159,15 @@ const CreateActivity: React.FC = () => {
         console.log('Formulario enviado:', activityData);
         const res = await onCreateActivity(activityData);
         console.log(res);
+        if(res.status === 200){
+            Swal.fire({
+                title: 'Actividad Actualizada Correctamente'
+            })
+        }else{
+            Swal.fire({
+                title: 'Hubo un error al Actualizar tu actividad'
+            })
+        }
         handleGoBack();
         return res;
     };

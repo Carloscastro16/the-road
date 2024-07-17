@@ -14,6 +14,7 @@ import * as activityService from '../../Services/Api/ActivitiesService'
 import * as genresService from '../../Services/Api/GenresService'
 import { useNavigate, useParams } from 'react-router-dom';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import Swal from 'sweetalert2';
 interface Option {
     text: string;
     correct?: boolean;
@@ -31,6 +32,7 @@ interface Question {
 const EditActivity: React.FC = () => {
     const navigate = useNavigate();
     const { id } = useParams();
+    const [activity, setActivity] = useState<any>(null);
     const [questions, setQuestions] = useState<Question[]>([]);
     const [genre, setGenre] = useState<string>('');
     const [genresList, setGenresList] = useState<any[]>([]);
@@ -149,6 +151,7 @@ const EditActivity: React.FC = () => {
         }));
         const bannerImg = await uploadBannerFile(bannerImageUpload!);
         const activityData = {
+            _id: id,
             title: activityTitle,
             genre: genre,
             description: activityDescription,
@@ -157,6 +160,16 @@ const EditActivity: React.FC = () => {
         };
         console.log('Formulario enviado:', activityData);
         const res = await onUpdateActivity(activityData);
+        if(res.status === 200){
+            Swal.fire({
+                title: 'Actividad Actualizada Correctamente'
+            })
+        }else{
+            Swal.fire({
+                title: 'Hubo un error al Actualizar tu actividad'
+            })
+        }
+        handleGoBack();
         console.log(res);
         return res;
     };

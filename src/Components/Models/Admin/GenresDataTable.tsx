@@ -146,6 +146,7 @@ function GenresDataTable({ initialData }: any) {
       setLoading(true);
       const response = await genreService.fetchGenres();
       setGenres(response.data);
+      setForceRender((prev) => prev + 1);
     } catch (error) {
       console.error('Error fetching genres:', error);
     } finally {

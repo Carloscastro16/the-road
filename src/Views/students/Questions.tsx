@@ -331,7 +331,11 @@ const Quiz: React.FC = () => {
                             height: '100%',
                             padding: '24px'
                         }}>
-                            <Button onClick={restartQuiz} variant="contained" color="primary" sx={{ marginTop: '20px' }}>Reiniciar cuestionario</Button>
+                            <Button onClick={restartQuiz} sx={{ 
+                                marginTop: '20px',
+                                background: '#49437B',
+                                color: '#fff'
+                                }}>Reiniciar cuestionario</Button>
                             <Stack direction={'row'} sx={{ marginTop: '20px' }}>
                                 {data.questions.map((question, index) => (
                                     <Box key={index} sx={{
