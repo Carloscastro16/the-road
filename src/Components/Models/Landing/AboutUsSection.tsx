@@ -1,13 +1,16 @@
 import React from 'react';
 import { Box, Grid, Typography, Card, CardMedia, } from '@mui/material';
-import Img1 from '../../../assets/images/Perfil.jpg'; 
+import Img1 from '../../../assets/images/andre.jpeg'; 
+import Img2 from '../../../assets/images/pollo.jpeg'; 
+import Img3 from '../../../assets/images/lalo.jpeg'; 
+import Img4 from '../../../assets/images/max.jpeg'; 
 
 const AboutUs = () => {
   const teamMembers = [
-    { name: 'Carlos Castro', role: 'Backend' },
-    { name: 'Ana Pérez', role: 'Frontend' },
-    { name: 'Luis Gómez', role: 'UI/UX' },
-    { name: 'Marta Díaz', role: 'Full Stack' },
+    { name: 'Carlos Castro', role: 'Backend', img: Img1 },
+    { name: 'Ana Pérez', role: 'Frontend', img: Img2 },
+    { name: 'Luis Gómez', role: 'UI/UX', img: Img3 },
+    { name: 'Marta Díaz', role: 'Full Stack', img: Img4 },
   ];
 
   return (
@@ -21,7 +24,7 @@ const AboutUs = () => {
             <Card sx={{ height: '100%' }}>
               <CardMedia
                 component="img"
-                image={Img1} 
+                image={member.img} 
                 alt={member.name}
                 sx={{ height: { xs: 260, sm: 290, md: 400 }, objectFit: 'cover' ,borderRadius: '10px',}}
               />

@@ -2,12 +2,12 @@ import React, { useState } from 'react';
 import { AppBar, Toolbar, IconButton, Typography, Box, Button, Drawer, List, ListItem, ListItemText, Hidden } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import { Link } from 'react-router-dom';
-
+import logo from '../../../assets/icons/logo.svg';
 interface HeaderProps {
-    scrollToSection: (ref: React.RefObject<HTMLDivElement>) => void;
-    presentacionRef: React.RefObject<HTMLDivElement>;
-    offerSectionRef: React.RefObject<HTMLDivElement>;
-    aboutUsSectionRef: React.RefObject<HTMLDivElement>;
+  scrollToSection: (ref: React.RefObject<HTMLDivElement>) => void;
+  presentacionRef: React.RefObject<HTMLDivElement>;
+  offerSectionRef: React.RefObject<HTMLDivElement>;
+  aboutUsSectionRef: React.RefObject<HTMLDivElement>;
 }
 
 const Header: React.FC<HeaderProps> = ({ scrollToSection, presentacionRef, offerSectionRef, aboutUsSectionRef }) => {
@@ -27,7 +27,7 @@ const Header: React.FC<HeaderProps> = ({ scrollToSection, presentacionRef, offer
         <ListItem onClick={() => scrollToSection(presentacionRef)}>
           <ListItemText primary="Explora" />
         </ListItem>
-        <ListItem  onClick={() => scrollToSection(offerSectionRef)}>
+        <ListItem onClick={() => scrollToSection(offerSectionRef)}>
           <ListItemText primary="Productos" />
         </ListItem>
         <ListItem onClick={() => scrollToSection(aboutUsSectionRef)}>
@@ -55,15 +55,21 @@ const Header: React.FC<HeaderProps> = ({ scrollToSection, presentacionRef, offer
             <IconButton edge="start" color="inherit" aria-label="menu" onClick={handleDrawerToggle}>
               <MenuIcon />
             </IconButton>
-            <Typography variant="h6" component="div" sx={{ flexGrow: 1, textAlign: 'right' }}>
-              Logo
-            </Typography>
+            <Box sx={{
+              mr: 2,
+              width: '50px'
+            }}>
+              <img src={logo} alt="" width={'100%'} />
+            </Box>
           </Hidden>
           <Hidden mdDown>
             <Box sx={{ display: 'flex', alignItems: 'center', flexGrow: 1 }}>
-              <Typography variant="h6" component="div" sx={{ mr: 2 }}>
-                Logo
-              </Typography>
+              <Box sx={{
+                mr: 2,
+                width: '100px'
+              }}>
+                <img src={logo} alt="" width={'100%'} />
+              </Box>
               <Button color="inherit" onClick={() => scrollToSection(presentacionRef)}>Explora</Button>
               <Button color="inherit" onClick={() => scrollToSection(offerSectionRef)}>Productos</Button>
               <Button color="inherit" onClick={() => scrollToSection(aboutUsSectionRef)}>Para Desarrolladores</Button>
