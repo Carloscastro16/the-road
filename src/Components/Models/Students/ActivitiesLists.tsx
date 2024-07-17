@@ -1,5 +1,7 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { Box, Button, Stack, Typography } from "@mui/material";
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/css';
 import expand from '../../../assets/icons/expand.png';
 import cover1 from '../../../assets/images/cover1.png';
 import { Link } from "react-router-dom";
@@ -50,22 +52,22 @@ export default function ActivitiesList() {
 
     function contarActividadesPorGenero(actividades: Activity[]): GeneroCantidad[] {
         const conteoPorGenero: Record<string, number> = {};
-      
+
         actividades.forEach((actividad) => {
             const genero = actividad.genre;
-      
+
             if (!conteoPorGenero[genero]) {
                 conteoPorGenero[genero] = 0;
             }
-      
+
             conteoPorGenero[genero]++;
         });
-      
+
         const resultado: GeneroCantidad[] = Object.keys(conteoPorGenero).map((genero) => ({
             genero: genero,
             cantidad: conteoPorGenero[genero],
         }));
-      
+
         console.log(resultado);
         setGenres(resultado);
         return resultado;
@@ -112,7 +114,7 @@ export default function ActivitiesList() {
                 </Typography>
             </Stack>
             <Stack alignItems={'center'} justifyContent={'center'} flexDirection={'row'} sx={{
-                px: '120px',
+                px: { xs: '0', sm: '120px' },
                 flexWrap: 'wrap',
                 gap: '16px',
                 width: '100%',
@@ -124,8 +126,8 @@ export default function ActivitiesList() {
                     gap: '10px',
                     flexWrap: 'wrap'
                 }}>
-                    <Button 
-                        onClick={() => setSelectedGenre(null)} 
+                    <Button
+                        onClick={() => setSelectedGenre(null)}
                         sx={{
                             border: '1px solid #49437B',
                             borderRadius: '24px',
@@ -144,11 +146,11 @@ export default function ActivitiesList() {
                     </Button>
                     {genres.slice(0, limit).map((language, index) => {
                         return (
-                            <Stack 
-                                key={index} 
-                                flexDirection={'row'} 
-                                gap={'6px'} 
-                                alignItems={'center'} 
+                            <Stack
+                                key={index}
+                                flexDirection={'row'}
+                                gap={'6px'}
+                                alignItems={'center'}
                                 sx={{
                                     border: '1px solid #49437B',
                                     borderRadius: '24px',
@@ -207,8 +209,82 @@ export default function ActivitiesList() {
                 }}>
                     <Loader />
                 </Box>
-            ) :
+            ) : (
+                <Box sx={{ display: { xs: 'block', sm: 'none' } }}>
+                    <Swiper
+                        spaceBetween={16}
+                        slidesPerView={1.5}
+                        pagination={{ clickable: true }}
+                        breakpoints={{
+                            640: {
+                                slidesPerView: 2,
+                                grid: {
+                                    rows: 2,
+                                },
+                            },
+                        }}
+                    >
+                        {filteredActivities.map((card: Activity, index: number) => (
+                            <SwiperSlide key={index}>
+                                <Link to={`/estudiantes/actividad/${card._id}`}>
+                                    <Box sx={{
+                                        p: { xs: '0px', sm: '10px' }, 
+                                        display: 'flex',
+                                        flexDirection: 'column',
+                                        alignItems: 'center',
+                                        gap: '20px',
+                                        borderRadius: '8px',
+                                        background: 'white',
+                                        width: '100%',
+                                        boxShadow: '0 4px 8px rgba(0,0,0,0.1)',
+                                    }}>
+                                        <Box sx={{
+                                            width: '100%',
+                                            height: '150px',
+                                            borderRadius: '8px',
+                                            background: `url(${card.bannerImg})`,
+                                            backgroundPosition: 'center',
+                                            backgroundSize: 'cover',
+                                            position: 'relative',
+                                        }}>
+                                        </Box>
+                                        <Stack flexDirection={'column'} alignItems={'center'}>
+                                            <Typography sx={{
+                                                fontSize: '16px',
+                                                fontWeight: 'bold',
+                                                textAlign: 'center'
+                                            }}>{card.title}</Typography>
+                                            <Stack alignItems={'center'} justifyContent={'center'} flexDirection={'row'} gap={'10px'} sx={{
+                                                color: 'black',
+                                                opacity: '0.7',
+                                            }}>
+                                                <Typography sx={{
+                                                    fontSize: '14px',
+                                                    fontWeight: '400',
+                                                }}>{card.genre}</Typography>
+                                                <Box sx={{
+                                                    width: '4px',
+                                                    height: '4px',
+                                                    background: 'black',
+                                                    opacity: '0.7',
+                                                    borderRadius: '50%'
+                                                }}></Box>
+                                                <Typography sx={{
+                                                    fontSize: '14px',
+                                                    fontWeight: '400'
+                                                }}>{card.questions.length} Preguntas</Typography>
+                                            </Stack>
+                                        </Stack>
+                                    </Box>
+                                </Link>
+                            </SwiperSlide>
+                        ))}
+                    </Swiper>
+                </Box>
+            )}
+            {!isLoading && (
                 <Stack sx={{
+                    display: { xs: 'none', sm: 'flex' },
                     flexDirection: 'row',
                     gap: '32px',
                     flexWrap: 'wrap',
@@ -216,61 +292,59 @@ export default function ActivitiesList() {
                     mb: '32px',
                     justifyContent: 'center',
                 }}>
-                    {filteredActivities.map((card: Activity, index: number) => {
-                        return (
-                            <Link key={index} to={`/estudiantes/actividad/${card._id}`}>
+                    {filteredActivities.map((card: Activity, index: number) => (
+                        <Link key={index} to={`/estudiantes/actividad/${card._id}`}>
+                            <Box sx={{
+                                p: '5px',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'flex-start',
+                                gap: '20px',
+                                borderRadius: '8px',
+                                background: 'white',
+                                width: '370px'
+                            }}>
                                 <Box sx={{
-                                    p: '10px',
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    justifyContent: 'flex-start',
-                                    gap: '20px',
+                                    width: '140px',
+                                    height: '82px',
                                     borderRadius: '8px',
-                                    background: 'white',
-                                    width: '370px'
-                                }} key={index}>
-                                    <Box sx={{
-                                        width: '140px',
-                                        height: '82px',
-                                        borderRadius: '8px',
-                                        background: `url(${card.bannerImg})`,
-                                        backgroundPosition: 'center',
-                                        backgroundSize: 'cover',
-                                        position: 'relative',
-                                    }}>
-                                    </Box>
-                                    <Stack flexDirection={'column'}>
-                                        <Typography sx={{
-                                            fontSize: '16px',
-                                            fontWeight: 'bold'
-                                        }}>{card.title}</Typography>
-                                        <Stack alignItems={'center'} justifyContent={'flex-start'} flexDirection={'row'} gap={'10px'} sx={{
-                                            color: 'black',
-                                            opacity: '0.7',
-                                        }}>
-                                            <Typography sx={{
-                                                fontSize: '14px',
-                                                fontWeight: '400',
-                                            }}>{card.genre}</Typography>
-                                            <Box sx={{
-                                                width: '4px',
-                                                height: '4px',
-                                                background: 'black',
-                                                opacity: '0.7',
-                                                borderRadius: '50%'
-                                            }}></Box>
-                                            <Typography sx={{
-                                                fontSize: '14px',
-                                                fontWeight: '400'
-                                            }}>{card.questions.length} Preguntas</Typography>
-                                        </Stack>
-                                    </Stack>
+                                    background: `url(${card.bannerImg})`,
+                                    backgroundPosition: 'center',
+                                    backgroundSize: 'cover',
+                                    position: 'relative',
+                                }}>
                                 </Box>
-                            </Link>
-                        )
-                    })}
+                                <Stack flexDirection={'column'}>
+                                    <Typography sx={{
+                                        fontSize: '16px',
+                                        fontWeight: 'bold'
+                                    }}>{card.title}</Typography>
+                                    <Stack alignItems={'center'} justifyContent={'flex-start'} flexDirection={'row'} gap={'10px'} sx={{
+                                        color: 'black',
+                                        opacity: '0.7',
+                                    }}>
+                                        <Typography sx={{
+                                            fontSize: '14px',
+                                            fontWeight: '400',
+                                        }}>{card.genre}</Typography>
+                                        <Box sx={{
+                                            width: '4px',
+                                            height: '4px',
+                                            background: 'black',
+                                            opacity: '0.7',
+                                            borderRadius: '50%'
+                                        }}></Box>
+                                        <Typography sx={{
+                                            fontSize: '14px',
+                                            fontWeight: '400'
+                                        }}>{card.questions.length} Preguntas</Typography>
+                                    </Stack>
+                                </Stack>
+                            </Box>
+                        </Link>
+                    ))}
                 </Stack>
-            }
+            )}
         </Box>
     );
 }
