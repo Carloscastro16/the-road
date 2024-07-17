@@ -8,6 +8,7 @@ import { v4 } from 'uuid';
 import { storage } from "../../Services/Auth/FirebaseAuthProvider";
 import { useNavigate, useParams } from "react-router-dom";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import Swal from 'sweetalert2';
 
 const CreateRoads: React.FC = () => {
     const navigate = useNavigate();
@@ -66,50 +67,73 @@ const CreateRoads: React.FC = () => {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+        const imageUrl = imageUpload ? await uploadFile(imageUpload) : formData.img;
+
+        const finalData = {
+            ...formData,
+            img: imageUrl,
+            activities: selectedActivities,
+        };
+
+        let res;
         if (routeId) {
-            getRoadById(routeId)
-            const finalEditData = {
-                ...formData,
-                activities: selectedActivities,
+            res = await roadService.updateRoadById(finalData);
+            if (res.status === 200) {
+                Swal.fire({
+                    title: 'Ruta Actualizada Correctamente'
+                });
+            } else {
+                Swal.fire({
+                    title: 'Hubo un error al Actualizar la actividad'
+                });
             }
-            const res = await roadService.updateRoadById(finalEditData);
-            navigate('/administrador/rutas');
-            return res
-        }else{
-            const imageUrl = await uploadFile(imageUpload!);
-            const finalData = {
-                ...formData,
-                img: imageUrl,
-                activities: selectedActivities,
+        } else {
+            res = await roadService.createRoad(finalData);
+            if (res.status === 200) {
+                Swal.fire({
+                    title: 'Ruta Creada Correctamente'
+                });
+            } else {
+                Swal.fire({
+                    title: 'Hubo un error al Crear la Ruta'
+                });
             }
-            console.log('Final data:', finalData);
-            const res = await roadService.createRoad(finalData);
-            navigate('/administrador/rutas');
-            return res
         }
+
+        navigate('/administrador/rutas');
+        return res;
     };
+
     const fetchActivities = async () => {
         const res = await activityService.fetchActivities();
         console.log('actividades:', res.data);
         setActivities(res.data);
         return res;
-    }
+    };
+
     const getRoadById = async (id: any) => {
         const res = await roadService.fetchRoadById(id);
+        console.log(res.data);
         setFormData(res.data);
+        setSelectedActivities(res.data.activities);
+        setImagePreview(res.data.img);
         return res;
-    }
+    };
+
     const handleGoBack = () => {
         navigate(-1); // Esto te llevará a la página anterior
     };
+
     useEffect(() => {
         fetchActivities();
-    }, [])
+    }, []);
+
     useEffect(() => {
         if (routeId) {
-            getRoadById(routeId)
+            getRoadById(routeId);
         }
-    }, []);
+    }, [routeId]);
+
     return (
         <Box sx={{
             width: '100%',
@@ -252,7 +276,7 @@ const CreateRoads: React.FC = () => {
                                     <FormControlLabel
                                         control={
                                             <Checkbox
-                                                checked={selectedActivities.includes(card._id)} // Aquí usamos card._id
+                                                defaultChecked={selectedActivities.includes(card._id)} // Aquí usamos card._id
                                                 onChange={(e) => handleActivityChange(e, card._id)} // Aquí usamos card._id
                                                 name={card.title}
                                             />
@@ -272,5 +296,4 @@ const CreateRoads: React.FC = () => {
         </Box>
     );
 };
-
 export default CreateRoads;

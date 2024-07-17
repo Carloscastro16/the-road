@@ -147,7 +147,6 @@ const Quiz: React.FC = () => {
                                         justifyContent: 'center'
                                     }}>
                                         <Typography variant="h2" gutterBottom>{currentQuestion.title}</Typography>
-                                        <Typography variant="h6" gutterBottom>{currentQuestion.description}</Typography>
                                     </Box>
                                     <Box sx={{
                                         display: 'flex',
@@ -217,7 +216,6 @@ const Quiz: React.FC = () => {
                                             marginTop: '20px'
                                         }}>
                                             <Typography variant="h2" gutterBottom>{currentQuestion.title}</Typography>
-                                            <Typography variant="h6" gutterBottom>{currentQuestion.description}</Typography>
                                             <Typography variant="body2" sx={{ marginTop: '20px' }}>{currentQuestionIndex + 1} / {data.questions.length}</Typography>
                                         </Box>
                                     </Box>
@@ -275,7 +273,6 @@ const Quiz: React.FC = () => {
                                         justifyContent: 'center'
                                     }}>
                                         <Typography variant="h2" gutterBottom>{currentQuestion.title}</Typography>
-                                        <Typography variant="h6" gutterBottom>{currentQuestion.description}</Typography>
                                     </Box>
                                     <Box sx={{
                                         display: 'flex',
@@ -334,7 +331,10 @@ const Quiz: React.FC = () => {
                             <Button onClick={restartQuiz} sx={{ 
                                 marginTop: '20px',
                                 background: '#49437B',
-                                color: '#fff'
+                                color: '#fff',
+                                ":hover":{ 
+                                    color: '#000'
+                                }
                                 }}>Reiniciar cuestionario</Button>
                             <Stack direction={'row'} sx={{ marginTop: '20px' }}>
                                 {data.questions.map((question, index) => (

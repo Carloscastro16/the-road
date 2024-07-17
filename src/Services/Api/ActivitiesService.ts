@@ -34,7 +34,7 @@ export async function createActivity(body: any){
 
 export async function updateActivityById(body: any){
   try {
-    const response = await axios.put('http://localhost:3200/api/activity/updateActivityById', body)
+    const response = await axios.put(API_URL + '/updateActivityById', body)
     return response.data;
   } catch (error) {
     console.error('Error creando actividad:', error);

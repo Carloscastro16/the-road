@@ -142,24 +142,39 @@ const EditActivity: React.FC = () => {
     }
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        const updatedQuestions = await Promise.all(questions.map(async (question, index) => {
-            if (question.type === 'image-options' && imageUpload[index]) {
-                const imageUrl = await uploadFile(imageUpload[index]!);
-                return { ...question, image: imageUrl };
-            }
-            return question;
-        }));
-        const bannerImg = await uploadBannerFile(bannerImageUpload!);
-        const activityData = {
-            _id: id,
-            title: activityTitle,
-            genre: genre,
-            description: activityDescription,
-            questions: updatedQuestions,
-            bannerImg: bannerImg
-        };
-        console.log('Formulario enviado:', activityData);
-        const res = await onUpdateActivity(activityData);
+        
+        let res;
+        if(imageUpload == null){
+            const activityData = {
+                _id: id,
+                title: activityTitle,
+                genre: genre,
+                description: activityDescription,
+                questions: questions
+            };
+            console.log('Formulario enviado:', activityData);
+            res = await onUpdateActivity(activityData);
+        }else{
+            const updatedQuestions = await Promise.all(questions.map(async (question, index) => {
+                if (question.type === 'image-options' && imageUpload[index]) {
+                    const imageUrl = await uploadFile(imageUpload[index]!);
+                    return { ...question, image: imageUrl };
+                }
+                return question;
+            }));
+            const bannerImg = await uploadBannerFile(bannerImageUpload!);
+            const activityData = {
+                _id: id,
+                title: activityTitle,
+                genre: genre,
+                description: activityDescription,
+                questions: updatedQuestions,
+                bannerImg: bannerImg
+            };
+            console.log('Formulario enviado:', activityData);
+            res = await onUpdateActivity(activityData);
+            
+        }
         if(res.status === 200){
             Swal.fire({
                 title: 'Actividad Actualizada Correctamente'
@@ -176,6 +191,7 @@ const EditActivity: React.FC = () => {
     async function getActivityById(id: string) {
         const res = await activityService.fetchActivityById(id);
         console.log(res.data);
+        setGenre(res.data.genre);
         setQuestions(res.data.questions);
         setActivityDescription(res.data.description);
         setActivityTitle(res.data.title);
