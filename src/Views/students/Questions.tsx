@@ -118,7 +118,9 @@ const Quiz: React.FC = () => {
                 }}></ArrowBackIcon>
             </Box>
             <Box sx={{ borderRadius: '10px', width: '100%', textAlign: 'center', height: '100%' }}>
-                <Typography variant="h4" gutterBottom>{data.description}</Typography>
+                <Typography variant="h4" gutterBottom sx={{
+                    fontSize: { xs: '20px', sm: '32px', md: '40px' }
+                }}>{data.description}</Typography>
                 {!showResults ? (
                     <Box sx={{
                         padding: '42px',
@@ -130,7 +132,7 @@ const Quiz: React.FC = () => {
                             boxShadow: '0 4px 8px rgba(0,0,0,0.1)',
                             padding: '24px',
                             borderRadius: '10px',
-                            height: '90%',
+                            height: {xs:'auto',md:'auto'},
                         }}>
                             {currentQuestion.type == 'options' && (
                                 <Box sx={{
@@ -184,7 +186,7 @@ const Quiz: React.FC = () => {
                                 <Box sx={{
                                     height: '100%',
                                     display: 'flex',
-                                    flexDirection: 'row',
+                                    flexDirection: { xs: 'column', md: 'row' },
                                     alignItems: 'center',
                                     justifyContent: 'space-between',
                                 }}>
@@ -194,28 +196,28 @@ const Quiz: React.FC = () => {
                                         alignItems: 'center',
                                         justifyContent: 'center',
                                         flexDirection: 'column',
+                                        width: {xs:'100%', md: 'auto'},
                                     }}>
-                                        <div className="gallery" id='gallery--getting-started'>
-                                            <Box sx={{
-                                                width: '650px',
-                                                height: '330px',
-                                                borderRadius: '8px',
-                                                background: `url('${currentQuestion!.image}')`,
-                                                backgroundPosition: 'center',
-                                                backgroundSize: 'cover',
-                                                position: 'relative',
-                                            }}>
-                                                <a href={`${currentQuestion!.image}`} data-pswp-width="2500"
-                                                    data-pswp-height="1668"
-                                                    target="_blank" rel="noreferrer"></a>
-                                            </Box>
-
-                                        </div>
                                         <Box sx={{
-                                            height: '40%',
+                                            width: { xs: '100%', md: '650px' },
+                                            height: '330px',
+                                            borderRadius: '8px',
+                                            background: `url('${currentQuestion!.image}')`,
+                                            backgroundPosition: 'center',
+                                            backgroundSize: 'cover',
+                                            position: 'relative',
+                                        }}>
+                                            <a href={`${currentQuestion!.image}`} data-pswp-width="2500"
+                                                data-pswp-height="1668"
+                                                target="_blank" rel="noreferrer"></a>
+                                        </Box>
+                                        <Box sx={{
+                                            height: {xs: 'inherit',md:'40%'},
                                             marginTop: '20px'
                                         }}>
-                                            <Typography variant="h2" gutterBottom>{currentQuestion.title}</Typography>
+                                            <Typography variant="h2" gutterBottom sx={{
+                                                fontSize: { xs: '20px', sm: '32px', md: '40px' }
+                                            }}>{currentQuestion.title}</Typography>
                                             <Typography variant="body2" sx={{ marginTop: '20px' }}>{currentQuestionIndex + 1} / {data.questions.length}</Typography>
                                         </Box>
                                     </Box>
@@ -225,15 +227,15 @@ const Quiz: React.FC = () => {
                                         justifyContent: 'center',
                                         gap: '16px',
                                         flexDirection: 'column',
-                                        width: '30%',
+                                        width: { xs: '100%', md: '30%' },
                                         paddingBottom: '42px',
                                         height: '100%',
                                     }}>
                                         <Box sx={{
                                             display: 'flex',
                                             justifyContent: 'space-between',
-                                            flexDirection: 'column',
-                                            height: '100%',
+                                            flexDirection: { xs: 'row', md: 'column' },
+                                            height: {xs: 'inherit',md:'100%'},
                                             width: '100%',
                                             gap: '16px'
                                         }}>
@@ -245,6 +247,8 @@ const Quiz: React.FC = () => {
                                                     onClick={() => handleAnswer(option.text)}
                                                     sx={{
                                                         flex: 1, margin: '0 10px', padding: '10px', width: '100%', py: '32px',
+                                                        fontSize: {xs: '10px', sm: '12px', md: '24px'},
+                                                        height: {xs: 'fit-content', sm: '100px', md: 'inherit'},
                                                         ":hover": {
                                                             background: '#49437B',
                                                             color: '#fff'
@@ -328,14 +332,14 @@ const Quiz: React.FC = () => {
                             height: '100%',
                             padding: '24px'
                         }}>
-                            <Button onClick={restartQuiz} sx={{ 
+                            <Button onClick={restartQuiz} sx={{
                                 marginTop: '20px',
                                 background: '#49437B',
                                 color: '#fff',
-                                ":hover":{ 
+                                ":hover": {
                                     color: '#000'
                                 }
-                                }}>Reiniciar cuestionario</Button>
+                            }}>Reiniciar cuestionario</Button>
                             <Stack direction={'row'} sx={{ marginTop: '20px' }}>
                                 {data.questions.map((question, index) => (
                                     <Box key={index} sx={{
