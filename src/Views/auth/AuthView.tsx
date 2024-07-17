@@ -144,9 +144,6 @@ const Auth: React.FC = () => {
             <button type="button" className='login-btn google' onClick={handleGoogleLogin}>
               Iniciar Sesión con Google
             </button>
-            <button type="button" className='login-btn' onClick={handleFacebookLogin}>
-              Iniciar Sesión con facebook
-            </button>
           </form>
           <form onSubmit={handleSubmitRegister} className="formulario__register">
             <h2>Únete</h2>
