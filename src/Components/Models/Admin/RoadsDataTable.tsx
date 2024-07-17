@@ -1,11 +1,22 @@
 // components/RoadsDataTable.tsx
 import React, { useEffect, useState } from 'react';
 import { DataGrid, GridColDef, GridDeleteIcon, GridRenderCellParams } from '@mui/x-data-grid';
-import { Box, IconButton, useMediaQuery, useTheme } from '@mui/material';
+import { Box, IconButton, styled, useMediaQuery, useTheme } from '@mui/material';
 import { EditNotifications } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
 import Loader from '../shared/Loader';
-
+const StyledDataGrid = styled(DataGrid)(() => ({
+  '& .MuiDataGrid-row:nth-of-type(odd)': {
+    backgroundColor: '#f0f0f0',
+    border: 'none' // color gris claro para filas impares
+  },
+  '& .MuiDataGrid-withBorderColor': {
+    border: 'transparent' // color gris claro para filas impares
+  },
+  '& .MuiDataGrid-cell': {
+    borderTop: '0px transparent' // color gris claro para filas impares
+  },
+}));
 export default function RoadsDataTable({ initialData }: any) {
   const [roads, setRoads] = useState([]);
   const navigate = useNavigate();
@@ -109,7 +120,7 @@ export default function RoadsDataTable({ initialData }: any) {
           <Loader />
         </Box>
       ) : (
-        <DataGrid
+        <StyledDataGrid
           rows={roads}
           columns={isTablet ? mobileColumns : columns}
           loading={loading}

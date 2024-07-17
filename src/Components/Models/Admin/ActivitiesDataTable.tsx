@@ -1,12 +1,24 @@
 // components/ActivitiesDataTable.tsx
 import React, { useEffect, useState } from 'react';
 import { DataGrid, GridColDef, GridDeleteIcon, GridRenderCellParams } from '@mui/x-data-grid';
-import { Box, IconButton, useMediaQuery, useTheme } from '@mui/material';
+import { Box, IconButton, styled, useMediaQuery, useTheme } from '@mui/material';
 import { EditNotifications } from '@mui/icons-material';
 import { Activity, Preguntas } from '../../../Services/Interfaces/Interfaces'; // Asegúrate de importar la interfaz correcta
 import * as activitiesService from '../../../Services/Api/ActivitiesService';
 import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
+const StyledDataGrid = styled(DataGrid)(() => ({
+  '& .MuiDataGrid-row:nth-of-type(odd)': {
+    backgroundColor: '#f0f0f0',
+    border: 'none' // color gris claro para filas impares
+  },
+  '& .MuiDataGrid-withBorderColor': {
+    border: 'transparent' // color gris claro para filas impares
+  },
+  '& .MuiDataGrid-cell': {
+    borderTop: '0px transparent' // color gris claro para filas impares
+  },
+}));
 
 const ActivitiesDataTable: React.FC = () => {
   const navigate = useNavigate()
@@ -134,7 +146,7 @@ const ActivitiesDataTable: React.FC = () => {
       backgroundColor: '#FFFFFF',
       overflowX: 'scroll'
     }}>
-      <DataGrid
+      <StyledDataGrid
         rows={activities}
         columns={isTablet ? mobileColumns : columns}
         loading={loading}

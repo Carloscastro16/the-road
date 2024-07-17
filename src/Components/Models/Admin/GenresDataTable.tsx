@@ -1,12 +1,23 @@
 import React, { useEffect, useState } from 'react';
 import { DataGrid, GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
-import { Box, Dialog, DialogContent, DialogTitle, IconButton, useMediaQuery, useTheme } from '@mui/material';
+import { Box, Dialog, DialogContent, DialogTitle, IconButton, styled, useMediaQuery, useTheme } from '@mui/material';
 import { EditNotifications, Delete as DeleteIcon } from '@mui/icons-material';
 import Swal from 'sweetalert2';
 import { Genre } from '../../../Services/Interfaces/Interfaces';
 import * as genreService from '../../../Services/Api/GenresService';
 import GenreForm from './Forms/GenresForm';
-
+const StyledDataGrid = styled(DataGrid)(() => ({
+  '& .MuiDataGrid-row:nth-of-type(odd)': {
+    backgroundColor: '#f0f0f0',
+    border: 'none' // color gris claro para filas impares
+  },
+  '& .MuiDataGrid-withBorderColor': {
+    border: 'transparent' // color gris claro para filas impares
+  },
+  '& .MuiDataGrid-cell': {
+    borderTop: '0px transparent' // color gris claro para filas impares
+  },
+}));
 function GenresDataTable({ initialData }: any) {
   const emptyGenre: Genre = {
     _id: '',
@@ -159,7 +170,7 @@ function GenresDataTable({ initialData }: any) {
         backgroundColor: '#FFFFFF',
         overflowX: 'scroll'
       }}>
-        <DataGrid
+        <StyledDataGrid
           key={`data-grid-${forceRender}`} // Agrega la clave para forzar la re-renderización
           rows={genres}
           columns={isMobile ? mobileColumns : columns}
