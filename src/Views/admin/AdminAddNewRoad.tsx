@@ -123,7 +123,11 @@ const CreateRoads: React.FC = () => {
     const handleGoBack = () => {
         navigate(-1); // Esto te llevará a la página anterior
     };
-
+    const markSelectedActivity = (card: any) => {
+        const isSelected = selectedActivities.includes(card._id)
+        console.log(isSelected)
+        return isSelected;
+    }
     useEffect(() => {
         fetchActivities();
     }, []);
@@ -276,7 +280,7 @@ const CreateRoads: React.FC = () => {
                                     <FormControlLabel
                                         control={
                                             <Checkbox
-                                                defaultChecked={selectedActivities.includes(card._id)} // Aquí usamos card._id
+                                                checked={markSelectedActivity(card)} // Aquí usamos card._id
                                                 onChange={(e) => handleActivityChange(e, card._id)} // Aquí usamos card._id
                                                 name={card.title}
                                             />
