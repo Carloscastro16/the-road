@@ -18,7 +18,7 @@ import roads from '../../../assets/icons/My-Activities.png'
 import activities from '../../../assets/icons/Activities.png'
 import logoutImg from '../../../assets/icons/Log-out.png'
 import { useAuth } from '../../../Services/Auth/AuthProvider';
-
+import logo from  '../../../assets/icons/logo.svg'
 const mainItems = [
   {
     route: 'dashboard',
@@ -154,7 +154,7 @@ export default function StudentsSidebar() {
               ...(open && { display: 'none' }),
             }}
           >
-            LOGO
+            <img src={logo} alt="" width={'50px'} />
           </IconButton>
           <Breadcrumbs aria-label="breadcrumb">
             {
@@ -180,7 +180,7 @@ export default function StudentsSidebar() {
             color: 'white',
             fontSize: '30px'
           }}>
-            LOGO
+            <img src={logo} alt="" width={'80px'} />
           </Button>
         </DrawerHeader>
         <Box sx={{ display: 'flex', flexDirection: 'column', height: '100%', background: '#fff' }}>

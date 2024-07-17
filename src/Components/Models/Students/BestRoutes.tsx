@@ -114,17 +114,6 @@ export default function BestRoutes() {
                 }}>
                     Las mejores Rutas
                 </Typography>
-                <Button sx={{
-                    color: 'white',
-                    backgroundColor: '#307071',
-                    py: '8px',
-                    px: '16px',
-                    borderRadius: '10px',
-                    height: 'fit-content',
-                    ":hover": {
-                        color: '#307071'
-                    }
-                }}>Ver mas...</Button>
             </Stack>
             <Stack sx={{
                 flexDirection: 'row',

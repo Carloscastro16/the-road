@@ -24,7 +24,7 @@ export default function RoadsDataTable({ initialData }: any) {
   const theme = useTheme();
   const isTablet = useMediaQuery(theme.breakpoints.down('md'));
   const columns: GridColDef[] = [
-    { field: 'title', headerName: 'Titulo', width: 110 },
+    { field: 'title', headerName: 'Titulo', width: 250 },
     { field: 'easyDescription', headerName: 'Descripción Corta', width: 250 },
     { field: 'fullDescription', headerName: 'Descripción Larga', width: 300 },
     {

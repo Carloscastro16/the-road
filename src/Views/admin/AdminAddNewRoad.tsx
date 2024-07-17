@@ -213,14 +213,15 @@ const CreateRoads: React.FC = () => {
                                     justifyContent: 'flex-start',
                                     gap: '20px',
                                     borderRadius: '8px',
-                                    background: 'white'
+                                    background: 'white',
+                                    boxShadow: 'rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px'
                                 }} key={index}>
                                     <Box sx={{
                                         width: '104px',
                                         height: '82px',
                                         borderRadius: '8px'
                                     }}>
-                                        <img src={card.img} alt={card.title} width={'100%'} height={'100%'} />
+                                        <img src={card.bannerImg} alt={card.title} width={'100%'} height={'100%'} />
                                     </Box>
                                     <Stack flexDirection={'column'}>
                                         <Typography sx={{
@@ -234,7 +235,7 @@ const CreateRoads: React.FC = () => {
                                             <Typography sx={{
                                                 fontSize: '14px',
                                                 fontWeight: '400',
-                                            }}>{card.language}</Typography>
+                                            }}>{card.genre}</Typography>
                                             <Box sx={{
                                                 width: '4px',
                                                 height: '4px',
@@ -242,17 +243,10 @@ const CreateRoads: React.FC = () => {
                                                 opacity: '0.7',
                                                 borderRadius: '50%'
                                             }}></Box>
-                                        </Stack>
-                                        <Stack alignItems={'center'} justifyContent={'flex-start'} flexDirection={'row'} gap={'10px'} sx={{
-                                            color: 'black',
-                                            opacity: '0.4',
-                                        }}>
                                             <Typography sx={{
                                                 fontSize: '14px',
-                                                fontWeight: '900',
-                                            }}>
-                                                {card.punctuation}
-                                            </Typography>
+                                                fontWeight: '400',
+                                            }}>{card.questions.length} Preguntas</Typography>
                                         </Stack>
                                     </Stack>
                                     <FormControlLabel

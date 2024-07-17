@@ -11,10 +11,6 @@ export interface RoadData {
     img: string;
     activityDetails: Activity[];
 }
-export interface Activity {
-    _id?: any;
-    title: string;
-}
 
 // Usuarios
 
@@ -52,7 +48,7 @@ export interface Activity {
     description: string;
     questions: Preguntas[];
     genre: string;
-    bannerImg: string;
+    bannerImg: string
 }
 
 export interface Preguntas {

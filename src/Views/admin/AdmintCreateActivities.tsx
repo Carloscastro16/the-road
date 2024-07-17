@@ -201,18 +201,6 @@ const CreateActivity: React.FC = () => {
                         }
                     </Select>
                 </FormControl>
-                <Box>
-                    <div className="question-image-upload">
-                        {bannerImagePreview && <img src={bannerImagePreview} alt="Vista previa de la imagen" className="image-preview" />}
-                    </div>
-                    <input
-                        type="file"
-                        id='upload-banner'
-                        className="upload-image"
-                        onChange={(e) => handleBannerImageUpload(e.target.files![0])}
-                    />
-                    <label htmlFor={`upload-banner`} className="upload-image-button">Subir imagen</label>
-                </Box>
                 <div className="description-container">
                     <label htmlFor="activityDescription">Descripción</label>
                     <label htmlFor="activityDescription" className="char-counter">{activityDescription.length}/150</label>
@@ -225,6 +213,39 @@ const CreateActivity: React.FC = () => {
                         className="activity-textarea"
                     />
                 </div>
+                <Box sx={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    flexDirection: 'column',
+                    width: '100%',
+                    gap: '16px'
+                }}>
+                    <input
+                        type="file"
+                        id={`upload-banner-img`}
+                        className="upload-image"
+                        onChange={(e) => handleBannerImageUpload(e.target.files![0])}
+                    />
+                    <label htmlFor={`upload-banner-img`} className="upload-image-button">Subir imagen</label>
+                    <Box sx={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        width: '100%',
+                    }}>
+                        <Box className="question-image-upload" sx={{
+                            height: '200px',
+                            width: '200px',
+                            opacity: '.5',
+                            background: `url(${bannerImagePreview})`,
+                            backgroundPosition: 'center',
+                            backgroundSize: 'cover',
+                            position: 'relative',
+                        }}>
+                        </Box>
+                    </Box>
+                </Box>
             </div>
             {questions.map((question, index) => (
                 <div className="question-card" key={index}>

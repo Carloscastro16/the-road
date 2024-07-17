@@ -28,8 +28,9 @@ const ActivitiesDataTable: React.FC = () => {
   const isTablet = useMediaQuery(theme.breakpoints.down('md'));
 
   const columns: GridColDef[] = [
-    { field: 'title', headerName: 'Titulo', width: 110 },
-    { field: 'genre', headerName: 'Genero', width: 300 },
+    { field: 'title', headerName: 'Titulo', width: 250 },
+    { field: 'description', headerName: 'Descripción', width: 220 },
+    { field: 'genre', headerName: 'Genero', width: 100 },
     {
       field: 'actions',
       headerName: 'Acciones',
