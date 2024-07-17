@@ -1,13 +1,24 @@
 // components/UsersDataTable.tsx
 import React, { useEffect, useState } from 'react';
 import { DataGrid, GridColDef, GridDeleteIcon, GridRenderCellParams } from '@mui/x-data-grid';
-import { Box, Dialog, DialogContent, DialogTitle, IconButton, useMediaQuery, useTheme } from '@mui/material';
+import { Box, Dialog, DialogContent, DialogTitle, IconButton, styled, useMediaQuery, useTheme } from '@mui/material';
 import { EditNotifications } from '@mui/icons-material';
 import { User } from '../../../Services/Interfaces/Interfaces';
 import * as usersService from '../../../Services/Api/UsersService';
 import Swal from 'sweetalert2';
 import UserForm from './Forms/UserForm';
-
+const StyledDataGrid = styled(DataGrid)(() => ({
+  '& .MuiDataGrid-row:nth-of-type(odd)': {
+    backgroundColor: '#f0f0f0',
+    border: 'none' // color gris claro para filas impares
+  },
+  '& .MuiDataGrid-withBorderColor': {
+    border: 'transparent' // color gris claro para filas impares
+  },
+  '& .MuiDataGrid-cell': {
+    borderTop: '0px transparent' // color gris claro para filas impares
+  },
+}));
 function UsersDataTable({ initialData }: any) {
   const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState(true);
@@ -164,7 +175,7 @@ function UsersDataTable({ initialData }: any) {
         backgroundColor: '#FFFFFF',
         overflowX: 'scroll'
       }}>
-        <DataGrid
+        <StyledDataGrid
           rows={users}
           columns={isTablet ? mobileColumns : columns}
           loading={loading}

@@ -242,6 +242,7 @@ main {
 }
 .contenedor__login-register .login-btn.google{
   margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 .formulario__login {

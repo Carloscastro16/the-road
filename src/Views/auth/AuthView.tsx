@@ -136,15 +136,15 @@ const Auth: React.FC = () => {
           </div>
         </div>
         <div className="contenedor__login-register">
-          <form onSubmit={handleSubmitLogin} className="formulario__login active">
+          <form className="formulario__login active">
             <h2>Iniciar Sesión</h2>
             <input type="text" placeholder="Correo Electronico" onChange={(e) => setEmail(e.target.value)} />
             <input type="password" placeholder="Contraseña" onChange={(e) => setPassword(e.target.value)} />
-            <button type="submit" className='login-btn login'>Entrar</button>
+            <button type="submit" className='login-btn login' onClick={handleSubmitLogin}>Entrar</button>
             <button type="button" className='login-btn google' onClick={handleGoogleLogin}>
               Iniciar Sesión con Google
             </button>
-            <button type="button" onClick={handleFacebookLogin}>
+            <button type="button" className='login-btn' onClick={handleFacebookLogin}>
               Iniciar Sesión con facebook
             </button>
           </form>

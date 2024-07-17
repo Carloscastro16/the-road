@@ -161,7 +161,7 @@ export default function MyRoads() {
                                 }}>
                                     <Box sx={{
                                         height: '180px',
-                                        width: '220px',
+                                        width: '240px',
                                         borderRadius: '10px 10px 0 0',
                                         background: `url(${card.img})`,
                                         backgroundPosition: 'center',
@@ -172,7 +172,8 @@ export default function MyRoads() {
                                     <Box sx={{
                                         background: 'white',
                                         borderRadius: '0 0 10px 10px',
-                                        width: '220px'
+                                        width: '240px',
+                                        height: '125px'
                                     }}>
                                         <Stack sx={{
                                             height: '100%',
@@ -187,6 +188,7 @@ export default function MyRoads() {
                                                 fontFamily: 'Montserrat',
                                                 marginBottom: '10px',
                                                 textAlign: 'center',
+                                                fontWeight: 'bold'
                                             }}>{card.title}</Typography>
                                             <Typography sx={{
                                                 whiteSpace: 'wrap',
