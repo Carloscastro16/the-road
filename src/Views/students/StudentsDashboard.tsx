@@ -13,7 +13,6 @@ export default function StudentsDashboard(){
                 <News></News>
             </Grid>
             <Grid item xs={12}>
-                <BestRoutes></BestRoutes>
             </Grid>
             <Grid item xs={12}>
                 <ActivitiesList></ActivitiesList>

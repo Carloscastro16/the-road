@@ -146,8 +146,24 @@ export default function MyRoads() {
                 width: '100%'
             }}>
                 <Swiper
-                    spaceBetween={10}
-                    slidesPerView={4}
+                 spaceBetween={20}
+                 slidesPerView={1}
+                 breakpoints={{
+                     600: {
+                         slidesPerView: 2,
+                         spaceBetween: 20,
+                     },
+                     900: {
+                         slidesPerView: 3,
+                         spaceBetween: 30,
+                     },
+                     1200: {
+                         slidesPerView: 4,
+                         spaceBetween: 40,
+                     },
+                 }}
+                 navigation
+                 pagination={{ clickable: true }}
                 >
                     {roads.slice(0, 6).map((card, index) => {
                         return (
