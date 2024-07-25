@@ -143,12 +143,18 @@ export default function MyRoads() {
                 }}>Ver mas...</Button>
             </Stack>
             <Box sx={{
-                width: '100%'
+                width: '86vw'
             }}>
                 <Swiper
                  spaceBetween={20}
                  slidesPerView={1}
+                 initialSlide={2}
+                 centeredSlides={true}
                  breakpoints={{
+                     400: {
+                         slidesPerView: 2,
+                         spaceBetween: 20,
+                     },
                      600: {
                          slidesPerView: 2,
                          spaceBetween: 20,

@@ -124,8 +124,8 @@ const CreateRoads: React.FC = () => {
         navigate(-1); // Esto te llevará a la página anterior
     };
     const markSelectedActivity = (card: any) => {
-        const isSelected = selectedActivities.includes(card._id)
-        console.log(isSelected)
+        const isSelected = selectedActivities.includes(card._id);
+        console.log(isSelected);
         return isSelected;
     }
     useEffect(() => {
@@ -145,37 +145,41 @@ const CreateRoads: React.FC = () => {
             alignItems: 'center',
             justifyContent: 'center',
             marginTop: '32px',
-            paddingInline: '48px'
+            paddingInline: { xs: '16px', sm: '24px', md: '48px' }
         }}>
             <Box sx={{
                 background: '#fff',
-                padding: '24px',
+                padding: { xs: '16px', sm: '24px' },
                 borderRadius: '10px',
-                width: '100%'
+                width: '100%',
+                maxWidth: '800px',
+                boxShadow: '0 4px 8px rgba(0,0,0,0.1)'
             }}>
                 <Box component="form" onSubmit={handleSubmit} sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
                     <Box onClick={handleGoBack} sx={{
                         background: '#82C6C1',
-                        width: '45px',
+                        width: '40px',
                         zIndex: 100,
                         borderRadius: '50%',
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
-                        padding: '10px',
+                        padding: '8px',
                         cursor: 'pointer'
                     }}>
                         <ArrowBackIcon sx={{
-                            color: '#fff'
-                        }}></ArrowBackIcon>
+                            color: '#fff',
+                            fontSize: { xs: '20px', sm: '24px' }
+                        }} />
                     </Box>
-                    <Typography variant="h4">Formulario de Rutas</Typography>
+                    <Typography variant="h4" sx={{ fontSize: { xs: '20px', sm: '24px', md: '28px' } }}>Formulario de Rutas</Typography>
                     <TextField
                         name="title"
                         label="Título"
                         value={formData.title}
                         onChange={handleChange}
                         fullWidth
+                        sx={{ fontSize: { xs: '12px', sm: '14px' } }}
                     />
                     <TextField
                         name="easyDescription"
@@ -185,6 +189,7 @@ const CreateRoads: React.FC = () => {
                         multiline
                         rows={4}
                         fullWidth
+                        sx={{ fontSize: { xs: '12px', sm: '14px' } }}
                     />
                     <TextField
                         name="fullDescription"
@@ -194,6 +199,7 @@ const CreateRoads: React.FC = () => {
                         multiline
                         rows={6}
                         fullWidth
+                        sx={{ fontSize: { xs: '12px', sm: '14px' } }}
                     />
                     <TextField
                         name="duration"
@@ -201,6 +207,7 @@ const CreateRoads: React.FC = () => {
                         value={formData.duration}
                         onChange={handleChange}
                         fullWidth
+                        sx={{ fontSize: { xs: '12px', sm: '14px' } }}
                     />
                     <Box>
                         <input
@@ -208,13 +215,21 @@ const CreateRoads: React.FC = () => {
                             id={`upload-img`}
                             className="upload-image"
                             onChange={(e) => handleImageUpload(e.target.files![0])}
+                            style={{ display: 'none' }}
                         />
-                        <label htmlFor={`upload-img`} className="upload-image-button">Subir imagen</label>
+                        <label htmlFor={`upload-img`} className="upload-image-button" style={{
+                            display: 'inline-block',
+                            padding: '8px 16px',
+                            backgroundColor: '#82C6C1',
+                            color: '#fff',
+                            borderRadius: '4px',
+                            cursor: 'pointer'
+                        }}>Subir imagen</label>
                     </Box>
                     {imagePreview && (
-                        <Box sx={{ marginTop: 2, textAlign: 'center', opacity: .4 }}>
-                            <Typography variant="subtitle1">Vista previa de la imagen:</Typography>
-                            <img src={imagePreview} alt="Vista previa" style={{ maxWidth: '100%', height: 'auto', width: '40%' }} />
+                        <Box sx={{ marginTop: 2, textAlign: 'center', opacity: .6 }}>
+                            <Typography variant="subtitle1" sx={{ fontSize: { xs: '12px', sm: '14px' } }}>Vista previa de la imagen:</Typography>
+                            <img src={imagePreview} alt="Vista previa" style={{ maxWidth: '100%', height: 'auto', width: '100%' }} />
                         </Box>
                     )}
                     <Stack>
@@ -222,11 +237,14 @@ const CreateRoads: React.FC = () => {
                             marginTop: '16px',
                             marginBottom: '16px',
                         }}>
-                            <Typography fontSize={'26px'}>Actividades</Typography>
+                            <Typography sx={{
+                                fontSize: { xs: '18px', sm: '20px', md: '26px' },
+                                fontWeight: 'bold'
+                            }}>Actividades</Typography>
                         </Box>
                         <Stack sx={{
                             flexDirection: 'row',
-                            gap: '32px',
+                            gap: '16px',
                             flexWrap: 'wrap',
                             mt: '24px',
                             mb: '32px',
@@ -235,36 +253,36 @@ const CreateRoads: React.FC = () => {
                             {activities.map((card: any, index: any) => (
                                 <Box sx={{
                                     p: '10px',
-                                    paddingRight: '38px',
                                     display: 'flex',
                                     alignItems: 'center',
                                     justifyContent: 'flex-start',
-                                    gap: '20px',
+                                    gap: {xs:'10px', md:'16px'},
                                     borderRadius: '8px',
                                     background: 'white',
                                     boxShadow: 'rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px'
                                 }} key={index}>
                                     <Box sx={{
-                                        width: '104px',
-                                        height: '82px',
+                                        width: { xs: '60px', md: '80px' },
+                                        height: { xs: 'auto', md: '60px' },
                                         borderRadius: '8px'
                                     }}>
                                         <img src={card.bannerImg} alt={card.title} width={'100%'} height={'100%'} />
                                     </Box>
                                     <Stack flexDirection={'column'}>
                                         <Typography sx={{
-                                            fontSize: '16px',
+                                            fontSize: { xs: '14px', sm: '16px' },
                                             fontWeight: 'bold'
                                         }}>{card.title}</Typography>
-                                        <Stack alignItems={'center'} justifyContent={'flex-start'} flexDirection={'row'} gap={'10px'} sx={{
+                                        <Stack alignItems={'center'} justifyContent={'flex-start'} flexDirection={'row'} gap={'8px'} sx={{
                                             color: 'black',
                                             opacity: '0.7',
                                         }}>
                                             <Typography sx={{
-                                                fontSize: '14px',
+                                                fontSize: { xs: '10px', sm: '12px', md: '14px' },
                                                 fontWeight: '400',
                                             }}>{card.genre}</Typography>
                                             <Box sx={{
+                                                display: {xs: 'none', md:'inline-flex'},
                                                 width: '4px',
                                                 height: '4px',
                                                 background: 'black',
@@ -272,7 +290,8 @@ const CreateRoads: React.FC = () => {
                                                 borderRadius: '50%'
                                             }}></Box>
                                             <Typography sx={{
-                                                fontSize: '14px',
+                                                display: {xs: 'none', md:'inline-flex'},
+                                                fontSize: { xs: '10px', sm: '12px', md: '14px' },
                                                 fontWeight: '400',
                                             }}>{card.questions.length} Preguntas</Typography>
                                         </Stack>
@@ -280,19 +299,19 @@ const CreateRoads: React.FC = () => {
                                     <FormControlLabel
                                         control={
                                             <Checkbox
-                                                checked={markSelectedActivity(card)} // Aquí usamos card._id
-                                                onChange={(e) => handleActivityChange(e, card._id)} // Aquí usamos card._id
+                                                checked={markSelectedActivity(card)}
+                                                onChange={(e) => handleActivityChange(e, card._id)}
                                                 name={card.title}
                                             />
                                         }
                                         label=""
+                                        sx={{ m: 0 }} // Establece el margen izquierdo en 0
                                     />
                                 </Box>
                             ))}
                         </Stack>
                     </Stack>
-                    {/* Aquí puedes agregar un formulario similar para activityDetails */}
-                    <Button type="submit" variant="contained" color="primary">
+                    <Button type="submit" variant="contained" color="primary" sx={{ fontSize: { xs: '12px', sm: '14px' } }}>
                         Enviar
                     </Button>
                 </Box>
@@ -300,4 +319,5 @@ const CreateRoads: React.FC = () => {
         </Box>
     );
 };
+
 export default CreateRoads;

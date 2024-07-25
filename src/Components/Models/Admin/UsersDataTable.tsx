@@ -1,41 +1,61 @@
-// components/UsersDataTable.tsx
 import React, { useEffect, useState } from 'react';
-import { DataGrid, GridColDef, GridDeleteIcon, GridRenderCellParams } from '@mui/x-data-grid';
+import { DataGrid, GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
 import { Box, Dialog, DialogContent, DialogTitle, IconButton, styled, useMediaQuery, useTheme } from '@mui/material';
-import { EditNotifications } from '@mui/icons-material';
+import { EditNotifications, Delete as DeleteIcon } from '@mui/icons-material';
+import Swal from 'sweetalert2';
 import { User } from '../../../Services/Interfaces/Interfaces';
 import * as usersService from '../../../Services/Api/UsersService';
-import Swal from 'sweetalert2';
 import UserForm from './Forms/UserForm';
-const StyledDataGrid = styled(DataGrid)(() => ({
+
+const StyledDataGrid = styled(DataGrid)(({ theme }) => ({
   '& .MuiDataGrid-row:nth-of-type(odd)': {
     backgroundColor: '#f0f0f0',
-    border: 'none' // color gris claro para filas impares
-  },
-  '& .MuiDataGrid-withBorderColor': {
-    border: 'transparent' // color gris claro para filas impares
+    border: 'none',
   },
   '& .MuiDataGrid-cell': {
-    borderTop: '0px transparent' // color gris claro para filas impares
+    borderTop: '0px transparent',
+  },
+  // Estilo específico para tablet
+  [theme.breakpoints.down('md')]: {
+    '& .MuiDataGrid-cell': {
+      fontSize: '0.75rem',
+    },
+    '& .MuiDataGrid-columnHeaders': {
+      fontSize: '0.875rem',
+    },
+  },
+  // Estilo específico para móvil
+  [theme.breakpoints.down('sm')]: {
+    '& .MuiDataGrid-cell': {
+      fontSize: '0.65rem',
+    },
+    '& .MuiDataGrid-columnHeaders': {
+      fontSize: '0.75rem',
+    },
   },
 }));
+
+
 function UsersDataTable({ initialData }: any) {
-  const [users, setUsers] = useState<User[]>([]);
+  const [users, setUsers] = useState<User[]>(initialData || []);
   const [loading, setLoading] = useState(true);
-  const [selectedUser, setSelectedUser] = useState<object>({});
+  const [selectedUser, setSelectedUser] = useState<User | null>(null);
   const [open, setOpen] = useState(false);
+
   const theme = useTheme();
   const isTablet = useMediaQuery(theme.breakpoints.down('md'));
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const columns: GridColDef[] = [
     { field: 'name', headerName: 'Nombre', width: 150 },
     { field: 'email', headerName: 'Correo Electrónico', width: 250 },
     { field: 'rolename', headerName: 'Rol', width: 150 },
     { field: 'points', headerName: 'Puntos', width: 150 },
     {
-      field: 'creationDate', headerName: 'Fecha de Creación', width: 200, type: 'date',
-      valueGetter: ((params) => {
-        return new Date(params);
-      })
+      field: 'creationDate',
+      headerName: 'Fecha de Creación',
+      width: 200,
+      type: 'date',
+      valueGetter: (params) => new Date(params),
     },
     {
       field: 'actions',
@@ -44,7 +64,7 @@ function UsersDataTable({ initialData }: any) {
       renderCell: (params: GridRenderCellParams) => (
         <>
           <IconButton
-            onClick={() => handleEdit(params.row)}
+            onClick={() => handleEdit(params.row as User)}
             color="primary"
             aria-label="edit"
           >
@@ -55,23 +75,17 @@ function UsersDataTable({ initialData }: any) {
             color="secondary"
             aria-label="delete"
           >
-            <GridDeleteIcon />
+            <DeleteIcon />
           </IconButton>
         </>
       ),
     },
   ];
-  const mobileColumns: GridColDef[] = [
+  
+  const tabletColumns: GridColDef[] = [
     { field: 'name', headerName: 'Nombre', width: 150 },
-    { field: 'email', headerName: 'Correo Electrónico', width: 250 },
     { field: 'rolename', headerName: 'Rol', width: 150 },
-    { field: 'points', headerName: 'Puntos', width: 150 },
-    {
-      field: 'creationDate', headerName: 'Fecha de Creación', width: 200, type: 'date',
-      valueGetter: ((params) => {
-        return new Date(params);
-      })
-    },
+    { field: 'points', headerName: 'Puntos', width: 100 },
     {
       field: 'actions',
       headerName: 'Acciones',
@@ -79,7 +93,7 @@ function UsersDataTable({ initialData }: any) {
       renderCell: (params: GridRenderCellParams) => (
         <>
           <IconButton
-            onClick={() => handleEdit(params.row)}
+            onClick={() => handleEdit(params.row as User)}
             color="primary"
             aria-label="edit"
           >
@@ -90,13 +104,40 @@ function UsersDataTable({ initialData }: any) {
             color="secondary"
             aria-label="delete"
           >
-            <GridDeleteIcon />
+            <DeleteIcon />
+          </IconButton>
+        </>
+      ),
+    },
+  ]; // Usa las mismas columnas para tablet en este ejemplo
+  
+  const mobileColumns: GridColDef[] = [
+    { field: 'name', headerName: 'Nombre', width: 120 },
+    {
+      field: 'actions',
+      headerName: 'Acciones',
+      width: 120,
+      renderCell: (params: GridRenderCellParams) => (
+        <>
+          <IconButton
+            onClick={() => handleEdit(params.row as User)}
+            color="primary"
+            aria-label="edit"
+          >
+            <EditNotifications />
+          </IconButton>
+          <IconButton
+            onClick={() => confirmDelete(params.row._id)}
+            color="secondary"
+            aria-label="delete"
+          >
+            <DeleteIcon />
           </IconButton>
         </>
       ),
     },
   ];
-
+  
   const confirmDelete = (id: string) => {
     Swal.fire({
       title: '¿Estás seguro?',
@@ -109,7 +150,6 @@ function UsersDataTable({ initialData }: any) {
       cancelButtonText: 'Cancelar'
     }).then((result) => {
       if (result.isConfirmed) {
-        console.log('usuario con: ', id)
         handleDelete(id);
         Swal.fire(
           '¡Eliminado!',
@@ -119,29 +159,28 @@ function UsersDataTable({ initialData }: any) {
       }
     });
   };
+
   const handleFormSubmit = async (data: User) => {
     try {
-      const response = await usersService.updateUserById(data);
-      console.log(response);
+      await usersService.updateUserById(data);
       await getUsers();
       handleClose();
-      return response;
     } catch (error) {
       console.error('Error updating data:', error);
     }
   };
+
   const handleClose = () => {
     setOpen(false);
-    setSelectedUser({});
+    setSelectedUser(null);
   };
+
   const handleDelete = async (id: string) => {
     try {
-      const response = await usersService.deleteUserById(id);
+      await usersService.deleteUserById(id);
       await getUsers();
-      return response
     } catch (error) {
-      console.error('Error eliminando actividad:', error);
-      throw new Error;
+      console.error('Error eliminando usuario:', error);
     }
   };
 
@@ -153,10 +192,9 @@ function UsersDataTable({ initialData }: any) {
   const getUsers = async () => {
     try {
       const data = await usersService.fetchUsers();
-      const newData = data.data;
-      setUsers(newData);
+      setUsers(data.data);
     } catch (error) {
-      console.error('Error fetching roads:', error);
+      console.error('Error fetching users:', error);
     } finally {
       setLoading(false);
     }
@@ -177,7 +215,7 @@ function UsersDataTable({ initialData }: any) {
       }}>
         <StyledDataGrid
           rows={users}
-          columns={isTablet ? mobileColumns : columns}
+          columns={isMobile ? mobileColumns : (isTablet ? tabletColumns : columns)}
           loading={loading}
           getRowId={(row) => row._id || ''}
         />
@@ -185,11 +223,11 @@ function UsersDataTable({ initialData }: any) {
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Editar Usuario</DialogTitle>
         <DialogContent>
-          <UserForm initialData={selectedUser} onSubmit={handleFormSubmit} isEdit={true} />
+          {selectedUser && <UserForm initialData={selectedUser} onSubmit={handleFormSubmit} isEdit={true} />}
         </DialogContent>
       </Dialog>
     </>
   );
-};
+}
 
 export default UsersDataTable;

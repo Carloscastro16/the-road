@@ -3,9 +3,11 @@ import RoadsDataTable from "../../Components/Models/Admin/RoadsDataTable";
 import { Box, Button, Grid, TextField } from "@mui/material";
 import { Link } from "react-router-dom";
 import * as roadsService from '../../Services/Api/RoadsService'
+
 export default function AdminRoutes() {
     const [roads, setRoads] = useState([]);
     const [loading, setLoading] = useState(false);
+
     const getRoads = async () => {
         try {
             const data = await roadsService.fetchRoads();
@@ -16,18 +18,20 @@ export default function AdminRoutes() {
             setLoading(false);
         }
     };
+
     useEffect(() => {
         getRoads();
     }, []);
+
     return (
         <Grid container spacing={2} sx={{
             width: '100%',
-            paddingInline: '42px',
+            paddingInline: { xs: '16px', sm: '24px', md: '42px' },
             mt: '24px',
         }}>
-            <Grid item xs={12} >
-                <Grid container spacing={3}>
-                    <Grid item xs={10}>
+            <Grid item xs={12}>
+                <Grid container spacing={2}>
+                    <Grid item xs={12} sm={10}>
                         <Box sx={{
                             width: '100%',
                             display: 'flex',
@@ -45,12 +49,12 @@ export default function AdminRoutes() {
                             }} />
                         </Box>
                     </Grid>
-                    <Grid item xs={2}>
+                    <Grid item xs={12} sm={2}>
                         <Link to={'/administrador/crear-ruta'}>
                             <Button variant="contained" sx={{
                                 width: "100%",
                                 height: "100%",
-                                fontSize: "24px",
+                                fontSize: { xs: '18px', sm: '16px', md: '24px'},
                             }}>
                                 Agregar
                             </Button>
@@ -59,8 +63,8 @@ export default function AdminRoutes() {
                 </Grid>
             </Grid>
             <Grid item xs={12}>
-                <RoadsDataTable initialData={roads}></RoadsDataTable>
+                <RoadsDataTable initialData={roads} />
             </Grid>
         </Grid>
-    )
+    );
 }

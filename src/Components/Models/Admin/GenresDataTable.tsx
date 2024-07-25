@@ -6,24 +6,27 @@ import Swal from 'sweetalert2';
 import { Genre } from '../../../Services/Interfaces/Interfaces';
 import * as genreService from '../../../Services/Api/GenresService';
 import GenreForm from './Forms/GenresForm';
+
 const StyledDataGrid = styled(DataGrid)(() => ({
   '& .MuiDataGrid-row:nth-of-type(odd)': {
     backgroundColor: '#f0f0f0',
-    border: 'none' // color gris claro para filas impares
+    border: 'none'
   },
   '& .MuiDataGrid-withBorderColor': {
-    border: 'transparent' // color gris claro para filas impares
+    border: 'transparent'
   },
   '& .MuiDataGrid-cell': {
-    borderTop: '0px transparent' // color gris claro para filas impares
+    borderTop: '0px transparent'
   },
 }));
+
 function GenresDataTable({ initialData }: any) {
   const emptyGenre: Genre = {
     _id: '',
     title: '',
     cantidad: 0,
   };
+
   const [genres, setGenres] = useState<Genre[]>(initialData || []);
   const [loading, setLoading] = useState(true);
   const [selectedGenre, setSelectedGenre] = useState<Genre>(emptyGenre);
@@ -31,12 +34,12 @@ function GenresDataTable({ initialData }: any) {
   const [forceRender, setForceRender] = useState(0); // Estado para forzar la re-renderización
 
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
-  const isTablet = useMediaQuery(theme.breakpoints.down('md'));
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const isTablet = useMediaQuery(theme.breakpoints.between('sm', 'md'));
 
   const columns: GridColDef[] = [
-    { field: 'title', headerName: 'Titulo', width: 280 },
-    { field: 'cantidad', headerName: 'Cantidad de Vistas', width: 300 },
+    { field: 'title', headerName: 'Titulo', width: 780 },
+    { field: 'cantidad', headerName: 'Cantidad de Vistas', width: 400 },
     {
       field: 'actions',
       headerName: 'Acciones',
@@ -62,12 +65,40 @@ function GenresDataTable({ initialData }: any) {
     },
   ];
 
-  const mobileColumns: GridColDef[] = [
-    { field: 'title', headerName: 'Titulo', width: 210 },
+  const tabletColumns: GridColDef[] = [
+    { field: 'title', headerName: 'Titulo', width: 220 },
+    { field: 'cantidad', headerName: 'Cantidad de Vistas', width: 150 },
     {
       field: 'actions',
       headerName: 'Acciones',
-      width: 250,
+      width: 200,
+      renderCell: (params: GridRenderCellParams) => (
+        <>
+          <IconButton
+            onClick={() => handleEdit(params.row)}
+            color="primary"
+            aria-label="edit"
+          >
+            <EditNotifications />
+          </IconButton>
+          <IconButton
+            onClick={() => confirmDelete(params.row._id)}
+            color="secondary"
+            aria-label="delete"
+          >
+            <DeleteIcon />
+          </IconButton>
+        </>
+      ),
+    },
+  ];
+
+  const mobileColumns: GridColDef[] = [
+    { field: 'title', headerName: 'Titulo', width: 150 },
+    {
+      field: 'actions',
+      headerName: 'Acciones',
+      width: 100,
       renderCell: (params: GridRenderCellParams) => (
         <>
           <IconButton
@@ -137,7 +168,7 @@ function GenresDataTable({ initialData }: any) {
       setGenres((prevGenres) => prevGenres.filter((genre) => genre._id !== id));
       setForceRender((prev) => prev + 1); // Cambia el estado para forzar la re-renderización
     } catch (error) {
-      console.error('Error eliminando actividad:', error);
+      console.error('Error eliminando género:', error);
     }
   };
 
@@ -160,7 +191,7 @@ function GenresDataTable({ initialData }: any) {
     } else {
       setLoading(false);
     }
-  }, []);
+  }, [initialData]);
 
   return (
     <>
@@ -174,13 +205,14 @@ function GenresDataTable({ initialData }: any) {
         <StyledDataGrid
           key={`data-grid-${forceRender}`} // Agrega la clave para forzar la re-renderización
           rows={genres}
-          columns={isMobile ? mobileColumns : columns}
+          columns={isMobile ? mobileColumns : isTablet ? tabletColumns : columns}
           loading={loading}
           getRowId={(row) => row._id || ''}
+          autoHeight
         />
       </Box>
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>Editar Genero</DialogTitle>
+        <DialogTitle>Editar Género</DialogTitle>
         <DialogContent>
           <GenreForm initialData={selectedGenre} onSubmit={handleFormSubmit} />
         </DialogContent>

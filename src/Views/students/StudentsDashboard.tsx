@@ -6,13 +6,14 @@ import React from "react";
 export default function StudentsDashboard(){
     return(
         <Grid container spacing={2} sx={{
-            paddingInline: '42px',
+            paddingInline: {xs:'20px',sm:'24px',md:'42px'},
             mt:'32px'
         }}>
             <Grid item xs={12} >
                 <News></News>
             </Grid>
             <Grid item xs={12}>
+                <BestRoutes></BestRoutes>
             </Grid>
             <Grid item xs={12}>
                 <ActivitiesList></ActivitiesList>

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useState } from 'react';
-import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from '@mui/material';
+import { Button, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, TextField, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import {
     ref,
@@ -159,11 +159,11 @@ const CreateActivity: React.FC = () => {
         console.log('Formulario enviado:', activityData);
         const res = await onCreateActivity(activityData);
         console.log(res);
-        if(res.status === 200){
+        if (res.status === 200) {
             Swal.fire({
                 title: 'Actividad Actualizada Correctamente'
             })
-        }else{
+        } else {
             Swal.fire({
                 title: 'Hubo un error al Actualizar tu actividad'
             })
@@ -179,226 +179,209 @@ const CreateActivity: React.FC = () => {
     useEffect(() => {
         fetchGenres();
     }, [])
+
+    // Dentro del return
     return (
-        <Box sx={{
-            marginTop: '32px'
-        }} className="activity-container">
+        <Box sx={{ marginTop: '32px' }} className="activity-container">
             <div className="activity-header">
-                <label htmlFor="activityTitle" className="activity-title-label">Título</label>
-                <input
+                <TextField
                     id="activityTitle"
-                    type="text"
+                    label="Título"
                     value={activityTitle}
                     onChange={(e) => setActivityTitle(e.target.value)}
                     placeholder="Título de la Actividad"
-                    className="activity-input"
+                    fullWidth
                 />
-                <FormControl fullWidth>
-                    <InputLabel id="demo-simple-select-label">Genero</InputLabel>
+                <FormControl fullWidth sx={{ marginTop: '16px' }}>
+                    <InputLabel id="genre-select-label">Género</InputLabel>
                     <Select
-                        labelId="demo-simple-select-label"
-                        id="demo-simple-select"
+                        labelId="genre-select-label"
+                        id="genre-select"
                         value={genre}
-                        label="genre"
+                        label="Género"
                         onChange={handleChange}
                     >
-                        {
-                            genresList.map((genre) => {
-                                return (
-                                    <MenuItem key='genre' value={genre.title}>{genre.title}</MenuItem>
-                                )
-                            })
-                        }
+                        {genresList.map((genre) => (
+                            <MenuItem key={genre.title} value={genre.title}>{genre.title}</MenuItem>
+                        ))}
                     </Select>
                 </FormControl>
-                <div className="description-container">
-                    <label htmlFor="activityDescription">Descripción</label>
-                    <label htmlFor="activityDescription" className="char-counter">{activityDescription.length}/150</label>
-                    <textarea
+                <Box sx={{ marginTop: '16px', width: '100%'}}>
+                    <Typography variant="subtitle1">Descripción</Typography>
+                    <Typography variant="body2" color="textSecondary">{activityDescription.length}/150</Typography>
+                    <TextField
                         id="activityDescription"
                         value={activityDescription}
                         onChange={(e) => setActivityDescription(e.target.value)}
                         placeholder="Descripción de la actividad"
-                        maxLength={150}
-                        className="activity-textarea"
+                        maxRows={4}
+                        multiline
+                        fullWidth
+                        sx={{
+                            width: '100%',
+                        }}
                     />
-                </div>
-                <Box sx={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    flexDirection: 'column',
-                    width: '100%',
-                    gap: '16px'
-                }}>
-                    <input
-                        type="file"
-                        id={`upload-banner-img`}
-                        className="upload-image"
-                        onChange={(e) => handleBannerImageUpload(e.target.files![0])}
-                    />
-                    <label htmlFor={`upload-banner-img`} className="upload-image-button">Subir imagen</label>
-                    <Box sx={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        width: '100%',
-                    }}>
-                        <Box className="question-image-upload" sx={{
-                            height: '200px',
-                            width: '200px',
-                            opacity: '.5',
-                            background: `url(${bannerImagePreview})`,
-                            backgroundPosition: 'center',
-                            backgroundSize: 'cover',
-                            position: 'relative',
-                        }}>
-                        </Box>
-                    </Box>
+                </Box>
+                <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '16px', marginTop: '16px', width: '100%' }}>
+                    <Button
+                        variant="contained"
+                        component="label"
+                    >
+                        Subir imagen
+                        <input
+                            type="file"
+                            id="upload-banner-img"
+                            hidden
+                            onChange={(e) => handleBannerImageUpload(e.target.files![0])}
+                        />
+                    </Button>
+                    <Box sx={{ height: {xs:'80px',sm:'200px',md:'250px'}, width: {xs:'200px',sm:'400px',md:'500px'}, opacity: 0.5, background: `url(${bannerImagePreview})`, backgroundPosition: 'center', backgroundSize: 'cover', position: 'relative', border: '2px dashed #c9c9c9' }} />
                 </Box>
             </div>
             {questions.map((question, index) => (
-                <div className="question-card" key={index}>
-                    <div className="question-header">
-                        <label htmlFor={`question-title-${index}`} className="question-title-label">Título</label>
-                        <input
+                <Box key={index} sx={{ marginTop: '32px' }} className="question-card">
+                    <Box sx={{ marginBottom: '16px' }}>
+                        <TextField
                             id={`question-title-${index}`}
-                            type="text"
+                            label="Título"
                             value={question.title || ''}
                             onChange={(e) => handleTitleChange(index, e.target.value)}
                             placeholder="Título"
-                            className="question-title"
+                            fullWidth
                         />
-                        <InputLabel id="demo-simple-select-label">Tipo de pregunta</InputLabel>
-                        <Select
-                            labelId="demo-simple-select-label"
-                            id="demo-simple-select"
-                            value={question.type}
-                            label="Age"
-                            onChange={(e) => handleTypeChange(index, e.target.value as 'options' | 'order' | 'image-options')}
-                        >
-                            <MenuItem value={'options'}>Opciones</MenuItem>
-                            <MenuItem value={'order'}>Ordenar</MenuItem>
-                            <MenuItem value={'image-options'}>Opciones con imagen</MenuItem>
-                        </Select>
-                    </div>
-                    <div className="description-container">
-                        <label htmlFor={`question-description-${index}`}>Descripción</label>
-                        <label htmlFor={`question-description-${index}`} className="char-counter">{question.description?.length || 0}/150</label>
-                        <textarea
+                        <FormControl fullWidth sx={{ marginTop: '16px' }}>
+                            <InputLabel id={`question-type-label-${index}`}>Tipo de pregunta</InputLabel>
+                            <Select
+                                labelId={`question-type-label-${index}`}
+                                id={`question-type-select-${index}`}
+                                value={question.type}
+                                label="Tipo"
+                                onChange={(e) => handleTypeChange(index, e.target.value as 'options' | 'order' | 'image-options')}
+                            >
+                                <MenuItem value="options">Opciones</MenuItem>
+                                <MenuItem value="order">Ordenar</MenuItem>
+                                <MenuItem value="image-options">Opciones con imagen</MenuItem>
+                            </Select>
+                        </FormControl>
+                    </Box>
+                    <Box sx={{ marginBottom: '16px' }}>
+                        <Typography variant="subtitle1">Descripción</Typography>
+                        <Typography variant="body2" color="textSecondary">{question.description?.length || 0}/150</Typography>
+                        <TextField
                             id={`question-description-${index}`}
                             value={question.description || ''}
                             onChange={(e) => handleDescriptionChange(index, e.target.value)}
                             placeholder="Descripción"
-                            maxLength={150}
-                            className="question-description"
-                        ></textarea>
-                    </div>
+                            maxRows={4}
+                            multiline
+                            fullWidth
+                        />
+                    </Box>
                     {question.type === 'options' && (
-                        <div className="question-options">
-                            <label className="option-label">Opciones</label>
+                        <Box>
+                            <Typography variant="subtitle1">Opciones</Typography>
                             {question.options?.map((option, idx) => (
-                                <div key={idx} className="option">
-                                    <div
-                                        className={`correct-indicator ${option.correct ? 'correct' : 'incorrect'}`}
+                                <Box key={idx} sx={{ display: 'flex', alignItems: 'center', marginBottom: '8px' }}>
+                                    <Box
+                                        sx={{
+                                            width: '20px',
+                                            height: '20px',
+                                            borderRadius: '50%',
+                                            border: '1px solid',
+                                            marginRight: '8px',
+                                            cursor: 'pointer',
+                                            backgroundColor: option.correct ? 'green' : 'red',
+                                        }}
                                         onClick={() => toggleCorrectness(index, idx)}
-                                    ></div>
-                                    <input
+                                    />
+                                    <TextField
                                         id={`option-text-${index}-${idx}`}
-                                        type="text"
                                         value={option.text}
                                         onChange={(e) => handleOptionTextChange(index, idx, e.target.value)}
-                                        maxLength={30}
-                                        className="option-input"
+                                        fullWidth
                                     />
-                                </div>
+                                </Box>
                             ))}
-                            <button className="add-option" onClick={() => addOption(index)}>Nueva opción +</button>
-                        </div>
+                            <Button variant="outlined" onClick={() => addOption(index)}>Nueva opción +</Button>
+                        </Box>
                     )}
                     {question.type === 'order' && (
-                        <div className="question-options order">
-                            <label className="option-label">Opciones</label>
+                        <Box>
+                            <Typography variant="subtitle1">Opciones</Typography>
                             {question.options?.map((option, idx) => (
-                                <div key={idx} className="option">
-                                    <input
+                                <Box key={idx} sx={{ display: 'flex', alignItems: 'center', marginBottom: '8px' }}>
+                                    <TextField
                                         id={`option-text-${index}-${idx}`}
-                                        type="text"
                                         value={option.text}
                                         onChange={(e) => handleOptionTextChange(index, idx, e.target.value)}
-                                        maxLength={30}
-                                        className="option-input"
+                                        fullWidth
+                                        sx={{ marginRight: '8px' }}
                                     />
-                                    <div className="order-input-container">
-                                        <input
-                                            type="number"
-                                            value={option.order}
-                                            onChange={(e) => handleOrderChange(index, idx, parseInt(e.target.value))}
-                                            className="order-input"
-                                            placeholder="1"
-                                        />
-                                    </div>
-                                </div>
+                                    <TextField
+                                        type="number"
+                                        value={option.order}
+                                        onChange={(e) => handleOrderChange(index, idx, parseInt(e.target.value))}
+                                        placeholder="1"
+                                        fullWidth
+                                    />
+                                </Box>
                             ))}
-                            <button className="add-option" onClick={() => addOption(index)}>Nueva opción +</button>
-                        </div>
+                            <Button variant="outlined" onClick={() => addOption(index)}>Nueva opción +</Button>
+                        </Box>
                     )}
                     {question.type === 'image-options' && (
-                        <Box sx={{
-                            display: 'flex',
-                            flexDirection: 'column',
-                        }} className="question-options-with-image">
-                            <Box sx={{
-                                width: '100%',
-                            }} className="question-options">
-                                <label className="option-label">Opciones</label>
+                        <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+                            <Box sx={{ marginBottom: '16px' }}>
+                                <Typography variant="subtitle1">Opciones</Typography>
                                 {question.options?.map((option, idx) => (
-                                    <div key={idx} className="option">
-                                        <div
-                                            className={`correct-indicator ${option.correct ? 'correct' : 'incorrect'}`}
+                                    <Box key={idx} sx={{ display: 'flex', alignItems: 'center', marginBottom: '8px' }}>
+                                        <Box
+                                            sx={{
+                                                width: '20px',
+                                                height: '20px',
+                                                borderRadius: '50%',
+                                                border: '1px solid',
+                                                marginRight: '8px',
+                                                cursor: 'pointer',
+                                                backgroundColor: option.correct ? 'green' : 'red',
+                                            }}
                                             onClick={() => toggleCorrectness(index, idx)}
-                                        ></div>
-                                        <input
+                                        />
+                                        <TextField
                                             id={`option-text-${index}-${idx}`}
-                                            type="text"
                                             value={option.text}
                                             onChange={(e) => handleOptionTextChange(index, idx, e.target.value)}
-                                            maxLength={30}
-                                            className="option-input"
+                                            fullWidth
                                         />
-                                    </div>
+                                    </Box>
                                 ))}
-                                <button className="add-option" onClick={() => addOption(index)}>Nueva opción +</button>
+                                <Button variant="outlined" onClick={() => addOption(index)}>Nueva opción +</Button>
                             </Box>
-                            <Box sx={{
-                                width: '100%',
-                                display: 'flex',
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                                flexDirection: 'column'
-                            }}>
-                                <div className="question-image-upload">
-                                    {imageUpload && <img src={imageUpload} alt="Vista previa de la imagen" className="image-preview" />}
-                                </div>
-                                <input
-                                    type="file"
-                                    id={`upload-${index}`}
-                                    className="upload-image"
-                                    onChange={(e) => handleImageUpload(index, e.target.files![0])}
-                                />
-                                <label htmlFor={`upload-${index}`} className="upload-image-button">Subir imagen</label>
+                            <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                                <Box sx={{ height: '200px', width: '200px', border: '1px solid #ddd', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                                    {imageUpload[index] && <img src={URL.createObjectURL(imageUpload[index])} alt="Vista previa de la imagen" style={{ maxHeight: '100%', maxWidth: '100%' }} />}
+                                </Box>
+                                <Button
+                                    variant="outlined"
+                                    component="label"
+                                    sx={{ marginTop: '16px' }}
+                                >
+                                    Subir imagen
+                                    <input
+                                        type="file"
+                                        id={`upload-${index}`}
+                                        hidden
+                                        onChange={(e) => handleImageUpload(index, e.target.files![0])}
+                                    />
+                                </Button>
                             </Box>
                         </Box>
                     )}
-                </div>
+                </Box>
             ))}
-            <Box sx={{
-                display: 'flex',
-                justifyContent: 'space-between',
-            }}>
-
-                <button className="add-question" onClick={addQuestion}>Nueva pregunta +</button>
-                <button className="add-question" onClick={handleSubmit}>Enviar</button>
+            <Box sx={{ display: 'flex', justifyContent: 'space-between', marginTop: '32px' }}>
+                <Button variant="outlined" onClick={addQuestion}>Nueva pregunta +</Button>
+                <Button variant="contained" color="primary" onClick={handleSubmit}>Enviar</Button>
             </Box>
         </Box>
     );

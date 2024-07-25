@@ -1,31 +1,32 @@
-// components/ActivitiesDataTable.tsx
 import React, { useEffect, useState } from 'react';
 import { DataGrid, GridColDef, GridDeleteIcon, GridRenderCellParams } from '@mui/x-data-grid';
 import { Box, IconButton, styled, useMediaQuery, useTheme } from '@mui/material';
 import { EditNotifications } from '@mui/icons-material';
-import { Activity, Preguntas } from '../../../Services/Interfaces/Interfaces'; // Asegúrate de importar la interfaz correcta
+import { Activity } from '../../../Services/Interfaces/Interfaces'; // Asegúrate de importar la interfaz correcta
 import * as activitiesService from '../../../Services/Api/ActivitiesService';
 import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
+
 const StyledDataGrid = styled(DataGrid)(() => ({
   '& .MuiDataGrid-row:nth-of-type(odd)': {
     backgroundColor: '#f0f0f0',
-    border: 'none' // color gris claro para filas impares
+    border: 'none'
   },
   '& .MuiDataGrid-withBorderColor': {
-    border: 'transparent' // color gris claro para filas impares
+    border: 'transparent'
   },
   '& .MuiDataGrid-cell': {
-    borderTop: '0px transparent' // color gris claro para filas impares
+    borderTop: '0px transparent'
   },
 }));
 
 const ActivitiesDataTable: React.FC = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [activities, setActivities] = useState<Activity[]>([]);
   const [loading, setLoading] = useState(true);
   const theme = useTheme();
-  const isTablet = useMediaQuery(theme.breakpoints.down('md'));
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const isTablet = useMediaQuery(theme.breakpoints.between('sm', 'md'));
 
   const columns: GridColDef[] = [
     { field: 'title', headerName: 'Titulo', width: 250 },
@@ -38,13 +39,12 @@ const ActivitiesDataTable: React.FC = () => {
       renderCell: (params: GridRenderCellParams) => (
         <>
           <IconButton
-            onClick={() => handleEdit(params.row._id)}
+            onClick={() => handleEdit(params.row)}
             color="primary"
             aria-label="edit"
           >
             <EditNotifications />
           </IconButton>
-          {/* Asumiendo que handleDelete está implementado correctamente */}
           <IconButton
             onClick={() => confirmDelete(params.row._id)}
             color="secondary"
@@ -56,22 +56,50 @@ const ActivitiesDataTable: React.FC = () => {
       ),
     },
   ];
-  const mobileColumns: GridColDef[] = [
-    { field: 'title', headerName: 'Titulo', width: 110 },
+
+  const tabletColumns: GridColDef[] = [
+    { field: 'title', headerName: 'Titulo', width: 200 },
+    { field: 'description', headerName: 'Descripción', width: 180 },
     {
       field: 'actions',
       headerName: 'Acciones',
-      width: 150,
+      width: 120,
       renderCell: (params: GridRenderCellParams) => (
         <>
           <IconButton
-            onClick={() => handleEdit(params.row._id)}
+            onClick={() => handleEdit(params.row)}
             color="primary"
             aria-label="edit"
           >
             <EditNotifications />
           </IconButton>
-          {/* Asumiendo que handleDelete está implementado correctamente */}
+          <IconButton
+            onClick={() => confirmDelete(params.row._id)}
+            color="secondary"
+            aria-label="delete"
+          >
+            <GridDeleteIcon />
+          </IconButton>
+        </>
+      ),
+    },
+  ];
+
+  const mobileColumns: GridColDef[] = [
+    { field: 'title', headerName: 'Titulo', width: 150 },
+    {
+      field: 'actions',
+      headerName: 'Acciones',
+      width: 100,
+      renderCell: (params: GridRenderCellParams) => (
+        <>
+          <IconButton
+            onClick={() => handleEdit(params.row)}
+            color="primary"
+            aria-label="edit"
+          >
+            <EditNotifications />
+          </IconButton>
           <IconButton
             onClick={() => confirmDelete(params.row._id)}
             color="secondary"
@@ -96,7 +124,7 @@ const ActivitiesDataTable: React.FC = () => {
       cancelButtonText: 'Cancelar'
     }).then((result) => {
       if (result.isConfirmed) {
-        console.log('usuario con: ',id)
+        console.log('usuario con: ', id)
         handleDelete(id);
         Swal.fire(
           '¡Eliminado!',
@@ -111,18 +139,18 @@ const ActivitiesDataTable: React.FC = () => {
     try {
       const response = await activitiesService.deleteActivityById(id);
       getActivities();
-      return response
+      return response;
     } catch (error) {
       console.error('Error eliminando actividad:', error);
-      throw new Error;
+      throw new Error();
     }
   };
 
   const handleEdit = (activity: Activity) => {
     console.log('Editar actividad:', activity);
-    navigate(`editar-actividad/${activity}`)
-    // Aquí podrías abrir un diálogo o navegar a la página de edición
+    navigate(`editar-actividad/${activity._id}`);
   };
+
   const getActivities = async () => {
     try {
       const data = await activitiesService.fetchActivities();
@@ -130,11 +158,12 @@ const ActivitiesDataTable: React.FC = () => {
       setActivities(newData);
       console.log(newData);
     } catch (error) {
-      console.error('Error fetching roads:', error);
+      console.error('Error fetching activities:', error);
     } finally {
       setLoading(false);
     }
   };
+
   useEffect(() => {
     getActivities();
   }, []);
@@ -149,9 +178,10 @@ const ActivitiesDataTable: React.FC = () => {
     }}>
       <StyledDataGrid
         rows={activities}
-        columns={isTablet ? mobileColumns : columns}
+        columns={isMobile ? mobileColumns : isTablet ? tabletColumns : columns}
         loading={loading}
         getRowId={(row) => row._id || ''}
+        autoHeight
       />
     </Box>
   );
