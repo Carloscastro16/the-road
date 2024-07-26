@@ -28,7 +28,7 @@ export default function News() {
                             height: '203px',
                             width: '100%',
                             backgroundSize: 'cover',
-                            backgroundPosition: 'center',
+                            backgroundPosition: 'center left',
                             backgroundRepeat: 'no-repeat',
                             borderRadius: '16px'
                         }}></Box>

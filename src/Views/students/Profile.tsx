@@ -1,6 +1,4 @@
 import React from "react";
-import StudentsSidebar from "../../Components/Models/Students/Sidebar";
-import { Outlet } from "react-router-dom";
 import { Container, Box, Avatar, Typography, Card, CardContent } from '@mui/material';
 
 const repositories = [
@@ -8,8 +6,7 @@ const repositories = [
   { name: 'Tienda Pina', description: 'Tienda Pina', visibility: 'Público' },
 ];
 
-
-export default function Profile(){
+export default function Profile() {
   return (
     <Container>
       <Box display="flex" flexDirection="column" alignItems="center" padding={2}>
@@ -19,9 +16,10 @@ export default function Profile(){
           display="flex"
           flexDirection={{ xs: 'column', md: 'row' }}
           alignItems="center"
+          width="100%"
         >
-          <Avatar src="path_to_your_image" alt="Profile Image" sx={{ width: { xs: 50, md: 100 }, height: { xs: 50, md: 100 } }} />
-          <Box ml={{ md: 2 }}>
+          <Avatar src="/mnt/data/image.png" alt="Profile Image" sx={{ width: { xs: 50, md: 100 }, height: { xs: 50, md: 100 } }} />
+          <Box ml={{ md: 2 }} textAlign={{ xs: 'center', md: 'left' }}>
             <Typography variant="h6">el pollo buey</Typography>
             <Typography variant="subtitle1">el pollo buey</Typography>
           </Box>
@@ -29,7 +27,7 @@ export default function Profile(){
         
         {/* Repositories */}
         <Box width="100%" mt={3}>
-          <Typography variant="h6">Repositorios populares</Typography>
+          <Typography variant="h6">Datos del usuario</Typography>
           {repositories.map((repo, index) => (
             <Card key={index} variant="outlined" sx={{ margin: '10px 0' }}>
               <CardContent>
@@ -53,5 +51,4 @@ export default function Profile(){
       </Box>
     </Container>
   );
-
 }
