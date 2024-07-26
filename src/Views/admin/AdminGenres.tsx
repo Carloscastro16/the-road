@@ -26,7 +26,6 @@ export default function AdminGenres() {
         try {
             delete data._id;
             const response = await genreService.createGenre(data);
-            console.log(response);
             await getGenres();
             handleClose();
             return response;

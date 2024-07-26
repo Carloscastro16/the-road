@@ -20,7 +20,6 @@ export default function IndividualRoads() {
         try {
             setIsLoading(false);
             const data = await roadsService.fetchRoadById(routeId!);
-            console.log(data);
             if (!data) {
                 throw new Error('Road not found')
             }
@@ -28,8 +27,6 @@ export default function IndividualRoads() {
             setIsLoading(true);
         } catch (error) {
             console.error('Error fetching roads:', error);
-        } finally {
-            console.log('data obtained successfully');
         }
     };
     useEffect(() => {

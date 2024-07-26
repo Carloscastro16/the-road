@@ -122,7 +122,6 @@ export default function RoadsDataTable({ initialData }: any) {
       cancelButtonText: 'Cancelar'
     }).then((result: any) => {
       if (result.isConfirmed) {
-        console.log('usuario con: ', id)
         handleDelete(id);
         Swal.fire(
           '¡Eliminado!',
@@ -150,9 +149,8 @@ export default function RoadsDataTable({ initialData }: any) {
     setLoading(true);
     if (initialData && initialData.length > 0) {
       setRoads(initialData);
-      console.log('initialData', initialData);
     } else {
-      console.log('initialData is empty or undefined', initialData);
+      console.error('initialData is empty or undefined', initialData);
     }
     setLoading(false);
   }, [initialData]);

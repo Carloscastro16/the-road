@@ -152,7 +152,6 @@ const EditActivity: React.FC = () => {
                 description: activityDescription,
                 questions: questions
             };
-            console.log('Formulario enviado:', activityData);
             res = await onUpdateActivity(activityData);
         }else{
             const updatedQuestions = await Promise.all(questions.map(async (question, index) => {
@@ -171,7 +170,6 @@ const EditActivity: React.FC = () => {
                 questions: updatedQuestions,
                 bannerImg: bannerImg
             };
-            console.log('Formulario enviado:', activityData);
             res = await onUpdateActivity(activityData);
             
         }
@@ -185,12 +183,10 @@ const EditActivity: React.FC = () => {
             })
         }
         handleGoBack();
-        console.log(res);
         return res;
     };
     async function getActivityById(id: string) {
         const res = await activityService.fetchActivityById(id);
-        console.log(res.data);
         setGenre(res.data.genre);
         setQuestions(res.data.questions);
         setActivityDescription(res.data.description);
@@ -202,7 +198,6 @@ const EditActivity: React.FC = () => {
     };
     async function fetchGenres() {
         const res = await genresService.fetchGenres();
-        console.log(res.data);
         setGenresList(res.data);
     }
     useEffect(() => {

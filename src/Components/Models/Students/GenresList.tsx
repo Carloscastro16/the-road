@@ -9,7 +9,6 @@ export default function GenresList(){
     async function fetchGenres() {
         setIsLoading(true)
         const res = await genresService.fetchGenres();
-        console.log(res.data);
         setGenres(res.data);
         setIsLoading(false)
         return res;

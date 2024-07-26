@@ -124,7 +124,6 @@ const ActivitiesDataTable: React.FC = () => {
       cancelButtonText: 'Cancelar'
     }).then((result) => {
       if (result.isConfirmed) {
-        console.log('usuario con: ', id)
         handleDelete(id);
         Swal.fire(
           '¡Eliminado!',
@@ -147,7 +146,6 @@ const ActivitiesDataTable: React.FC = () => {
   };
 
   const handleEdit = (activity: Activity) => {
-    console.log('Editar actividad:', activity);
     navigate(`editar-actividad/${activity._id}`);
   };
 
@@ -156,7 +154,6 @@ const ActivitiesDataTable: React.FC = () => {
       const data = await activitiesService.fetchActivities();
       const newData = data.data;
       setActivities(newData);
-      console.log(newData);
     } catch (error) {
       console.error('Error fetching activities:', error);
     } finally {

@@ -41,7 +41,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       const result = await signInWithGoogle();
       const user = result.user;
       const token = await user.getIdToken();
-      console.log(token);
       localStorage.setItem('token', token);
       setIsLoggedIn(true);
     } catch (error) {
@@ -76,7 +75,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       const result = await loginFacebook();
       const user = result.user;
       const token = await user.getIdToken();
-      console.log(token);
       localStorage.setItem('token', token);
       setIsLoggedIn(true);
     } catch (error) {

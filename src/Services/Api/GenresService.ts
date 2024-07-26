@@ -6,7 +6,6 @@ const API_URL = 'https://the-road-api.onrender.com/api/genre';
 
 export const fetchGenres = async (): Promise<Response> => {
   const response = await axios.get(API_URL + '/getAllGenres');
-  console.log(response);
   return response.data;
 };
 

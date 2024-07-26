@@ -98,7 +98,6 @@ const Auth: React.FC = () => {
     }
     const res = await userService.getUserByMail(user);
     await login(email, password);
-    console.log('respuesta: ',res)
     if (res.data.rolename == 'Administrador') {
       navigate('/administrador/dashboard');
       return 'administrador';
@@ -110,8 +109,6 @@ const Auth: React.FC = () => {
 
   const handleSubmitRegister = (e: React.FormEvent) => {
     e.preventDefault();
-    // Aquí debes implementar la lógica de registro
-    console.log("Registrado");
   };
 
   return (

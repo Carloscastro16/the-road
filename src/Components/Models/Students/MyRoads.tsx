@@ -105,13 +105,10 @@ export default function MyRoads() {
     const getRoads = async () => {
         try {
             const data = await roadsService.fetchRoads();
-            console.log(data);
             setRoads(data.data);
         } catch (error) {
             console.error('Error fetching roads:', error);
-        } finally {
-            console.log('data');
-        }
+        } 
     };
     function redirectTo(route: string) {
         navigate(route);

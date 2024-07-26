@@ -6,7 +6,6 @@ const API_URL = 'https://the-road-api.onrender.com/api/users';
 
 export const fetchUsers = async (): Promise<Response> => {
   const response = await axios.get(API_URL + '/getUsers');
-  console.log(response);
   return response.data;
 };
 export const deleteUserById = async (id: string) => {

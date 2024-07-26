@@ -6,12 +6,10 @@ const API_URL = 'https://the-road-api.onrender.com/api/activity';
 
 export const fetchActivities = async (): Promise<Response> => {
   const response = await axios.get(API_URL + '/getActivity');
-  console.log(response);
   return response.data;
 };
 export const fetchActivityById = async (id: string): Promise<Response> => {
   const response = await axios.get(API_URL + `/getActivityById/${id}`);
-  console.log(response);
   return response.data;
 };
 export const deleteActivityById = async (id: string) => {

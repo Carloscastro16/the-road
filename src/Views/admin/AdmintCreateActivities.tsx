@@ -156,9 +156,7 @@ const CreateActivity: React.FC = () => {
             questions: updatedQuestions,
             bannerImg: bannerImg
         };
-        console.log('Formulario enviado:', activityData);
         const res = await onCreateActivity(activityData);
-        console.log(res);
         if (res.status === 200) {
             Swal.fire({
                 title: 'Actividad Actualizada Correctamente'
@@ -173,7 +171,6 @@ const CreateActivity: React.FC = () => {
     };
     async function fetchGenres() {
         const res = await genresService.fetchGenres();
-        console.log(res.data);
         setGenresList(res.data);
     }
     useEffect(() => {

@@ -29,7 +29,6 @@ export default function AdminUsers() {
         try {
             delete data._id; // Asume que `data` puede tener `_id` en algunos casos
             const response = await usersService.createUser(data);
-            console.log(response);
             await handleAddUser();
             handleClose();
             return response;

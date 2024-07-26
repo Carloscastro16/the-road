@@ -28,8 +28,6 @@ export default function AdminDashboard() {
             setUsers(sortedUsers);
         } catch (error) {
             console.error('Error fetching roads:', error);
-        } finally {
-            console.log('Successfully fetched');
         }
     };
 
@@ -41,8 +39,6 @@ export default function AdminDashboard() {
             setGenres(sortedGenres);
         } catch (error) {
             console.error('Error fetching roads:', error);
-        } finally {
-            console.log('Successfully fetched');
         }
     };
 

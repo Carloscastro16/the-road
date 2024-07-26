@@ -106,14 +106,12 @@ const CreateRoads: React.FC = () => {
 
     const fetchActivities = async () => {
         const res = await activityService.fetchActivities();
-        console.log('actividades:', res.data);
         setActivities(res.data);
         return res;
     };
 
     const getRoadById = async (id: any) => {
         const res = await roadService.fetchRoadById(id);
-        console.log(res.data);
         setFormData(res.data);
         setSelectedActivities(res.data.activities);
         setImagePreview(res.data.img);
@@ -125,7 +123,6 @@ const CreateRoads: React.FC = () => {
     };
     const markSelectedActivity = (card: any) => {
         const isSelected = selectedActivities.includes(card._id);
-        console.log(isSelected);
         return isSelected;
     }
     useEffect(() => {

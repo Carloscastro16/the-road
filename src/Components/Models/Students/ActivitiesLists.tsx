@@ -68,7 +68,6 @@ export default function ActivitiesList() {
             cantidad: conteoPorGenero[genero],
         }));
 
-        console.log(resultado);
         setGenres(resultado);
         return resultado;
     }
@@ -84,7 +83,6 @@ export default function ActivitiesList() {
     async function fetchActivities() {
         setIsLoading(true);
         const res = await activitiesService.fetchActivities();
-        console.log(res.data);
         setActivitiesInfo(res.data);
         setIsLoading(false);
         contarActividadesPorGenero(res.data);
