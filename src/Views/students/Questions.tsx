@@ -106,7 +106,7 @@ const Quiz: React.FC = () => {
         <Box sx={{ paddingTop: '32px', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
             <Box onClick={handleGoBack} sx={{
                 position: 'absolute',
-                top: { xs: 80, sm: 100,md: 100 },
+                top: { xs: 80, sm: 100, md: 100 },
                 left: { xs: 28, sm: 100, md: 100 },
                 background: '#82C6C1',
                 zIndex: 100,
@@ -349,7 +349,7 @@ const Quiz: React.FC = () => {
                                 }
                             }}>Reiniciar cuestionario</Button>
                             <Stack direction={'row'} sx={{ marginTop: '20px' }}>
-                                <Box sx={{ display: { xs: 'none', md: 'flex' }, width: '100%', justifyContent: 'space-between', flexWrap:'wrap' }}>
+                                <Box sx={{ display: { xs: 'none', md: 'flex' }, width: '100%', justifyContent: 'space-between', flexWrap: 'wrap' }}>
                                     {data.questions.map((question, index) => (
                                         <Box key={index} sx={{
                                             marginBottom: '10px', maxWidth: '350px', width: '300px',
@@ -422,7 +422,7 @@ const Quiz: React.FC = () => {
                                         </Box>
                                     ))}
                                 </Box>
-                                <Box sx={{ display: { xs: 'block', md: 'none' }, width: '100%' }}>
+                                <Box sx={{ display: { xs: 'flex', md: 'none' }, width: '85vw' }}>
                                     <Swiper
                                         modules={[Navigation, Pagination]}
                                         spaceBetween={16}
@@ -432,85 +432,89 @@ const Quiz: React.FC = () => {
                                         pagination={{ clickable: true }}
                                         breakpoints={{
                                             400: {
-                                                slidesPerView: 1.1,
-                                                spaceBetween: 20,
+                                                slidesPerView: 1,
+                                                spaceBetween: 10,
                                             },
                                             600: {
-                                                slidesPerView: 2,
-                                                spaceBetween: 20,
+                                                slidesPerView: 1,
+                                                spaceBetween: 10,
                                             }
                                         }}
                                     >
                                         {data.questions.map((question, index) => (
                                             <SwiperSlide key={index}>
                                                 <Box sx={{
-                                                    marginBottom: '10px', maxWidth: '350px', width: '300px',
-                                                    display: 'flex',
-                                                    alignItems: 'flex-start',
-                                                    flexDirection: 'column',
-                                                    gap: '12px',
-                                                    flexWrap: 'wrap',
-                                                    background: 'white',
-                                                    borderRadius: '10px',
-                                                    boxShadow: '0 4px 8px rgba(0,0,0,0.1)',
-                                                    p: '10px'
+                                                    px: '10px'
                                                 }}>
-                                                    <Typography variant="body1" sx={{
-                                                        fontSize: '20px',
-                                                        fontFamily: 'Roboto',
-                                                    }}>Pregunta {index + 1}</Typography>
-                                                    <Typography variant="body1" sx={{
-                                                        textAlign: 'initial',
-                                                    }}>{question.title}</Typography>
-                                                    <Stack direction={'row'} gap={'16px'} alignItems={'center'} justifyContent={'flex-start'}>
+                                                    <Box sx={{
+                                                        marginBottom: '10px',
+                                                        display: 'flex',
+                                                        alignItems: 'flex-start',
+                                                        flexDirection: 'column',
+                                                        gap: '12px',
+                                                        flexWrap: 'wrap',
+                                                        background: 'white',
+                                                        borderRadius: '10px',
+                                                        boxShadow: '0 4px 8px rgba(0,0,0,0.1)',
+                                                        p: '10px',
+                                                    }}>
+                                                        <Typography variant="body1" sx={{
+                                                            fontSize: '20px',
+                                                            fontFamily: 'Roboto',
+                                                        }}>Pregunta {index + 1}</Typography>
                                                         <Typography variant="body1" sx={{
                                                             textAlign: 'initial',
-                                                        }}><strong>Tu respuesta:</strong></Typography>
-                                                        <Typography variant="body1"
-                                                            sx={{
+                                                        }}>{question.title}</Typography>
+                                                        <Stack direction={'row'} gap={'16px'} alignItems={'center'} justifyContent={'flex-start'}>
+                                                            <Typography variant="body1" sx={{
+                                                                textAlign: 'initial',
+                                                            }}><strong>Tu respuesta:</strong></Typography>
+                                                            <Typography variant="body1"
+                                                                sx={{
+                                                                    borderRadius: '10px',
+                                                                    backgroundColor: question.options.find(option => option.text === answers[index])?.correct ? '#89FF7E' : '#FF6063',
+                                                                    px: '16px',
+                                                                    py: '10px'
+                                                                }}>{answers[index]}</Typography>
+                                                            {
+                                                                question.options.find(option => option.text === answers[index])?.correct ?
+                                                                    (
+                                                                        <Box sx={{
+                                                                            background: '#89FF7E',
+                                                                            borderRadius: '50%',
+                                                                            padding: '7px 7px 3px 7px'
+                                                                        }}>
+                                                                            <CheckIcon sx={{
+                                                                                color: '#fff'
+                                                                            }}></CheckIcon>
+                                                                        </Box>
+                                                                    ) :
+                                                                    (
+                                                                        <Box sx={{
+                                                                            background: '#FF6063',
+                                                                            borderRadius: '50%',
+                                                                            padding: '7px 7px 3px 7px'
+                                                                        }}>
+                                                                            <ClearIcon sx={{
+                                                                                color: '#fff'
+                                                                            }}></ClearIcon>
+                                                                        </Box>
+                                                                    )
+                                                            }
+                                                        </Stack>
+                                                        <Stack direction={'row'} gap={'16px'} alignItems={'center'} justifyContent={'flex-start'}>
+                                                            <Typography variant="body1" sx={{
+                                                                textAlign: 'initial',
+                                                            }}><strong>Respuesta Correcta:</strong></Typography>
+                                                            <Typography variant="body1" sx={{
                                                                 borderRadius: '10px',
-                                                                backgroundColor: question.options.find(option => option.text === answers[index])?.correct ? '#89FF7E' : '#FF6063',
+                                                                background: '#49437B',
+                                                                color: '#fff',
                                                                 px: '16px',
                                                                 py: '10px'
-                                                            }}>{answers[index]}</Typography>
-                                                        {
-                                                            question.options.find(option => option.text === answers[index])?.correct ?
-                                                                (
-                                                                    <Box sx={{
-                                                                        background: '#89FF7E',
-                                                                        borderRadius: '50%',
-                                                                        padding: '7px 7px 3px 7px'
-                                                                    }}>
-                                                                        <CheckIcon sx={{
-                                                                            color: '#fff'
-                                                                        }}></CheckIcon>
-                                                                    </Box>
-                                                                ) :
-                                                                (
-                                                                    <Box sx={{
-                                                                        background: '#FF6063',
-                                                                        borderRadius: '50%',
-                                                                        padding: '7px 7px 3px 7px'
-                                                                    }}>
-                                                                        <ClearIcon sx={{
-                                                                            color: '#fff'
-                                                                        }}></ClearIcon>
-                                                                    </Box>
-                                                                )
-                                                        }
-                                                    </Stack>
-                                                    <Stack direction={'row'} gap={'16px'} alignItems={'center'} justifyContent={'flex-start'}>
-                                                        <Typography variant="body1" sx={{
-                                                            textAlign: 'initial',
-                                                        }}><strong>Respuesta Correcta:</strong></Typography>
-                                                        <Typography variant="body1" sx={{
-                                                            borderRadius: '10px',
-                                                            background: '#49437B',
-                                                            color: '#fff',
-                                                            px: '16px',
-                                                            py: '10px'
-                                                        }}>{question.options.find(option => option.correct)?.text}</Typography>
-                                                    </Stack>
+                                                            }}>{question.options.find(option => option.correct)?.text}</Typography>
+                                                        </Stack>
+                                                    </Box>
                                                 </Box>
                                             </SwiperSlide>
                                         ))}
