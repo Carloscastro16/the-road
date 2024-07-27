@@ -306,13 +306,14 @@ export default function ActivitiesList() {
                                 display: 'flex',
                                 alignItems: 'center',
                                 justifyContent: 'flex-start',
-                                gap: '20px',
+                                gap: {sm:'10px',md:'20px'},
                                 borderRadius: '8px',
                                 background: 'white',
-                                width: '370px'
+                                width: {sm:'180px',md:'370px'},
+                                flexDirection: { sm:'column',md:'row'}
                             }}>
                                 <Box sx={{
-                                    width: '140px',
+                                    width: {sm:'100%',md:'140px'},
                                     height: '82px',
                                     borderRadius: '8px',
                                     background: `url(${card.bannerImg})`,
@@ -320,17 +321,21 @@ export default function ActivitiesList() {
                                     backgroundSize: 'cover',
                                     position: 'relative',
                                 }} />
-                                <Stack flexDirection='column'>
+                                <Stack flexDirection='column' sx={{
+                                    mb: '10px'
+                                }}>
                                     <Typography sx={{
-                                        fontSize: '16px',
+                                        textAlign: 'center',
+                                        fontSize: {sm:'14px',md:'16px'},
                                         fontWeight: 'bold'
                                     }}>{card.title}</Typography>
                                     <Stack alignItems='center' justifyContent='flex-start' flexDirection='row' gap='10px' sx={{
                                         color: 'black',
                                         opacity: '0.7',
+                                        mt: '5px'
                                     }}>
                                         <Typography sx={{
-                                            fontSize: '14px',
+                                            fontSize: {sm:'12px',md:'14px'},
                                             fontWeight: '400',
                                         }}>{card.genre}</Typography>
                                         <Box sx={{
@@ -341,7 +346,7 @@ export default function ActivitiesList() {
                                             borderRadius: '50%'
                                         }} />
                                         <Typography sx={{
-                                            fontSize: '14px',
+                                            fontSize: {sm:'12px',md:'14px'},
                                             fontWeight: '400'
                                         }}>{card.questions.length} Preguntas</Typography>
                                     </Stack>

@@ -11,6 +11,7 @@ import PhotoSwipeLightbox from 'photoswipe/lightbox';
 import 'photoswipe/style.css';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
+import { Navigation, Pagination } from 'swiper/modules';
 
 
 const lightbox = new PhotoSwipeLightbox({
@@ -105,8 +106,8 @@ const Quiz: React.FC = () => {
         <Box sx={{ paddingTop: '32px', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
             <Box onClick={handleGoBack} sx={{
                 position: 'absolute',
-                top: { xs: 80, md: 100 },
-                left: { xs: 28, md: 90 },
+                top: { xs: 80, sm: 100,md: 100 },
+                left: { xs: 28, sm: 100, md: 100 },
                 background: '#82C6C1',
                 zIndex: 100,
                 borderRadius: '50%',
@@ -149,7 +150,8 @@ const Quiz: React.FC = () => {
                                         height: '100%',
                                         display: 'flex',
                                         alignItems: 'center',
-                                        justifyContent: 'center'
+                                        justifyContent: 'center',
+                                        my: '32px'
                                     }}>
                                         <Typography variant="h2" gutterBottom sx={{ fontSize: { xs: '20px', sm: '24px', md: '32px' } }}>{currentQuestion.title}</Typography>
                                     </Box>
@@ -163,7 +165,16 @@ const Quiz: React.FC = () => {
                                         paddingBottom: '42px'
                                     }}>
                                         <Typography variant="body2" sx={{ marginTop: '20px' }}>{currentQuestionIndex + 1} / {data.questions.length}</Typography>
-                                        <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr 1fr', md: 'repeat(4, 1fr)' }, gap: '16px', mt: 2, width: '100%' }}>
+                                        <Box
+                                            sx={{
+                                                display: 'flex',
+                                                flexWrap: 'wrap',
+                                                gap: '16px',
+                                                mt: 2,
+                                                width: '100%',
+                                                justifyContent: { xs: 'space-around', md: 'space-between' }
+                                            }}
+                                        >
                                             {currentQuestion.options.map((option, index) => (
                                                 <Button
                                                     key={index}
@@ -172,7 +183,8 @@ const Quiz: React.FC = () => {
                                                     onClick={() => handleAnswer(option.text)}
                                                     sx={{
                                                         padding: '10px',
-                                                        width: '100%',
+                                                        flex: '1 1 calc(50% - 16px)', // Adjusts for a two-column layout in small screens
+                                                        maxWidth: 'calc(50% - 16px)', // Ensures the maximum width in small screens
                                                         py: '16px',
                                                         fontSize: { xs: '12px', sm: '14px', md: '16px' },
                                                         ":hover": {
@@ -223,6 +235,7 @@ const Quiz: React.FC = () => {
                                         justifyContent: 'center',
                                         width: '100%',
                                         padding: '20px',
+                                        my: '32px'
                                     }}>
                                         <Typography variant="h2" gutterBottom sx={{ fontSize: { xs: '20px', sm: '24px', md: '32px' } }}>{currentQuestion.title}</Typography>
                                         <Typography variant="body2" sx={{ marginTop: '20px' }}>{currentQuestionIndex + 1} / {data.questions.length}</Typography>
@@ -336,15 +349,19 @@ const Quiz: React.FC = () => {
                                 }
                             }}>Reiniciar cuestionario</Button>
                             <Stack direction={'row'} sx={{ marginTop: '20px' }}>
-                                <Box sx={{ display: { xs: 'none', md: 'block' } }}>
+                                <Box sx={{ display: { xs: 'none', md: 'flex' }, width: '100%', justifyContent: 'space-between', flexWrap:'wrap' }}>
                                     {data.questions.map((question, index) => (
                                         <Box key={index} sx={{
                                             marginBottom: '10px', maxWidth: '350px', width: '300px',
                                             display: 'flex',
                                             alignItems: 'flex-start',
-                                            flexDirection: 'column',
+                                            flexDirection: 'row',
                                             gap: '12px',
-                                            flexWrap: 'wrap'
+                                            flexWrap: 'wrap',
+                                            background: 'white',
+                                            borderRadius: '10px',
+                                            boxShadow: '0 4px 8px rgba(0,0,0,0.1)',
+                                            p: '10px'
                                         }}>
                                             <Typography variant="body1" sx={{
                                                 fontSize: '20px',
@@ -407,9 +424,22 @@ const Quiz: React.FC = () => {
                                 </Box>
                                 <Box sx={{ display: { xs: 'block', md: 'none' }, width: '100%' }}>
                                     <Swiper
+                                        modules={[Navigation, Pagination]}
                                         spaceBetween={16}
-                                        slidesPerView={1}
+                                        slidesPerView={1.1}
+                                        centeredSlides={true}
+                                        navigation
                                         pagination={{ clickable: true }}
+                                        breakpoints={{
+                                            400: {
+                                                slidesPerView: 1.1,
+                                                spaceBetween: 20,
+                                            },
+                                            600: {
+                                                slidesPerView: 2,
+                                                spaceBetween: 20,
+                                            }
+                                        }}
                                     >
                                         {data.questions.map((question, index) => (
                                             <SwiperSlide key={index}>
@@ -419,7 +449,11 @@ const Quiz: React.FC = () => {
                                                     alignItems: 'flex-start',
                                                     flexDirection: 'column',
                                                     gap: '12px',
-                                                    flexWrap: 'wrap'
+                                                    flexWrap: 'wrap',
+                                                    background: 'white',
+                                                    borderRadius: '10px',
+                                                    boxShadow: '0 4px 8px rgba(0,0,0,0.1)',
+                                                    p: '10px'
                                                 }}>
                                                     <Typography variant="body1" sx={{
                                                         fontSize: '20px',
