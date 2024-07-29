@@ -212,7 +212,8 @@ const Quiz: React.FC = () => {
                                         width: '100%',
                                         borderRadius: '8px',
                                         overflow: 'hidden',
-                                        marginBottom: '20px'
+                                        marginBottom: '20px',
+                                        height: {xs:'auto', md:'70%'}
                                     }}>
                                         <img
                                             src={currentQuestion.image}
@@ -224,9 +225,6 @@ const Quiz: React.FC = () => {
                                                 maxWidth: '100%'
                                             }}
                                         />
-                                        <a href={`${currentQuestion.image}`} data-pswp-width="2500"
-                                            data-pswp-height="1668"
-                                            target="_blank" rel="noreferrer"></a>
                                     </Box>
                                     <Box sx={{
                                         display: 'flex',

@@ -125,6 +125,7 @@ export default function ActivitiesList() {
                     flexWrap: 'wrap',
                     gap: '16px',
                     width: '100%',
+                    mb:'12px'
                 }}
             >
                 <Box

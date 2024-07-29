@@ -80,7 +80,7 @@ const EditActivity: React.FC = () => {
 
     const addOption = (index: number) => {
         const newQuestions = [...questions];
-        newQuestions[index].options!.push({ text: `Opción ${newQuestions[index].options!.length + 1}`, order: newQuestions[index].options!.length + 1 });
+        newQuestions[index].options!.push({ text: `Opción ${newQuestions[index].options!.length + 1}`, order: newQuestions[index].options!.length + 1, correct: false });
         setQuestions(newQuestions);
     };
 
@@ -321,10 +321,9 @@ const EditActivity: React.FC = () => {
                             id="demo-simple-select"
                             value={question.type}
                             label="Age"
-                            onChange={(e) => handleTypeChange(index, e.target.value as 'options' | 'order' | 'image-options')}
+                            onChange={(e) => handleTypeChange(index, e.target.value as 'options' | 'image-options')}
                         >
                             <MenuItem value={'options'}>Opciones</MenuItem>
-                            <MenuItem value={'order'}>Ordenar</MenuItem>
                             <MenuItem value={'image-options'}>Opciones con imagen</MenuItem>
                         </Select>
                     </div>

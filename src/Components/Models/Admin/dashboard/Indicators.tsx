@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Box, Grid, styled, Typography } from "@mui/material";
-
+import * as usersService from '../../../../Services/Api/UsersService'
+import * as roadsService from '../../../../Services/Api/RoadsService'
+import * as activitiesService from '../../../../Services/Api/ActivitiesService'
 const IndicatorContainer = styled(Box)`
   border-radius: 10px;
   display: flex;
@@ -15,30 +17,38 @@ const IndicatorContainer = styled(Box)`
 `;
 
 export default function IndicatorCharts() {
+    const [users, setUsers] = useState(null);
+    const [roads, setRoads] = useState(null);
+    const [activities, setActivities] = useState(null);
+    async function fetchAll(){
+        const usersRes = await usersService.fetchUsers();
+        const roadsRes = await roadsService.fetchRoads();
+        const activitiesRes = await activitiesService.fetchActivities();
+        setUsers(usersRes.data.length);
+        setRoads(roadsRes.data.length);
+        setActivities(activitiesRes.data.length);
+    }
+    useEffect(()=> {
+        fetchAll();
+    }, [])
     return (
         <Grid container spacing={2}>
-            <Grid item xs={12} sm={6} md={3}>
+            <Grid item xs={12} sm={4} md={4}>
                 <IndicatorContainer>
                     <Typography fontSize={'24px'} color={'white'}>Actividades</Typography>
-                    <Typography fontSize={'32px'} color={'white'}>45</Typography>
+                    <Typography fontSize={'32px'} color={'white'}>{activities}</Typography>
                 </IndicatorContainer>
             </Grid>
-            <Grid item xs={12} sm={6} md={3}>
+            <Grid item xs={12} sm={4} md={4}>
                 <IndicatorContainer>
                     <Typography fontSize={'24px'} color={'white'}>Rutas</Typography>
-                    <Typography fontSize={'32px'} color={'white'}>45</Typography>
+                    <Typography fontSize={'32px'} color={'white'}> {roads} </Typography>
                 </IndicatorContainer>
             </Grid>
-            <Grid item xs={12} sm={6} md={3}>
+            <Grid item xs={12} sm={4} md={4}>
                 <IndicatorContainer>
                     <Typography fontSize={'24px'} color={'white'}>Total de Usuarios</Typography>
-                    <Typography fontSize={'32px'} color={'white'}>45</Typography>
-                </IndicatorContainer>
-            </Grid>
-            <Grid item xs={12} sm={6} md={3}>
-                <IndicatorContainer>
-                    <Typography fontSize={'24px'} color={'white'}>Usuarios Activos</Typography>
-                    <Typography fontSize={'32px'} color={'white'}>45</Typography>
+                    <Typography fontSize={'32px'} color={'white'}> {users} </Typography>
                 </IndicatorContainer>
             </Grid>
         </Grid>
