@@ -14,6 +14,7 @@ const CreateRoads: React.FC = () => {
     const navigate = useNavigate();
     const [activities, setActivities] = useState<any[]>([]);
     const [selectedActivities, setSelectedActivities] = useState<string[]>([]);
+    const [isLoadingSubmit, setIsLoadingSubmit] = useState<boolean>(false);
     const { routeId } = useParams();
     const [formData, setFormData] = useState<RoadData>({
         title: '',
@@ -67,6 +68,7 @@ const CreateRoads: React.FC = () => {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+        setIsLoadingSubmit(true)
         const imageUrl = imageUpload ? await uploadFile(imageUpload) : formData.img;
 
         const finalData = {
@@ -99,7 +101,7 @@ const CreateRoads: React.FC = () => {
                 });
             }
         }
-
+        setIsLoadingSubmit(false)
         navigate('/administrador/rutas');
         return res;
     };
@@ -308,7 +310,7 @@ const CreateRoads: React.FC = () => {
                             ))}
                         </Stack>
                     </Stack>
-                    <Button type="submit" variant="contained" color="primary" sx={{ fontSize: { xs: '12px', sm: '14px' } }}>
+                    <Button type="submit" variant="contained" color="primary" sx={{ fontSize: { xs: '12px', sm: '14px' } }} disabled={isLoadingSubmit}>
                         Enviar
                     </Button>
                 </Box>

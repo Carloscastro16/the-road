@@ -20,7 +20,6 @@ import activities from '../../../assets/icons/Activities.png';
 import logoutImg from '../../../assets/icons/Log-out.png';
 import { useAuth } from '../../../Services/Auth/AuthProvider';
 import logo from '../../../assets/icons/logo.svg';
-import User from '../../../assets/icons/profile.png';
 
 const mainItems = [
   {
@@ -37,12 +36,7 @@ const mainItems = [
     text: 'Actividades',
     route: 'actividades',
     img: activities,
-  },
-  {
-    text: 'Perfil',
-    route: 'perfil',
-    img: User,
-  },
+  }
 ];
 
 const drawerWidth = 240;

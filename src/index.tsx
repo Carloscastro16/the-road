@@ -19,13 +19,14 @@ import AdminActivities from './Views/admin/AdminActivities';
 import AdminUsers from './Views/admin/AdminUsers';
 import AdminGenres from './Views/admin/AdminGenres';
 import StudentsRoads from './Views/students/StudentsRoads';
-import StudentsActivities from './Views/students/StudentsActivities';
 import IndividualRoads from './Views/students/IndividualRoads';
 import CreateActivity from './Views/admin/AdmintCreateActivities';
 import CreateRoads from './Views/admin/AdminAddNewRoad';
 import EditActivity from './Views/admin/AdminEditActivities';
 import Quiz from './Views/students/Questions';
 import Profile from './Views/students/Profile';
+import ActivitiesViewByGenre from './Views/students/ActvityByGenre';
+import StudentsActivities from './Views/students/StudentsActivities';
 
 const router = createBrowserRouter([
   {
@@ -103,6 +104,10 @@ const router = createBrowserRouter([
           {
             path: 'actividades',
             element: <StudentsActivities />,
+          },
+          {
+            path: 'generos/:activityGenre',
+            element: <ActivitiesViewByGenre />,
           },
           {
             path: 'actividad/:questionId',

@@ -59,7 +59,11 @@ const Header: React.FC<HeaderProps> = ({ scrollToSection, presentacionRef, offer
               mr: 2,
               width: '50px'
             }}>
-              <img src={logo} alt="" width={'100%'} />
+              <Typography sx={{
+                fontFamily: 'Bebas Neue'
+              }}>
+                The Road
+              </Typography>
             </Box>
           </Hidden>
           <Hidden mdDown>
@@ -68,7 +72,11 @@ const Header: React.FC<HeaderProps> = ({ scrollToSection, presentacionRef, offer
                 mr: 2,
                 width: '100px'
               }}>
-                <img src={logo} alt="" width={'100%'} />
+                <Typography sx={{
+                  fontFamily: 'Bebas Neue'
+                }}>
+                  The Road
+                </Typography>
               </Box>
               <Button color="inherit" onClick={() => scrollToSection(presentacionRef)}>Explora</Button>
               <Button color="inherit" onClick={() => scrollToSection(offerSectionRef)}>Productos</Button>

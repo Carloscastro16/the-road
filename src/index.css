@@ -627,3 +627,29 @@ code {
 .MuiDataGrid-cell {
   border-top: '0px transparent';
 }
+
+/* Estilos personalizados para las flechas de navegación de Swiper */
+.swiper-button-prev, .swiper-button-next {
+  width: 50px !important;  /* Ajusta el tamaño de las flechas según tus necesidades */
+  height: 50px !important;
+  background: 'white';
+  background-size: contain;  /* Asegúrate de que la imagen se ajuste al contenedor */
+  background-repeat: no-repeat;
+  background-position: center;
+  border-radius: 50%;
+}
+
+.swiper-button-prev::after{
+  content: '' !important;
+}
+
+.swiper-button-next::after{
+  content: '' !important;
+}
+.swiper-button-prev {
+  background-image: url('./assets/icons/arrow-left.svg');  /* Ruta a tu imagen personalizada */
+}
+
+.swiper-button-next {
+  background-image: url('./assets/icons/arrow-right.svg');
+}

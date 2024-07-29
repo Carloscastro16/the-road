@@ -3,11 +3,15 @@ import { Box, Typography, Stack, useMediaQuery, useTheme } from "@mui/material";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination } from "swiper/modules";
 import 'swiper/css';
-import { RoadData } from "@/Services/Interfaces/Interfaces";
+import { RoadData } from "../../../Services/Interfaces/Interfaces";
 import * as roadsService from '../../../Services/Api/RoadsService';
 import { Link } from "react-router-dom";
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+import 'swiper/css/scrollbar';
 
-export default function BestRoutes() {
+export default function BestRoutes({title}: any) {
     const [roads, setRoads] = useState<RoadData[]>([]);
     const theme = useTheme();
     const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
@@ -37,19 +41,19 @@ export default function BestRoutes() {
                 mb='28px'
             >
                 <Typography sx={{
-                    fontFamily: 'Montserrat',
+                    fontFamily: 'Bebas neue',
                     fontSize: { xs: '24px', sm: '32px' },
                     color: '#307071',
                     fontWeight: 'bold'
                 }}>
-                    Las mejores Rutas
+                    {title ? title : 'Las mejores Rutas'}
                 </Typography>
             </Stack>
             <Box sx={{
                 width: '85vw'
             }}>
                 <Swiper
-                    modules={[Navigation, Pagination]}
+                    modules={[Navigation]}
                     spaceBetween={isSmallScreen ? 10 : 20}
                     slidesPerView={1}
                     initialSlide={2}
@@ -68,41 +72,38 @@ export default function BestRoutes() {
                             spaceBetween: 30,
                         },
                         1200: {
-                            slidesPerView: 4,
+                            slidesPerView: 3,
                             spaceBetween: 40,
                         },
                     }}
                     navigation
-                    pagination={{ clickable: true }}
                 >
                     {roads.slice(0, 6).map((card, index) => (
                         <SwiperSlide key={index}>
                             <Link to={`/estudiantes/rutas/${card._id}`}>
                                 <Box sx={{
                                     display: 'flex',
-                                    flexDirection: 'column',
+                                    flexDirection: 'row',
                                     alignItems: 'center',
                                     borderRadius: '8px',
                                     background: 'white',
-                                    height: {xs:'200px',sm:'250px',md:'300px'},
-                                    maxWidth: { xs: '90%', sm: '300px' },
+                                    gap:'16px',
                                     mx: 'auto',
+                                    p: '12px'
                                 }}>
                                     <Box sx={{
-                                        width: '100%',
-                                        height: { xs: '130px', sm: '150px', md: '200px' },
+                                        width: '40%',
+                                        height: { xs: '85px', sm: '90px', md: '100px' },
                                         borderRadius: '8px',
                                         background: `url(${card.img})`,
                                         backgroundPosition: 'center',
-                                        backgroundSize: 'cover',
-                                        mb: '10px',
+                                        backgroundSize: 'cover'
                                     }} />
                                     <Box sx={{
-                                        p: '10px',
                                         display: 'flex',
                                         flexDirection: 'column',
                                         justifyContent: 'space-between',
-                                        height: '100%',
+                                        width: '60%',
                                     }}>
                                         <Box sx={{
                                             height: 'fit-content',
@@ -111,29 +112,34 @@ export default function BestRoutes() {
                                                 fontSize: { xs: '14px', sm: '16px', md: '18px' },
                                                 fontWeight: 'bold',
                                                 mb: '8px',
-                                                textAlign: 'center',
+                                                textAlign: 'left',
+                                                overflow: 'hidden',
+                                                textOverflow: 'ellipsis',
+                                                whiteSpace: 'nowrap',
                                             }}>
                                                 {card.title}
                                             </Typography>
                                             <Typography sx={{
-                                                fontSize: { xs: '12px', sm: '14px', md: '16px' },
+                                                fontSize: { xs: '11px', sm: '13px', md: '15px' },
                                                 fontWeight: '400',
-                                                textAlign: 'center',
+                                                textAlign: 'left',
                                                 overflow: 'hidden',
                                                 textOverflow: 'ellipsis',
                                                 display: '-webkit-box',
                                                 WebkitLineClamp: 2,
                                                 WebkitBoxOrient: 'vertical',
+                                                width: '80%'
                                             }}>
                                                 {card.easyDescription}
                                             </Typography>
 
                                         </Box>
                                         <Typography sx={{
-                                            fontSize: { xs: '12px', sm: '14px', md: '16px' },
+                                            fontSize: { xs: '10px', sm: '12px', md: '14px' },
+                                            opacity: '.6',
                                             fontWeight: '400',
                                             mt: 'auto',
-                                            textAlign: 'center',
+                                            textAlign: 'left',
                                             height: 'fit-content'
                                         }}>
                                             {card.activities.length} Actividades

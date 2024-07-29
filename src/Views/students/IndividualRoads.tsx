@@ -85,11 +85,6 @@ export default function IndividualRoads() {
                                 <Typography fontSize={'32px'}>{roads?.title}</Typography>
                                 <Typography fontSize={'16px'}>{roads?.fullDescription}</Typography>
                             </Box>
-                            <Button sx={{
-                                borderRadius: '40px',
-                                backgroundColor: '#82C6C1',
-                                color: '#fff'
-                            }}>Iniciar Ruta</Button>
                         </Stack>
                         <Stack>
                             <Box sx={{
@@ -104,7 +99,7 @@ export default function IndividualRoads() {
                                 flexWrap: 'wrap',
                                 mt: '24px',
                                 mb: '32px',
-                                justifyContent: 'center',
+                                justifyContent: 'flex-start',
                             }}>
                                 {roads!.activityDetails.map((card: any, index: any) => {
                                     return (

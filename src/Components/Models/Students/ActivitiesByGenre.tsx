@@ -1,14 +1,12 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { Box, Button, Stack, Typography, useMediaQuery, useTheme } from "@mui/material";
+import { Box, Stack, Typography, useMediaQuery, useTheme } from "@mui/material";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
-import expand from '../../../assets/icons/expand.png';
 import cover1 from '../../../assets/images/cover1.png';
-import { Link } from "react-router-dom";
-import * as activitiesService from '../../../Services/Api/ActivitiesService';
+import { Link, useParams } from "react-router-dom";
 import Loader from "../shared/Loader";
 import { Activity } from "../../../Services/Interfaces/Interfaces";
-
+import * as activitiesService from '../../../Services/Api/ActivitiesService';
 const activitiesInfoDefault: Activity[] = [
     {
         _id: '2544590422454322',
@@ -38,39 +36,12 @@ const languages = [
     }
 ];
 
-interface GeneroCantidad {
-    genero: string;
-    cantidad: number;
-}
-
-export default function ActivitiesList() {
+export default function ActivitiesByGenre() {
     const [activitiesInfo, setActivitiesInfo] = useState<Activity[]>(activitiesInfoDefault);
-    const [limit, setLimit] = useState(1);
-    const [genres, setGenres] = useState<GeneroCantidad[]>([]);
+    const [limit, setLimit] = useState(6);
     const [isLoading, setIsLoading] = useState(true);
     const [selectedGenre, setSelectedGenre] = useState<string | null>(null);
-
-    function contarActividadesPorGenero(actividades: Activity[]): GeneroCantidad[] {
-        const conteoPorGenero: Record<string, number> = {};
-
-        actividades.forEach((actividad) => {
-            const genero = actividad.genre;
-
-            if (!conteoPorGenero[genero]) {
-                conteoPorGenero[genero] = 0;
-            }
-
-            conteoPorGenero[genero]++;
-        });
-
-        const resultado: GeneroCantidad[] = Object.keys(conteoPorGenero).map((genero) => ({
-            genero: genero,
-            cantidad: conteoPorGenero[genero],
-        }));
-
-        setGenres(resultado);
-        return resultado;
-    }
+    const { activityGenre } = useParams();
 
     function expandLimit() {
         if (limit === 6) {
@@ -84,7 +55,6 @@ export default function ActivitiesList() {
         setIsLoading(true);
         const res = await activitiesService.fetchActivities();
         setActivitiesInfo(res.data);
-        await contarActividadesPorGenero(res.data);
         setIsLoading(false);
     }
 
@@ -93,123 +63,28 @@ export default function ActivitiesList() {
     }, []);
 
     const filteredActivities = useMemo(() => {
-        if (selectedGenre) {
-            return activitiesInfo.filter((actividad) => actividad.genre === selectedGenre);
+        if (activityGenre) {
+            return activitiesInfo.filter((actividad) => actividad.genre === activityGenre);
         }
         return activitiesInfo;
-    }, [activitiesInfo, selectedGenre]);
+    }, [activitiesInfo]);
 
     const theme = useTheme();
     const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
     return (
         <Box sx={{
-            mb: '32px'
+            marginTop: {xs: '25px', sm:'25px'}
         }}>
             <Stack width='100%' flexDirection='row' alignItems='center' justifyContent='space-between' mb='28px'>
                 <Typography sx={{
                     fontFamily: 'Bebas neue',
-                    fontSize: { xs: '32px', sm: '42px' },
+                    fontSize: {xs:'32px',sm:'42px'},
                     color: '#307071',
                     fontWeight: 'bold'
                 }}>
-                    Actividades
+                    Actividades de { activityGenre }
                 </Typography>
-            </Stack>
-            <Stack
-                alignItems='center'
-                justifyContent='center'
-                flexDirection='row'
-                sx={{
-                    px: { xs: '0', sm: '60px' },
-                    flexWrap: 'wrap',
-                    gap: '16px',
-                    width: '100%',
-                }}
-            >
-                <Box
-                    sx={{
-                        display: 'flex',
-                        flexDirection: 'row',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        gap: '10px',
-                        flexWrap: 'wrap'
-                    }}
-                >
-                    <Button
-                        onClick={() => setSelectedGenre(null)}
-                        sx={{
-                            border: '1px solid #49437B',
-                            borderRadius: '24px',
-                            py: '4px',
-                            px: '12px',
-                            cursor: 'pointer',
-                            ":hover": {
-                                color: 'white',
-                                backgroundColor: '#49437B'
-                            },
-                            backgroundColor: selectedGenre === null ? '#49437B' : 'transparent',
-                            color: selectedGenre === null ? 'white' : 'inherit'
-                        }}
-                    >
-                        Mostrar todo
-                    </Button>
-                    {genres.slice(0, limit).map((genre, index) => (
-                        <Stack
-                            key={index}
-                            flexDirection='row'
-                            gap='6px'
-                            alignItems='center'
-                            sx={{
-                                border: '1px solid #49437B',
-                                borderRadius: '24px',
-                                py: '4px',
-                                px: '12px',
-                                cursor: 'pointer',
-                                ":hover": {
-                                    color: 'white',
-                                    backgroundColor: '#49437B'
-                                },
-                                backgroundColor: selectedGenre === genre.genero ? '#49437B' : 'transparent',
-                                color: selectedGenre === genre.genero ? 'white' : 'inherit'
-                            }}
-                            onClick={() => setSelectedGenre(genre.genero)}
-                        >
-                            <Typography sx={{
-                                fontSize: { sx: '10px', sm: '12px', md: '14px' }
-                            }}>{genre.genero}</Typography>
-                            <Box sx={{
-                                px: '10px',
-                                py: '3px',
-                                background: '#49437B',
-                                borderRadius: '18px',
-                                color: 'white',
-                                fontSize: '12px',
-                                fontWeight: 'bold'
-                            }}>
-                                {genre.cantidad}
-                            </Box>
-                        </Stack>
-                    ))}
-                </Box>
-                <Box>
-                    <Button
-                        sx={{
-                            color: 'black',
-                            opacity: 0.5,
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            gap: '6px',
-                            borderRadius: '20px',
-                        }}
-                        onClick={expandLimit}
-                    >
-                        Expand
-                        <img src={expand} alt="expand" width='12px' height='14px' />
-                    </Button>
-                </Box>
             </Stack>
             {isLoading ? (
                 <Box sx={{
@@ -226,11 +101,10 @@ export default function ActivitiesList() {
                     <Swiper
                         spaceBetween={16}
                         slidesPerView={1.5}
-                        centeredSlidesBounds={true}
                         pagination={{ clickable: true }}
                         breakpoints={{
                             640: {
-                                slidesPerView: 1.5,
+                                slidesPerView: 2,
                                 grid: {
                                     rows: 2,
                                 },
@@ -242,13 +116,14 @@ export default function ActivitiesList() {
                                 <Link to={`/estudiantes/actividad/${card._id}`}>
                                     <Box sx={{
                                         paddingBottom: '24px',
-                                        px: { xs: '0px', sm: '10px' },
+                                        px: { xs: '0px', sm: '10px' }, 
                                         display: 'flex',
                                         flexDirection: 'column',
                                         alignItems: 'center',
                                         gap: '20px',
                                         borderRadius: '8px',
                                         background: 'white',
+                                        width: '100%',
                                         boxShadow: '0 4px 8px rgba(0,0,0,0.1)',
                                     }}>
                                         <Box sx={{
@@ -311,14 +186,14 @@ export default function ActivitiesList() {
                                 display: 'flex',
                                 alignItems: 'center',
                                 justifyContent: 'flex-start',
-                                gap: { sm: '10px', md: '20px' },
+                                gap: {sm:'10px',md:'20px'},
                                 borderRadius: '8px',
                                 background: 'white',
-                                width: { sm: '180px', md: '370px' },
-                                flexDirection: { sm: 'column', md: 'row' }
+                                width: {sm:'180px',md:'370px'},
+                                flexDirection: { sm:'column',md:'row'}
                             }}>
                                 <Box sx={{
-                                    width: { sm: '100%', md: '100px' },
+                                    width: {sm:'100%',md:'140px'},
                                     height: '82px',
                                     borderRadius: '8px',
                                     background: `url(${card.bannerImg})`,
@@ -330,18 +205,17 @@ export default function ActivitiesList() {
                                     mb: '10px'
                                 }}>
                                     <Typography sx={{
-                                        fontSize: { sm: '14px', md: '16px' },
-                                        fontWeight: 'bold',
-                                        textAlign: { xs: 'center', sm: 'center', md: 'left' }
+                                        textAlign: 'center',
+                                        fontSize: {sm:'14px',md:'16px'},
+                                        fontWeight: 'bold'
                                     }}>{card.title}</Typography>
-                                    <Stack alignItems='center' flexDirection='row' gap='10px' sx={{
+                                    <Stack alignItems='center' justifyContent='flex-start' flexDirection='row' gap='10px' sx={{
                                         color: 'black',
                                         opacity: '0.7',
-                                        mt: '5px',
-                                        justifyContent: { xs: 'center', sm: 'center', md: 'flex-start' },
+                                        mt: '5px'
                                     }}>
                                         <Typography sx={{
-                                            fontSize: { sm: '12px', md: '14px' },
+                                            fontSize: {sm:'12px',md:'14px'},
                                             fontWeight: '400',
                                         }}>{card.genre}</Typography>
                                         <Box sx={{
@@ -352,7 +226,7 @@ export default function ActivitiesList() {
                                             borderRadius: '50%'
                                         }} />
                                         <Typography sx={{
-                                            fontSize: { sm: '12px', md: '14px' },
+                                            fontSize: {sm:'12px',md:'14px'},
                                             fontWeight: '400'
                                         }}>{card.questions.length} Preguntas</Typography>
                                     </Stack>

@@ -159,7 +159,7 @@ const CreateActivity: React.FC = () => {
         const res = await onCreateActivity(activityData);
         if (res.status === 200) {
             Swal.fire({
-                title: 'Actividad Actualizada Correctamente'
+                title: 'Actividad Creada Correctamente'
             })
         } else {
             Swal.fire({

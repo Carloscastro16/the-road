@@ -15,18 +15,28 @@ const AboutUs = () => {
 
   return (
     <Box sx={{ padding: 10 }}>
-      <Typography variant="h3" align="center" gutterBottom>
+      <Typography variant="h2" align="center" gutterBottom sx={{
+        fontFamily: 'Bebas Neue'
+      }}>
         ¿Quiénes somos?
       </Typography>
       <Grid container spacing={2} justifyContent="center">
         {teamMembers.map((member, index) => (
-          <Grid item xs={6} sm={6} md={3} key={index} sx={{ borderRadius: '10px',}}>
+          <Grid item xs={6} sm={6} md={3} key={index} sx={{ borderRadius: '10px'}}>
             <Card sx={{ height: '100%' }}>
               <CardMedia
                 component="img"
                 image={member.img} 
                 alt={member.name}
-                sx={{ height: { xs: 260, sm: 290, md: 400 }, objectFit: 'cover' ,borderRadius: '10px',}}
+                sx={{ height: { xs: 260, sm: 290, md: 400 }, 
+                objectFit: 'cover' ,
+                borderRadius: '10px',
+                filter: 'grayscale(80%)',
+                transition: 'all 500ms ease-in-out', 
+                ":hover":{
+                  filter: 'grayscale(0%)'
+                }
+              }}
               />
             </Card>
           </Grid>

@@ -1,7 +1,12 @@
 import React from 'react';
-import { Box, Typography, Grid, Link, Chip } from '@mui/material';
-
-const Footer = () => {
+import { Box, Typography, Grid, Chip, List, ListItem, ListItemText } from '@mui/material';
+interface FooterProps {
+  scrollToSection: (ref: React.RefObject<HTMLDivElement>) => void;
+  presentacionRef: React.RefObject<HTMLDivElement>;
+  offerSectionRef: React.RefObject<HTMLDivElement>;
+  aboutUsSectionRef: React.RefObject<HTMLDivElement>;
+}
+const Footer: React.FC<FooterProps> = ({ scrollToSection, presentacionRef, offerSectionRef, aboutUsSectionRef }) => {
   const languages = ['JavaScript', 'HTML', 'CSS', 'TypeScript', 'React', 'Angular', 'Python'];
   const developers = [
     'Eduardo Chan Caamal',
@@ -11,16 +16,23 @@ const Footer = () => {
   ];
 
   return (
-    <Box sx={{ backgroundColor: '#D1DCEE', padding: 4, marginTop: 4 }}>
+    <Box sx={{
+      background: 'linear-gradient(0deg, rgba(255,255,255,1) 50%, rgba(209,220,238,1) 100%)',
+      padding: 4,
+      marginTop: 4,
+      paddingTop: 10
+    }}>
       <Grid container spacing={4} sx={{ paddingLeft: 2, paddingRight: 2 }}>
         <Grid item xs={12} md={7}>
-          <Typography variant="h6" gutterBottom>
-            LOGO
+          <Typography variant="h6" gutterBottom sx={{
+            fontFamily: 'Bebas Neue'
+          }}>
+            The Road
           </Typography>
-          <Typography variant="body1" sx={{fontWeight: 'bold' }}>Lenguajes disponibles</Typography>
-          <Box sx={{ display: 'flex', flexWrap: 'wrap'}}>
+          <Typography variant="body1" sx={{ fontWeight: 'bold' }}>Lenguajes disponibles</Typography>
+          <Box sx={{ display: 'flex', flexWrap: 'wrap' }}>
             {languages.map((lang, index) => (
-              <Chip label={lang} key={index} sx={{ margin: 0.5,backgroundColor: '#82c6c1',color: '#ffffff',fontWeight: 'bold' }} />
+              <Chip label={lang} key={index} sx={{ margin: 0.5, backgroundColor: '#82c6c1', color: '#ffffff', fontWeight: 'bold' }} />
             ))}
           </Box>
         </Grid>
@@ -28,15 +40,28 @@ const Footer = () => {
           <Typography variant="h6" gutterBottom>
             Mapa de sitio
           </Typography>
-          <Typography variant="body1">
-            <Link href="#">Home</Link>
-          </Typography>
-          <Typography variant="body1">
-            <Link href="#">Productos</Link>
-          </Typography>
-          <Typography variant="body1">
-            <Link href="#">Nosotros</Link>
-          </Typography>
+          <List sx={{
+            p: 0
+          }}>
+            <ListItem onClick={() => scrollToSection(presentacionRef)} sx={{
+              p: 0,
+              cursor: 'pointer'
+            }}>
+              <ListItemText primary="Explora" />
+            </ListItem>
+            <ListItem onClick={() => scrollToSection(offerSectionRef)} sx={{
+              p: 0,
+              cursor: 'pointer'
+            }}>
+              <ListItemText primary="Productos" />
+            </ListItem>
+            <ListItem onClick={() => scrollToSection(aboutUsSectionRef)} sx={{
+              p: 0,
+              cursor: 'pointer'
+            }}>
+              <ListItemText primary="Para Desarrolladores" />
+            </ListItem>
+          </List>
         </Grid>
         <Grid item xs={12} md={1.5}>
           <Typography variant="h6" gutterBottom>

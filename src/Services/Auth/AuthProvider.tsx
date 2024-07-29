@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { auth, signInWithGoogle, signOut as googleSignOut, loginFacebook } from '../../Services/Auth/FirebaseConfig'; // Importar auth y signInWithGoogle desde el archivo correcto
-import { onAuthStateChanged, signInWithEmailAndPassword, User, signOut } from 'firebase/auth';
+import { onAuthStateChanged, signInWithEmailAndPassword, User, signOut, createUserWithEmailAndPassword } from 'firebase/auth';
 interface AuthContextType {
   currentUser: User | null;
   isLoggedIn: boolean;
@@ -9,7 +9,7 @@ interface AuthContextType {
   logout: () => void;
   googleSignOut: () => Promise<void>; // Agrega googleSignOut a AuthContextType
   facebookLogin: () => Promise<void>; // Función para iniciar sesión con Facebook
-
+  register: (email: string, password: string) => Promise<any>; 
 }
 
 interface AuthProviderProps {
@@ -35,7 +35,17 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       throw new Error('Failed to log in');
     }
   };
+  const register = async (email: string, password: string) => {
+    try {
+      const res = await createUserWithEmailAndPassword(auth, email, password);
+      console.log('respuesta de firebase al register',res);
+      return res
+    } catch (error) {
+      console.error('Error al registrar un usuario ', error)
+      return { status: 400, error: error };
+    }
 
+  }
   const googleLogin = async () => {
     try {
       const result = await signInWithGoogle();
@@ -94,7 +104,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ currentUser, isLoggedIn, login, googleLogin, logout, googleSignOut, facebookLogin }}>
+    <AuthContext.Provider value={{ currentUser, isLoggedIn, login, googleLogin, logout, googleSignOut, facebookLogin, register }}>
       {children}
     </AuthContext.Provider>
   );

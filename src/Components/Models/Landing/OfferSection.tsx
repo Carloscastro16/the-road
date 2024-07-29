@@ -4,6 +4,7 @@ import { styled } from '@mui/system';
 import Img from '../../../assets/Img/Codigo.png';
 import Img2 from '../../../assets/images/Vector.png';
 import Img3 from '../../../assets/images/Vector2.png';
+import { Link } from 'react-router-dom';
 
 
 const ImageContainer = styled('div')(({ theme }) => ({
@@ -49,7 +50,9 @@ const AlignLeftTypography = styled(Typography)(({ theme }) => ({
 const Ofrecemos = () => {
   return (
     <Box sx={{ paddingInline: '42px', marginBottom: '42px' }}>
-      <Typography variant="h3" align="center" gutterBottom>
+      <Typography variant="h2" align="center" gutterBottom sx={{
+        fontFamily: 'Bebas Neue'
+      }}>
         ¿Qué ofrecemos?
       </Typography>
 
@@ -65,15 +68,17 @@ const Ofrecemos = () => {
             }}
           >
             <ContentContainer>
-              <Typography variant="h5" gutterBottom sx={{ mb: 3, fontWeight: 'bold' }}>
+              <Typography variant="h5" gutterBottom sx={{ mt:2,mb: 3, fontWeight: 'bold', fontFamily: 'Bebas Neue' }}>
                 Afila tus habilidades de codificación
               </Typography>
               <Typography variant="body1" gutterBottom sx={{ mb: 3, pr: { md: 12 } }}>
                 Lleva tus conocimientos al siguiente nivel enfrentándote a desafíos continuos. Mejora tu lógica, optimiza tus soluciones y conviértete en un desarrollador más eficiente y seguro. ¡Empieza hoy y ve el progreso en cada línea de código!
               </Typography>
-              <CustomButton>
-                Unirme
-              </CustomButton>
+              <Link to={'/login'}>
+                <CustomButton>
+                  Unirme
+                </CustomButton>
+              </Link>
             </ContentContainer>
             <ImageContainer />
           </Paper>
@@ -86,7 +91,6 @@ const Ofrecemos = () => {
               p: 3,
               display: 'flex',
               flexDirection: 'column',
-              justifyContent: 'space-between',
               height: '100%',
               alignItems: { xs: 'center', md: 'flex-start' },
               borderRadius: '20px',
@@ -95,8 +99,12 @@ const Ofrecemos = () => {
 
             }}
           >
+            <Box sx={{
+              height: '86px',
+            }}>
             <img src={Img2} alt="Icono" style={{ width: '50px', marginBottom: '16px' }} />
-            <Typography variant="h5" gutterBottom sx={{ fontWeight: 'bold' }}>
+            </Box>
+            <Typography variant="h5" gutterBottom sx={{ fontWeight: 'bold', fontFamily: 'Bebas Neue' }}>
               Mantente actualizado
             </Typography>
             <Typography variant="body1" gutterBottom>
@@ -115,7 +123,6 @@ const Ofrecemos = () => {
               p: 3,
               display: 'flex',
               flexDirection: 'column',
-              justifyContent: 'space-between',
               height: '100%',
               alignItems: { xs: 'center', md: 'flex-start' },
               borderRadius: '20px',
@@ -123,8 +130,12 @@ const Ofrecemos = () => {
               backdropFilter: 'blur(40px)'
             }}
           >
-            <img src={Img3} alt="Icono" style={{ width: '50px', marginBottom: '16px' }} />
-            <Typography variant="h5" gutterBottom sx={{ fontWeight: 'bold' }}>
+            <Box sx={{
+              height: '86px',
+            }}>
+              <img src={Img3} alt="Icono" style={{ width: '50px', marginBottom: '16px' }} />
+            </Box>
+            <Typography variant="h5" gutterBottom sx={{ fontWeight: 'bold', fontFamily: 'Bebas Neue' }}>
               Gana puntos y compite con tus amigos
             </Typography>
             <Typography variant="body1" gutterBottom>

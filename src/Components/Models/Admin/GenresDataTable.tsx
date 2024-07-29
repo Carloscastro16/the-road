@@ -34,11 +34,11 @@ function GenresDataTable({ initialData }: any) {
   const [forceRender, setForceRender] = useState(0); // Estado para forzar la re-renderización
 
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
-  const isTablet = useMediaQuery(theme.breakpoints.between('sm', 'md'));
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+  const isTablet = useMediaQuery(theme.breakpoints.between('md', 'lg'));
 
   const columns: GridColDef[] = [
-    { field: 'title', headerName: 'Titulo', width: 780 },
+    { field: 'title', headerName: 'Titulo', width: 580 },
     { field: 'cantidad', headerName: 'Cantidad de Vistas', width: 400 },
     {
       field: 'actions',
@@ -186,11 +186,13 @@ function GenresDataTable({ initialData }: any) {
   };
 
   useEffect(() => {
+    setLoading(true);
     if (!initialData || initialData.length === 0) {
       fetchGenres();
     } else {
-      setLoading(false);
+      setGenres(initialData);
     }
+    setLoading(false);
   }, [initialData]);
 
   return (
@@ -202,6 +204,7 @@ function GenresDataTable({ initialData }: any) {
         backgroundColor: '#FFFFFF',
         overflowX: 'scroll'
       }}>
+
         <StyledDataGrid
           key={`data-grid-${forceRender}`} // Agrega la clave para forzar la re-renderización
           rows={genres}

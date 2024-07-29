@@ -1,8 +1,8 @@
 import { Grid } from "@mui/material";
 import News from "../../Components/Models/Students/News";
-import BestRoutes from "../../Components/Models/Students/BestRoutes";
 import ActivitiesList from "../../Components/Models/Students/ActivitiesLists";
 import React from "react";
+import GenresList from "../../Components/Models/Students/GenresList";
 export default function StudentsDashboard(){
     return(
         <Grid container spacing={2} sx={{
@@ -13,7 +13,7 @@ export default function StudentsDashboard(){
                 <News></News>
             </Grid>
             <Grid item xs={12}>
-                <BestRoutes></BestRoutes>
+                <GenresList></GenresList>
             </Grid>
             <Grid item xs={12}>
                 <ActivitiesList></ActivitiesList>

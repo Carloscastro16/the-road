@@ -30,7 +30,6 @@ export default function RoadsDataTable({ initialData }: any) {
   const columns: GridColDef[] = [
     { field: 'title', headerName: 'Titulo', width: 400 },
     { field: 'easyDescription', headerName: 'Descripción Corta', width: 350 },
-    { field: 'fullDescription', headerName: 'Descripción Larga', width: 550 },
     {
       field: 'actions',
       headerName: 'Actions',

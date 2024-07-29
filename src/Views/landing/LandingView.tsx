@@ -27,7 +27,7 @@ export default function LandingView(){
             <div ref={aboutUsSectionRef}>
                 <AboutUsSection />
             </div>
-            <Footer />
+            <Footer scrollToSection={scrollToSection} presentacionRef={presentacionRef} offerSectionRef={offerSectionRef} aboutUsSectionRef={aboutUsSectionRef} />
         </>
     );
 }

@@ -68,4 +68,5 @@ export interface Genre{
     _id?: any;
     title: string;
     cantidad: number;
+    bannerImg?: string;
 }

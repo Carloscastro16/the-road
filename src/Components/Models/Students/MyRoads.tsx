@@ -7,6 +7,12 @@ import *  as roadsService from '../../../Services/Api/RoadsService'
 import 'swiper/css';
 import { RoadData } from "../../../Services/Interfaces/Interfaces";
 import { Link, useNavigate } from "react-router-dom";
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+import 'swiper/css/scrollbar';
+import { Navigation } from "swiper/modules";
+
 const cardsInfo = [
     {
         _id: 'holas',
@@ -108,7 +114,7 @@ export default function MyRoads() {
             setRoads(data.data);
         } catch (error) {
             console.error('Error fetching roads:', error);
-        } 
+        }
     };
     function redirectTo(route: string) {
         navigate(route);
@@ -120,53 +126,42 @@ export default function MyRoads() {
         <Box>
             <Stack width={'100%'} flexDirection={'row'} alignItems={'center'} justifyContent={'space-between'} mb={'28px'}>
                 <Typography sx={{
-                    fontFamily: 'Montserrat',
-                    fontSize: '32px',
+                    fontFamily: 'Bebas neue',
+                    fontSize: { xs: '32px', sm: '42px' },
                     color: '#307071',
                     fontWeight: 'bold'
                 }}>
                     Mis Rutas
                 </Typography>
-                <Button sx={{
-                    color: 'white',
-                    backgroundColor: '#307071',
-                    py: '8px',
-                    px: '16px',
-                    borderRadius: '10px',
-                    height: 'fit-content',
-                    ":hover": {
-                        color: '#307071'
-                    }
-                }}>Ver mas...</Button>
             </Stack>
             <Box sx={{
                 width: '86vw'
             }}>
                 <Swiper
-                 spaceBetween={20}
-                 slidesPerView={1}
-                 initialSlide={2}
-                 centeredSlides={true}
-                 breakpoints={{
-                     400: {
-                         slidesPerView: 2,
-                         spaceBetween: 20,
-                     },
-                     600: {
-                         slidesPerView: 2,
-                         spaceBetween: 20,
-                     },
-                     900: {
-                         slidesPerView: 3,
-                         spaceBetween: 30,
-                     },
-                     1200: {
-                         slidesPerView: 4,
-                         spaceBetween: 40,
-                     },
-                 }}
-                 navigation
-                 pagination={{ clickable: true }}
+                    modules={[Navigation]}
+                    spaceBetween={20}
+                    slidesPerView={1}
+                    centeredSlidesBounds={true}
+                    breakpoints={{
+                        400: {
+                            slidesPerView: 1,
+                            spaceBetween: 20,
+                        },
+                        600: {
+                            slidesPerView: 2,
+                            spaceBetween: 20,
+                        },
+                        900: {
+                            slidesPerView: 3,
+                            spaceBetween: 30,
+                        },
+                        1200: {
+                            slidesPerView: 4,
+                            spaceBetween: 40,
+                        },
+                    }}
+                    navigation
+                    pagination={{ clickable: true }}
                 >
                     {roads.slice(0, 6).map((card, index) => {
                         return (
@@ -180,7 +175,7 @@ export default function MyRoads() {
                                 }}>
                                     <Box sx={{
                                         height: '180px',
-                                        width: '240px',
+                                        width: '100%',
                                         borderRadius: '10px 10px 0 0',
                                         background: `url(${card.img})`,
                                         backgroundPosition: 'center',
@@ -191,8 +186,8 @@ export default function MyRoads() {
                                     <Box sx={{
                                         background: 'white',
                                         borderRadius: '0 0 10px 10px',
-                                        width: '240px',
-                                        height: '125px'
+                                        height: '125px',
+                                        width: '100%',
                                     }}>
                                         <Stack sx={{
                                             height: '100%',
